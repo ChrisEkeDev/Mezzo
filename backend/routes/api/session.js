@@ -27,8 +27,20 @@ router.post('/', async(req, res, next) => {
         username: user.username,
     };
 
+    await setTokenCookie(res, safeUser);
 
+    return res.json({
+      user: safeUser
+    });
 })
+
+// Route for user sign out
+router.delete('/', (_req, res) => {
+      res.clearCookie('token');
+      return res.json({ message: 'success' });
+    }
+  );
+
 
 
 module.exports = router;
