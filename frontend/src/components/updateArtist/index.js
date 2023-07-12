@@ -85,7 +85,7 @@ function UpdateArtist({artist}) {
             />
             <div className='new_artist--action'>
                 <Button
-                label='Create Artist'
+                label='Update Artist'
                 style='primary'
                 action={updateArtist}
                 disabled={Object.keys(errors).length}
