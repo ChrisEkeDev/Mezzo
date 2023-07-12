@@ -16,10 +16,14 @@ router.get('/', (req, res) => {
           email: user.email,
           username: user.username,
         };
-        return res.json({
+        return res.status(200).json({
+          message: 'Session Restored',
           user: safeUser
         });
-      } else return res.json({ user: null });
+      } else return res.status(200).json({
+        message: 'Session Not Found',
+        user: null
+      });
     }
   );
 
@@ -27,7 +31,7 @@ router.get('/', (req, res) => {
 // Validate sign in
 const validateSignIn = [
   check('email').exists({ checkFalsy: true }).notEmpty().isEmail()
-    .withMessage('Please provide a valid email or username.'),
+    .withMessage('Please provide a valid email.'),
   check('password').exists({ checkFalsy: true })
     .withMessage('Please provide a password.'),
   handleValidationErrors
@@ -57,7 +61,8 @@ router.post('/', validateSignIn, async(req, res, next) => {
 
     await setTokenCookie(res, safeUser);
 
-    return res.json({
+    return res.status(200).json({
+      message: 'Sign In Successful',
       user: safeUser
     });
 })
@@ -65,7 +70,7 @@ router.post('/', validateSignIn, async(req, res, next) => {
 // Route for user sign out
 router.delete('/', (_req, res) => {
       res.clearCookie('token');
-      return res.json({ message: 'success' });
+      return res.status(200).json({ message: 'Sign Out Successful' });
     }
   );
 

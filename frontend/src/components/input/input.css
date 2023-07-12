@@ -1,0 +1,57 @@
+@import url('../../index.css');
+
+
+.input--wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 45px 0;
+}
+
+.input--input {
+    border: 1px solid var(--border);
+    height: 45px;
+    padding: 0 15px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.input--input:focus {
+    outline: transparent;
+    border: 2px solid var(--orange)
+}
+
+.input--error {
+    border: 2px solid var(--error);
+}
+
+.input--label {
+    position: absolute;
+    font-size: 15px;
+    font-weight: 500;
+    top: -25px;
+    color: var(--text-label)
+}
+
+.input--icon {
+    position: absolute;
+    right: 15px;
+    font-size: 20px;
+    top: 12.5px;
+    color: var(--text-body);
+    cursor: pointer;
+}
+
+.input--icon:hover {
+    color: var(--text-label)
+}
+
+.input_error--wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 5px 0;
+    color: var(--error);
+    font-weight: 500;
+}
