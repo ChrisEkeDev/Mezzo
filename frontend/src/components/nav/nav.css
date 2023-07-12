@@ -1,0 +1,60 @@
+@import url('../../index.css');
+
+#nav--wrapper {
+    border-bottom: 1px solid var(--border);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav_user--wrapper {
+    position: relative;
+}
+
+.nav_user--icon {
+    font-size: 30px;
+    color: var(--orange);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav_user--icon:hover {
+    color: var(--orange-hover)
+}
+
+.nav_user_menu--wrapper {
+    position: absolute;
+    width: 200px;
+    top: 40px;
+    right: 15px;
+    background-color: white;
+    color: var(--text-body);
+    border-radius: 5px;
+}
+
+.nav_user_menu--option {
+    height: 45px;
+    border: 1px solid var(--border);
+    padding: 0 15px;
+    width: 100%;
+    display: block;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    border-radius: 5px;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.nav_user_menu--option:hover {
+    background-color: var(--white-hover);
+}
+
+.nav_user_menu--icon {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

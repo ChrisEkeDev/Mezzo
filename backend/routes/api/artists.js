@@ -9,7 +9,9 @@ const router = express.Router();
 router.get('/',
     requireAuth,
     async(req, res) => {
-        const artists = await Artist.findAll()
+        const artists = await Artist.findAll({
+
+        })
         return res.status(200).json({
             Artists: artists
         })

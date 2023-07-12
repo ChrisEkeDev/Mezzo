@@ -1,0 +1,53 @@
+@import url('../../index.css');
+
+
+#modal--wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    width: 100vw;
+    height: 100dvh;
+    height: 100vh;
+    background-color: rgba(0,0,0,.3);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm--wrapper {
+    position: relative;
+    width: 500px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.confirm--content {
+    width: 75%;
+}
+
+.confirm--content h2 {
+    margin: 0 0 10px 0;
+    color: var(--text-heading);
+}
+
+.confirm--content p {
+    margin: 0;
+    color: var(--text-body);
+}
+
+.confirm--actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 30px;
+    gap: 15px;
+}
+
+.confirm--close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}

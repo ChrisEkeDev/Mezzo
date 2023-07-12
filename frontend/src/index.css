@@ -8,6 +8,8 @@
     --border: #E8E8E8;
     --border-active: #B8B8B8;
     --error: #e72424;
+    --placeholder: #d8d8d8;
+    --background: #fbfbfb;
 }
 
 html, body {
@@ -24,4 +26,52 @@ html, body {
 #app--wrapper {
     height: 100dvh;
     width: 100dvw;
+}
+
+
+.hover_menu--wrapper {
+    position: absolute;
+    width: 200px;
+    top: 45px;
+    right: 45px;
+    background-color: white;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--text-body);
+    z-index: 450;
+}
+
+.hover_menu--option {
+    height: 45px;
+    border-bottom: 1px solid var(--border);
+    padding: 0 15px;
+    width: 100%;
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 15px;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hover_menu--option:first-of-type {
+    border-radius: 5px 5px 0 0;
+}
+
+.hover_menu--option:last-of-type {
+    border: none;
+    border-radius: 0 0 5px 5px;
+}
+
+.hover_menu--option:hover {
+    background-color: var(--white-hover);
+}
+
+
+.hover_menu--icon {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

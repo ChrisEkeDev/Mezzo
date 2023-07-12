@@ -1,0 +1,117 @@
+@import url('../../index.css');
+
+
+.artists--wrapper {
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 30px;
+    background-color: var(--background);
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.artist_item--wrapper {
+    cursor: pointer;
+}
+
+.artist_item--image,
+.artist--image {
+    position: relative;
+    height: 200px;
+    aspect-ratio: 1;
+    background-color: var(--placeholder);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+.artist_item--image img,
+.artist--image img {
+    height: 100px;
+    position: relative;
+    right: 5px;
+}
+
+.artist_item--image:hover .artist_item--overlay {
+    opacity: 1;
+}
+
+.artist_item--overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0, .25);
+    opacity: 0;
+    border-radius: 10px;
+}
+
+.artist_item--name {
+    margin: 15px 0;
+    font-size: 15px;
+    color: var(--text-body);
+    text-align: center;
+}
+
+.artist_header--wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    align-items: flex-end;
+    background-color: var(--background);
+}
+
+.artist_header--contents {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.artist--data {
+    height: 200px;
+    width: 600px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+
+.artist--data h1 {
+    margin: 15px 0 0 0;
+    font-size: 30px;
+    color: var(--text-heading);
+    margin-bottom: 10px;
+}
+
+.artist--data p {
+    margin: 0;
+    font-size: 15px;
+    margin-bottom: 30px;
+    color: var(--text-body)
+}
+
+.artist_manage--wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.artist_manage--title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text-label)
+}
+
+.artist_item--play {
+    position: absolute;
+    left: 15px;
+    bottom: 15px;
+}

@@ -1,0 +1,63 @@
+@import url('../../index.css');
+
+#aside--wrapper {
+    border-right: 1px solid var(--border);
+    width: 300px;
+    padding: 15px;
+}
+
+.aside_logo--wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.aside_logo--wrapper img {
+    height: 40px;
+}
+
+.aside_logo--wrapper span {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-heading)
+}
+
+.aside_group--wrapper {
+    margin: 30px 0;
+}
+
+.aside_group--label {
+    font-size: 15px;
+    color: var(--text-label);
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+
+.aside_group_item--wrapper {
+    height: 45px;
+    width: 100%;
+    padding: 0 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.aside_group_item--wrapper:hover {
+    background-color: var(--white-hover);
+}
+
+.aside_group_item--icon {
+    color: var(--orange);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.aside_group_item--label {
+    font-size: 15px;
+    color: var(--text-body)
+}

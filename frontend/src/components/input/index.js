@@ -9,6 +9,16 @@ function Input({name, label, placeholder, type, error, value, setValue, disabled
 
   return (
     <label htmlFor={name} className="input--wrapper">
+      {
+        type === 'textarea' ?
+        <textarea
+          id={name}
+          name={name}
+          defaultValue={value}
+          onChange={(x) => setValue(x.target.value)}
+          disabled={disabled}
+          className={`input--textarea ${error ? 'input--error' : ''}`}>
+        </textarea> :
         <input
           id={name}
           name={name}
@@ -19,6 +29,8 @@ function Input({name, label, placeholder, type, error, value, setValue, disabled
           disabled={disabled}
           className={`input--input ${error ? 'input--error' : ''}`}
         />
+      }
+
 
         <span className='input--label'>{label}</span>
 

@@ -1,0 +1,12 @@
+@import url('../../index.css');
+
+#dashboard--wrapper {
+    height: 100%;
+    display: flex;
+}
+
+.dashboard--main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}

@@ -83,7 +83,7 @@ export const thunkCreateArtist = (artistData) => async dispatch => {
     if (res.ok) {
         const data = await res.json();
         dispatch(actionCreateArtist(data.Artist))
-        return data.message
+        return data
     } else {
         const errors = await res.json();
         return errors
@@ -98,7 +98,7 @@ export const thunkUpdateArtist = (id, artistData) => async dispatch => {
     if (res.ok) {
         const data = await res.json();
         dispatch(actionUpdateArtist(data.Artist))
-        return data.message
+        return data
     } else {
         const errors = await res.json();
         return errors
@@ -106,7 +106,7 @@ export const thunkUpdateArtist = (id, artistData) => async dispatch => {
 }
 
 export const thunkDeleteArtist = (artist) => async dispatch => {
-    const res = await csrfFetch(`/api/artists/${id}`, {
+    const res = await csrfFetch(`/api/artists/${artist.id}`, {
         method: 'DELETE'
     })
     if (res.ok) {
@@ -134,7 +134,11 @@ const artistsReducer = (state = initialState, action) => {
             action.payload.forEach(artist => newState.user[artist.id] = artist);
             return newState;
         }
-        case GET_ARTIST:
+        case GET_ARTIST: {
+            const newState = { ...state };
+            newState.current = action.payload
+            return newState;
+        }
         case UPDATE_ARTIST: {
             const newState = { ...state };
             newState.current = action.payload

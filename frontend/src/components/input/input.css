@@ -17,7 +17,21 @@
     width: 100%;
 }
 
+.input--textarea {
+    border: 1px solid var(--border);
+    height: 100px;
+    padding: 15px;
+    resize: none;
+    border-radius: 5px;
+    width: 100%;
+}
+
 .input--input:focus {
+    outline: transparent;
+    border: 2px solid var(--orange)
+}
+
+.input--textarea:focus {
     outline: transparent;
     border: 2px solid var(--orange)
 }

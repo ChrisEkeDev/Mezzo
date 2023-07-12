@@ -1,36 +1,50 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { thunkSignOut } from '../../store/session';
-import { useLoading } from '../../context/loading';
+import { Switch, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Nav from '../nav';
+import NewArtist from '../newArtist';
+import Aside from '../aside';
+import Artists from '../artists';
+import MyArtists from '../artists/myArtists'
+import Artist from '../artists/artist';
+import UpdateWrapper from '../updateArtist';
+import './dashboard.css'
 
 function Dashboard() {
     const user = useSelector(state => state.session.user);
-    const { setLoading } = useLoading();
     const history = useHistory();
-    const dispatch = useDispatch()
 
     const navigate = (route) => {
         history.push(route);
     }
 
-    const signOut = () => {
-        setLoading(true);
-        dispatch(thunkSignOut())
-        .then(() => {
-            navigate('/')
-            setLoading(false);
-        })
-    }
-
     if (!user) navigate('/')
 
     return (
-        <div>
-            <h1>Dashboard</h1>
-            <p>{user?.username} | {user?.email}</p>
-            <button onClick={signOut}>Sign Out</button>
-        </div>
+        <main id='dashboard--wrapper'>
+            <Aside/>
+            <section className='dashboard--main'>
+            <Nav/>
+            <Switch>
+                <Route exact path='/dashboard/artists'>
+                    <Artists/>
+                </Route>
+                <Route exact path='/dashboard/my-artists'>
+                    <MyArtists/>
+                </Route>
+                <Route exact path='/dashboard/new-artist'>
+                    <NewArtist/>
+                </Route>
+                <Route exact path='/dashboard/artist/:id/update'>
+                    <UpdateWrapper/>
+                </Route>
+                <Route exact path='/dashboard/artist/:id'>
+                    <Artist/>
+                </Route>
+            </Switch>
+            </section>
+        </main>
     )
 }
 
