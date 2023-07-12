@@ -48,10 +48,10 @@ function UpdateArtist({artist}) {
 
     useEffect(() => {
         const errors = {};
-        if (name.trim().length < 1 || name.trim() > 30) {
+        if (name && name.trim().length < 1 || name.trim() > 30) {
           errors.name = 'Name must be between 1 and 30 characters';
         }
-        if (bio.trim().length > 500) {
+        if (bio && bio.trim().length > 500) {
           errors.bio = 'Artist Bio must be less than 500 characters';
         }
         setErrors(errors)
