@@ -33,14 +33,14 @@
 }
 
 .auth_form--header h1 {
-    font-size: 30px;
+    font-size: 25px;
     margin: 0;
     color: var(--text-heading);
     font-weight: 600;
 }
 
 .auth_form--header p {
-    font-size: 20px;
+    font-size: 15px;
     margin: 0;
     color: var(--text-body);
     font-weight: 500;

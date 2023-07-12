@@ -3,6 +3,7 @@ import '../auth.css';
 import mezzo from '../../../assets/mezzo-color.svg';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLoading } from '../../../context/loading';
 import { thunkSignUp, thunkSignIn } from '../../../store/session';
 import Input from '../../input';
 import Button from '../../button';
@@ -17,6 +18,7 @@ function SignUp() {
   const [ password, setPassword ] = useState('');
   const [ confirmPassword, setConfirmPassword ] = useState('');
   const [ errors, setErrors] = useState({});
+  const { setLoading } = useLoading();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -26,30 +28,36 @@ function SignUp() {
 
   const signUp = (e) => {
     e.preventDefault();
+    setLoading(true);
     const data = {email, username, password};
     return (
       dispatch(thunkSignUp(data))
       .then(() => {
         navigate('/dashboard')
+        setLoading(false);
       })
       .catch(async(errors) => {
         const data = await errors.json();
         if (data && data.errors) setErrors(data.errors)
+        setLoading(false);
       })
     )
   }
 
   const demoSignIn = (e) => {
     e.preventDefault();
-    const data = {email: 'demo' , password: 'password'}
+    setLoading(true);
+    const data = {email: 'demo@email.com' , password: 'password'}
     return (
       dispatch(thunkSignIn(data))
       .then(() => {
         navigate('/dashboard')
+        setLoading(false);
       })
       .catch(async(errors) => {
         const data = await errors.json();
         if (data && data.errors) setErrors(data.errors)
+        setLoading(false);
       })
     )
   }

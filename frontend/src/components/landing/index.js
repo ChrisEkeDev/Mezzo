@@ -17,6 +17,7 @@ function Landing() {
                 <nav className='landing_nav--nav'>
                     <div className='landing_nav--logo'>
                         <img src={mezzo} />
+                        {/* <span>Mezzo</span> */}
                     </div>
                     <div className='landing_nav--actions'>
                         <Button
@@ -35,7 +36,7 @@ function Landing() {
             <main className='landing_main--wrapper'>
                 <section className='landing_main--contents'>
                     <h1>Your Music,<br/> Your Way.</h1>
-                    <p>Your stage, your spotlight.<br/> Mezzo: Share your original tracks and be heard.</p>
+                    <p>Your stage, your spotlight.<br/> Share and discover original songs and be heard.</p>
                     <div className='landing_main--actions'>
                         <Button
                             style='primary'

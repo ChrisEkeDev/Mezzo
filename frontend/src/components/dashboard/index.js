@@ -1,10 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkSignOut } from '../../store/session';
+import { useLoading } from '../../context/loading';
 import { useHistory } from 'react-router-dom';
 
 function Dashboard() {
     const user = useSelector(state => state.session.user);
+    const { setLoading } = useLoading();
     const history = useHistory();
     const dispatch = useDispatch()
 
@@ -13,9 +15,11 @@ function Dashboard() {
     }
 
     const signOut = () => {
+        setLoading(true);
         dispatch(thunkSignOut())
         .then(() => {
             navigate('/')
+            setLoading(false);
         })
     }
 
