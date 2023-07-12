@@ -76,14 +76,7 @@ router.post('/',
             image: image ? image : null
         })
 
-        const artist = await Artist.findByPk(newArtist.id, {
-            include: [
-                {
-                    model: User,
-                    attributes: ["id", "username"]
-                }
-            ]
-        })
+        const artist = await Artist.findByPk(newArtist.id)
 
         return res.status(200).json({
             message: { message: 'Artist was created successfully.'},
