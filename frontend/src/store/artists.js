@@ -9,7 +9,6 @@ const UPDATE_ARTIST = '/mezzo/artists/UPDATE_ARTIST'
 const DELETE_ARTIST = '/mezzo/artists/DELETE_ARTIST'
 
 // ACTIONS
-
 const actionGetAllArtists = (artists) => ({
     type: GET_ALL_ARTISTS,
     payload: artists
