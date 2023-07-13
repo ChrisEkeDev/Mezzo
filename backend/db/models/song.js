@@ -1,19 +1,21 @@
 'use strict';
-const { Model } = require('sequelize');
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Artist extends Model {
+  class Song extends Model {
     static associate(models) {
-      Artist.belongsTo(models.User, {
-        foreignKey: 'userId',
+      Song.belongsTo(models.Artist, {
+        foreignKey: 'artistId',
         targetKey: 'id'
       })
-      Artist.hasMany(models.Song, {
-        foreignKey: 'artistId',
-        sourceKey: 'id'
+      Song.belongsTo(models.Genre, {
+        foreignKey: 'genreId',
+        targetKey: 'id'
       })
     }
   }
-  Artist.init({
+  Song.init({
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -27,30 +29,33 @@ module.exports = (sequelize, DataTypes) => {
         len: [1, 30]
       }
     },
-    bio: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: true,
       validate: {
         max: 500
       }
     },
-    userId: {
+    file: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    artistId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    image: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      defaultValue: null,
+    genreId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
     sequelize,
-    modelName: 'Artist',
+    modelName: 'Song',
     defaultScope: {
       attributes: {
-        exclude: ['updatedAt']
+        exclude: ['createdAt', 'updatedAt']
       }
     }
   });
-  return Artist;
+  return Song;
 };
