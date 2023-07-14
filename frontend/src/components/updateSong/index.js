@@ -11,7 +11,6 @@ import LoadingData from '../loading/loadingData';
 import { thunkGetSong } from '../../store/songs';
 import { thunkGetArtist } from '../../store/artists'
 import '../newSong/newSong.css';
-import { thunkGetArtist } from '../../store/artists';
 
 function UpdateSong({song}) {
     const [ name, setName ] = useState(song.name);
