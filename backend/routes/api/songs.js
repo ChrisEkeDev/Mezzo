@@ -9,11 +9,11 @@ const router = express.Router();
 // Route for getting all songs
 router.get('/', requireAuth, async(req, res) => {
     const songs = await Song.findAll({
-        attributes: ["name", "id", "file"],
+        attributes: ["name", "id", "file", "genreId"],
         include: [
             {
                 model: Artist,
-                attributes: ["name", "image"]
+                attributes: ["id", "name", "image", "userId"]
             },
             {
                 model: Genre,
@@ -42,11 +42,11 @@ router.get('/current', requireAuth, async(req, res) => {
         where: {
             artistId: ids
         },
-        attributes: ["name", "id", "file"],
+        attributes: ["name", "id", "file", "genreId"],
         include: [
             {
                 model: Artist,
-                attributes: ["name", "image"]
+                attributes: ["id", "name", "image", "userId"]
             },
             {
                 model: Genre,
@@ -67,7 +67,7 @@ router.get('/:songId', requireAuth, async(req, res) => {
         include: [
             {
                 model: Artist,
-                attributes: ["name", "image"]
+                attributes: ["id", "name", "image", "userId"]
             },
             {
                 model: Genre,
@@ -106,11 +106,11 @@ router.get('/:genreName', requireAuth, async(req, res) => {
         where: {
             genreId: genre.id
         },
-        attributes: ["name", "id", "file"],
+        attributes: ["name", "id", "file", "genreId"],
         include: [
             {
                 model: Artist,
-                attributes: ["name", "image"]
+                attributes: ["id", "name", "image", "userId"]
             },
             {
                 model: Genre,
@@ -150,7 +150,7 @@ router.post('/', requireAuth, validateCreateSong, async(req, res) => {
         include: [
             {
                 model: Artist,
-                attributes: ["name", "image"]
+                attributes: ["id", "name", "image", "userId"]
             },
             {
                 model: Genre,
@@ -202,7 +202,7 @@ router.put('/:songId', requireAuth, validateUpdateSong, async(req, res) => {
             include: [
                 {
                     model: Artist,
-                    attributes: ["name", "image"]
+                    attributes: ["id", "name", "image", "userId"]
                 },
                 {
                     model: Genre,

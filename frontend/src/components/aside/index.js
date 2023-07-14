@@ -40,7 +40,7 @@ function Aside() {
                 <AsideGroupItem
                     label='Songs'
                     icon={<TbMusic/>}
-                    action={() => alert('Feature coming soon.')}
+                    action={() => navigate('/dashboard/songs')}
                 />
             </div>
             <div className='aside_group--wrapper'>
@@ -61,7 +61,7 @@ function Aside() {
                 <AsideGroupItem
                     label='My Songs'
                     icon={<TbMusic/>}
-                    action={() => alert('Feature coming soon.')}
+                    action={() => navigate('/dashboard/my-songs')}
                 />
                 <AsideGroupItem
                     label='Favorites'

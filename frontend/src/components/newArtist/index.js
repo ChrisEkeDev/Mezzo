@@ -22,7 +22,7 @@ function NewArtist() {
 
     const createArtist = (e) => {
         e.preventDefault();
-        setLoading(true);
+        setLoading({message: 'Creating your artist...'});
         const data = {
             name,
             bio: bio ? bio : null,
@@ -33,12 +33,12 @@ function NewArtist() {
             .then((res) => {
                 const artist = res.Artist;
                 navigate(`/dashboard/artist/${artist?.id}`)
-                setLoading(false);
+                setLoading(undefined);
             })
             .catch(async(errors) => {
                 const data = await errors.json();
                 if (data && data.errors) setErrors(data.errors)
-                setLoading(false);
+                setLoading(undefined);
             })
         )
     }

@@ -8,8 +8,9 @@ import placeholder from '../../assets/mezzo-placeholder.svg'
 import useOutsideClick from '../../hooks/useOutsideClick';
 import './artists.css';
 import IconButton from '../button/iconButton';
+import SongItem from '../songs/songItem';
 import Button from '../button';
-import { TbPlayerPlayFilled, TbDots, TbEdit, TbTrash, TbX, TbHeartPlus } from 'react-icons/tb';
+import { TbPlayerPlayFilled, TbDots, TbEdit, TbTrash, TbX, TbHeartPlus, TbPlus } from 'react-icons/tb';
 
 function Artist() {
     const user = useSelector(state => state.session.user);
@@ -21,7 +22,7 @@ function Artist() {
     const history = useHistory();
     const dispatch = useDispatch();
 
-
+    console.log(artist)
 
     const navigate = (route) => {
         history.push(route);
@@ -86,6 +87,10 @@ function Artist() {
                                     <span className='hover_menu--label'>Add to favorites</span>
                                     <span className='hover_menu--icon'><TbHeartPlus/></span>
                                 </span>
+                                <span onClick={() => setIsVisible(false)} className='hover_menu--option'>
+                                    <span className='hover_menu--label'>Close</span>
+                                    <span className='hover_menu--icon'><TbX/></span>
+                                </span>
 
                         </div> :
                         null
@@ -124,6 +129,42 @@ function Artist() {
                     null
                 }
             </header>
+            <section className='artist_songs--wrapper'>
+                <header className='artist_songs--header'>
+                    <div className='artist_songs--top_header'>
+                    { isAuth ?
+                        <Button
+                            label='New Song'
+                            style='new-artist'
+                            left={<TbPlus/>}
+                            action={() => navigate(`/dashboard/artist/${artist.id}/new-song`)}
+                        /> :
+                        null
+                    }
+                    </div>
+                    <div className=''>
+                        <div className='songs_header--wrapper song--grid'>
+                            <span>Song</span>
+                            <span className='songs_header--label'>
+                                <span>Artist</span>
+                            </span>
+                            <span className='songs_header--label'>
+                                <span>Genre</span>
+                            </span>
+                            <span className='songs_header--label'>
+                                <span>Time</span>
+                            </span>
+                        </div>
+                    </div>
+                </header>
+                <ul className='songs--list'>
+                    {
+                        artist.Songs.map(song => (
+                            <SongItem key={song.id} artist={artist} isAuth={user.id === artist.User.id} song={song} />
+                        ))
+                    }
+                </ul>
+            </section>
         </div>
     )
 }

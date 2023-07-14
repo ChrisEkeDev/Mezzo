@@ -50,6 +50,10 @@
     border-radius: 10px;
 }
 
+.artist_songs--top_header {
+
+}
+
 .artist_item--name {
     margin: 15px 0;
     font-size: 15px;
@@ -60,7 +64,7 @@
 .artist_header--wrapper {
     display: flex;
     justify-content: space-between;
-    padding: 30px;
+    padding: 15px;
     align-items: flex-end;
     background-color: var(--background);
 }
@@ -114,4 +118,10 @@
     position: absolute;
     left: 15px;
     bottom: 15px;
+}
+
+.artist_songs--header {
+    border-top: 1px solid var(--border);
+    padding: 15px 15px 0 15px;
+    border-bottom: 1px solid var(--border);
 }

@@ -25,30 +25,30 @@ function UpdateArtist({artist}) {
 
     const updateArtist = (e) => {
         e.preventDefault();
-        setLoading(true);
+        setLoading({message: "Updating your artist..."});
         const data = {
             name: name === artist.name ? artist.name : name,
-            bio: bio === artist.bio ? artist.bio : bio,
-            image: image === artist.image ? artist.image : image,
+            bio: bio === artist.bio ? artist.bio : bio === "" ? null : bio,
+            image: image === artist.image ? artist.image : image === "" ? null : image,
         }
         return (
             dispatch(thunkUpdateArtist(artist.id, data))
             .then((res) => {
                 const artist = res.Artist;
                 navigate(`/dashboard/artist/${artist.id}`)
-                setLoading(false);
+                setLoading(undefined);
             })
             .catch(async(errors) => {
                 const data = await errors.json();
                 if (data && data.errors) setErrors(data)
-                setLoading(false);
+                setLoading(undefined);
             })
         )
     }
 
     useEffect(() => {
         const errors = {};
-        if (name && name.trim().length < 1 || name.trim() > 30) {
+        if (name.trim().length < 1 || name.trim() > 30) {
           errors.name = 'Name must be between 1 and 30 characters';
         }
         if (bio && bio.trim().length > 500) {

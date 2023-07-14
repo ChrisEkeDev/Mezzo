@@ -75,3 +75,25 @@ html, body {
     align-items: center;
     justify-content: center;
 }
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 0;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: white;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--orange);
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--orange-hover);
+  }

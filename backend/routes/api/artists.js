@@ -1,6 +1,6 @@
 const express = require('express');
 const { requireAuth } = require('../../utils/auth');
-const { Artist, User, Song } = require('../../db/models')
+const { Artist, User, Song, Genre } = require('../../db/models')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
@@ -38,7 +38,13 @@ router.get('/:artistId', requireAuth, async(req, res) => {
             },
             {
                 model: Song,
-                attributes: ["id", "name", "file"]
+                attributes: ["name", "id", "file", "genreId"],
+                include: [
+                    {
+                        model: Genre,
+                        attributes: ["name"]
+                    }
+                ]
             }
         ]
     })

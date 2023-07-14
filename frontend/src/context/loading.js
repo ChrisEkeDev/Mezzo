@@ -6,11 +6,11 @@ const LoadingContext = createContext();
 export const useLoading = () => useContext(LoadingContext);
 
 function LoadingProvider({children}) {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(undefined);
 
     return (
         <LoadingContext.Provider value={{setLoading}}>
-            {loading && <Loading/>}
+            {loading && <Loading message={loading.message}/>}
             {children}
         </LoadingContext.Provider>
     )

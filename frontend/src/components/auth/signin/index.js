@@ -27,36 +27,36 @@ function SignIn() {
 
   const signIn = (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading({message: 'Signing you in...'});
     const data = {email, password};
     return (
       dispatch(thunkSignIn(data))
       .then(() => {
         navigate('/dashboard')
-        setLoading(false);
+        setLoading(undefined);
       })
       .catch(async(errors) => {
         const data = await errors.json();
         if (data && data.errors) setErrors(data.errors)
-        setLoading(false);
+        setLoading(undefined);
       })
     )
   }
 
   const demoSignIn = (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading({message: 'Signing you in...'});
     const data = {email: 'demo@email.com' , password: 'password'}
     return (
       dispatch(thunkSignIn(data))
       .then(() => {
         navigate('/dashboard')
-        setLoading(false);
+        setLoading(undefined);
       })
       .catch(async(errors) => {
         const data = await errors.json();
         if (data && data.errors) setErrors(data.errors)
-        setLoading(false);
+        setLoading(undefined);
       })
     )
   }

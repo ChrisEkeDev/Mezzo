@@ -118,7 +118,7 @@ export const thunkDeleteArtist = (artist) => async dispatch => {
     }
 }
 
-
+// REDUCER
 const initialState = { all: {}, current: {}, user: {} }
 
 const artistsReducer = (state = initialState, action) => {
@@ -155,7 +155,6 @@ const artistsReducer = (state = initialState, action) => {
         }
         default:
             return state;
-
     }
 }
 
