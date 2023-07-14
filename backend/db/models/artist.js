@@ -11,6 +11,17 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'artistId',
         sourceKey: 'id'
       })
+      Artist.hasMany(models.UserArtistFavorite, {
+        foreignKey: 'artistId',
+        sourceKey: 'id'
+      })
+      Artist.belongsToMany(models.User, {
+        through: models.UserArtistFavorite,
+        foreignKey: 'artistId',
+        otherKey: 'userId',
+        sourceKey: 'id',
+        targetKey: 'id'
+      })
     }
   }
   Artist.init({

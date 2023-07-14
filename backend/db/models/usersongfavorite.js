@@ -1,24 +1,41 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class UserSongFavorite extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      UserSongFavorite.belongsTo(models.User, {
+        foreignKey: 'userId',
+        targetKey: 'id'
+      })
+      UserSongFavorite.belongsTo(models.Song, {
+        foreignKey: 'songId',
+        targetKey: 'id'
+      })
     }
   }
   UserSongFavorite.init({
-    userId: DataTypes.INTEGER,
-    songId: DataTypes.INTEGER
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    songId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   }, {
     sequelize,
     modelName: 'UserSongFavorite',
+    defaultScope: {
+      attributes: {
+        exclude: ['createdAt', 'updatedAt']
+      }
+    }
   });
   return UserSongFavorite;
 };
