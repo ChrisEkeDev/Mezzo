@@ -9,7 +9,9 @@ import Select from '../input/select'
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingData from '../loading/loadingData';
 import { thunkGetSong } from '../../store/songs';
+import { thunkGetArtist } from '../../store/artists'
 import '../newSong/newSong.css';
+import { thunkGetArtist } from '../../store/artists';
 
 function UpdateSong({song}) {
     const [ name, setName ] = useState(song.name);
@@ -123,13 +125,14 @@ function UpdateSong({song}) {
 
 
 function UpdateWrapper() {
-    const { songId } = useParams();
+    const { artistId, songId } = useParams();
     const [ loading, setLoading ] = useState(true);
     const dispatch = useDispatch();
     const song = useSelector(state =>  state.songs.current);
 
     useEffect(() => {
         dispatch(thunkGetSong(songId))
+        .then(() => dispatch(thunkGetArtist(artistId)))
         .then(() => setLoading(false))
     }, [dispatch])
 
