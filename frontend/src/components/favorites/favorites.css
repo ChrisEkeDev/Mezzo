@@ -1,0 +1,81 @@
+@import url('../../index.css');
+
+.favorites--wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: scroll;
+}
+
+.favorites_header--wrapper {
+    border-bottom: 1px solid var(--border);
+}
+
+.no-border {
+    border: none;
+}
+
+.favorites--header {
+    display: flex;
+    font-size: 12px;
+    /* gap: 15px; */
+    font-weight: 500;
+    align-items: center;
+    color: var(--text-label);
+
+}
+
+.favorites--tab {
+    height: 45px;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.active--tab {
+    color: var(--text-body);
+}
+
+.favorites--songs {
+    border: none;
+}
+
+.favorites--toggle {
+    height: 15px;
+    width: 30px;
+    background-color: var(--white-hover);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.favorites--node {
+    height: 15px;
+    aspect-ratio: 1;
+    background-color: var(--orange);
+    border-radius: 15px;
+
+}
+
+.toggle--artists {
+    justify-content: flex-start;
+}
+
+.toggle--songs {
+    justify-content: flex-end;
+}
+
+.artists--list {
+    padding: 30px;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 30px;
+    background-color: var(--background);
+    overflow-y: scroll;
+    height: 100%;
+}

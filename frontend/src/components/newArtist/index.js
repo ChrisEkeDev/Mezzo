@@ -3,6 +3,7 @@ import Input from '../input';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useLoading } from '../../context/loading';
+import { useAlerts } from '../../context/alerts';
 import { thunkCreateArtist } from '../../store/artists';
 import './newArtist.css';
 import Button from '../button';
@@ -13,6 +14,7 @@ function NewArtist() {
     const [ image, setImage ] = useState('');
     const [ errors, setErrors ] = useState({})
     const { setLoading } = useLoading();
+    const { handleAlerts } = useAlerts();
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -20,27 +22,29 @@ function NewArtist() {
         history.push(route);
     }
 
-    const createArtist = (e) => {
+    const createArtist = async (e) => {
         e.preventDefault();
         setLoading({message: 'Creating your artist...'});
-        const data = {
-            name,
-            bio: bio ? bio : null,
-            image: image ? image : null
+        try {
+            const artistData = {
+                name,
+                bio: bio ? bio : null,
+                image: image ? image : null
+            }
+            const data = await dispatch(thunkCreateArtist(artistData))
+            const message = data.message;
+            const newArtist = data.Artist;
+            handleAlerts(message)
+            navigate(`/dashboard/artists/${newArtist.id}`)
+        } catch(error) {
+            let errors;
+            if (errors.json()) errors = await error.json()
+            else console.log(errors);
+            if (errors.errors) setErrors(errors.errors)
+            handleAlerts({message: 'There was an error while submitting your request.'})
+        } finally {
+            setLoading(undefined);
         }
-        return (
-            dispatch(thunkCreateArtist(data))
-            .then((res) => {
-                const artist = res.Artist;
-                navigate(`/dashboard/artist/${artist?.id}`)
-                setLoading(undefined);
-            })
-            .catch(async(errors) => {
-                const data = await errors.json();
-                if (data && data.errors) setErrors(data.errors)
-                setLoading(undefined);
-            })
-        )
     }
 
     useEffect(() => {
@@ -83,10 +87,10 @@ function NewArtist() {
             />
             <div className='new_artist--action'>
                 <Button
-                label='Create Artist'
-                style='primary'
-                action={createArtist}
-                disabled={Object.keys(errors).length}
+                    label='Create Artist'
+                    style='primary'
+                    action={createArtist}
+                    disabled={Object.keys(errors).length}
                 />
             </div>
             </form>

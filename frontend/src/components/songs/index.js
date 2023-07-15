@@ -23,7 +23,6 @@ function Songs() {
     return (
         <div className="songs--wrapper">
                 <header className='songs--header'>
-                    <div></div>
                     <div className=''>
                     <div className='songs_header--wrapper song--grid'>
                             <span>Song</span>

@@ -4,6 +4,7 @@ import Select from '../input/select'
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoading } from '../../context/loading';
+import { useAlerts } from '../../context/alerts'
 import { thunkCreateSong } from '../../store/songs';
 import './newSong.css';
 import Button from '../button';
@@ -15,6 +16,7 @@ function NewSong() {
     const [ genre, setGenre] = useState(0)
     const [ errors, setErrors ] = useState({})
     const { setLoading } = useLoading();
+    const { handleAlerts } = useAlerts();
     const history = useHistory();
     const dispatch = useDispatch();
     const artist = useSelector(state => state.artists.current);
@@ -25,29 +27,31 @@ function NewSong() {
         history.push(route);
     }
 
-    const createSong = (e) => {
+    const createSong = async (e) => {
         e.preventDefault();
         setLoading({message: 'Creating your song...'});
-        const data = {
-            name,
-            description: description ? description : null,
-            file,
-            genreId: parseInt(genre),
-            artistId: artist.id
+        try {
+            const songData = {
+                name,
+                description: description ? description : null,
+                file,
+                genreId: parseInt(genre),
+                artistId: artist.id
+            }
+            const data = await dispatch(thunkCreateSong(songData))
+            const message = data.message;
+            const updatedArtist = data.Song.Artist;
+            handleAlerts(message);
+            navigate(`/dashboard/artists/${updatedArtist?.id}`)
+        } catch(error) {
+            let errors;
+            if (errors.json()) errors = await error.json()
+            else console.log(errors);
+            if (errors.errors) setErrors(errors.errors)
+            handleAlerts({message: 'There was an error while submitting your request.'})
+        } finally {
+            setLoading(undefined);
         }
-        return (
-            dispatch(thunkCreateSong(data))
-            .then((res) => {
-                const artist = res.Song.Artist;
-                navigate(`/dashboard/artist/${artist?.id}`)
-                setLoading(undefined);
-            })
-            .catch(async(errors) => {
-                const data = await errors.json();
-                if (data && data.errors) setErrors(data.errors)
-                setLoading(undefined);
-            })
-        )
     }
 
     useEffect(() => {

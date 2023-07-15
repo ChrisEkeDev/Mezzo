@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import LoadingProvider from './context/loading';
+import AlertsProvider from './context/alerts';
 import './index.css';
 import App from './App';
 import configureStore from './store';
@@ -22,7 +23,9 @@ function Root() {
     <Provider store={store}>
       <BrowserRouter>
         <LoadingProvider>
-          <App />
+          <AlertsProvider>
+            <App />
+          </AlertsProvider>
         </LoadingProvider>
       </BrowserRouter>
     </Provider>

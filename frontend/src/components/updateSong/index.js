@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Input from '../input';
 import { useHistory } from 'react-router-dom';
 import { useLoading } from '../../context/loading';
+import { useAlerts } from '../../context/alerts';
 import { thunkUpdateSong } from '../../store/songs';
 import { useParams } from 'react-router-dom';
 import Button from '../button';
@@ -19,6 +20,7 @@ function UpdateSong({song}) {
     const [ genre, setGenre] = useState(song.genreId)
     const [ errors, setErrors ] = useState({})
     const { setLoading } = useLoading();
+    const { handleAlerts } = useAlerts();
     const history = useHistory();
     const dispatch = useDispatch();
     const artist = useSelector(state => state.artists.current);
@@ -27,29 +29,31 @@ function UpdateSong({song}) {
         history.push(route);
     }
 
-    const updateSong = (e) => {
+    const updateSong = async (e) => {
         e.preventDefault();
         setLoading({message: 'Updating your song...'});
-        const data = {
-            name: name === song.name ? song.name : name,
-            description: description === song.description ? song.description : description === "" ? null : description,
-            file: file === song.file ? song.file : file,
-            genreId: parseInt(genre),
-            artistId: artist.id
+        try {
+            const songData = {
+                name: name === song.name ? song.name : name,
+                description: description === song.description ? song.description : description === "" ? null : description,
+                file: file === song.file ? song.file : file,
+                genreId: parseInt(genre),
+                artistId: artist.id
+            }
+            const data = await dispatch(thunkUpdateSong(song.id, songData))
+            const message = data.message;
+            const updatedArtist = data.Song.Artist
+            handleAlerts(message);
+            navigate(`/dashboard/artists/${updatedArtist?.id}`)
+        } catch(error) {
+            let errors;
+            if (errors.json()) errors = await error.json()
+            else console.log(errors);
+            if (errors.errors) setErrors(errors.errors)
+            handleAlerts({message: 'There was an error while submitting your request.'})
+        } finally {
+            setLoading(undefined);
         }
-        return (
-            dispatch(thunkUpdateSong(song.id, data))
-            .then((res) => {
-                const artist = res.Song.Artist;
-                navigate(`/dashboard/artist/${artist?.id}`)
-                setLoading(undefined);
-            })
-            .catch(async(errors) => {
-                const data = await errors.json();
-                if (data && data.errors) setErrors(data.errors)
-                setLoading(undefined);
-            })
-        )
     }
 
     useEffect(() => {
@@ -125,17 +129,17 @@ function UpdateSong({song}) {
 
 function UpdateWrapper() {
     const { artistId, songId } = useParams();
-    const [ loading, setLoading ] = useState(true);
+    const [ isLoading, setIsLoading ] = useState(true);
     const dispatch = useDispatch();
     const song = useSelector(state =>  state.songs.current);
 
     useEffect(() => {
         dispatch(thunkGetSong(songId))
         .then(() => dispatch(thunkGetArtist(artistId)))
-        .then(() => setLoading(false))
+        .then(() => setIsLoading(false))
     }, [dispatch])
 
-    if (loading || !song) return <LoadingData></LoadingData>
+    if (isLoading || !song) return <LoadingData></LoadingData>
 
     return <UpdateSong song={song}/>
   }

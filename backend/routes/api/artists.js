@@ -43,6 +43,9 @@ router.get('/:artistId', requireAuth, async(req, res) => {
                     {
                         model: Genre,
                         attributes: ["name"]
+                    },
+                    {
+                        model: Artist
                     }
                 ]
             }

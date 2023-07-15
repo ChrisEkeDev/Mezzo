@@ -6,7 +6,10 @@ import Nav from '../nav';
 import NewArtist from '../newArtist';
 import NewSong from '../newSong';
 import Aside from '../aside';
+import Favorites from '../favorites';
 import Artists from '../artists';
+import Playlists from '../playlists';
+import Playlist from '../playlists/playlist';
 import MyArtists from '../artists/myArtists'
 import MySongs from '../songs/mySongs';
 import Artist from '../artists/artist';
@@ -37,6 +40,12 @@ function Dashboard() {
                 <Route exact path='/dashboard/songs'>
                     <Songs/>
                 </Route>
+                <Route exact path='/dashboard/playlists'>
+                    <Playlists/>
+                </Route>
+                <Route exact path='/dashboard/playlists/:id'>
+                    <Playlist/>
+                </Route>
                 <Route exact path='/dashboard/my-artists'>
                     <MyArtists/>
                 </Route>
@@ -46,17 +55,20 @@ function Dashboard() {
                 <Route exact path='/dashboard/new-artist'>
                     <NewArtist/>
                 </Route>
-                <Route exact path='/dashboard/artist/:artistId/songs/:songId/update'>
+                <Route exact path='/dashboard/artists/:artistId/songs/:songId/update'>
                     <UpdateSongWrapper/>
                 </Route>
-                <Route exact path='/dashboard/artist/:id/new-song'>
+                <Route exact path='/dashboard/artists/:id/new-song'>
                     <NewSong/>
                 </Route>
-                <Route exact path='/dashboard/artist/:id/update'>
+                <Route exact path='/dashboard/artists/:id/update'>
                     <UpdateArtistWrapper/>
                 </Route>
-                <Route exact path='/dashboard/artist/:id'>
+                <Route exact path='/dashboard/artists/:id'>
                     <Artist/>
+                </Route>
+                <Route exact path='/dashboard/favorites'>
+                    <Favorites/>
                 </Route>
             </Switch>
             </section>

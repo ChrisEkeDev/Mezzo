@@ -4,6 +4,7 @@ import mezzo from '../../../assets/mezzo-color.svg';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoading } from '../../../context/loading';
+import { useAlerts } from '../../../context/alerts';
 import { thunkSignIn } from '../../../store/session';
 import Input from '../../input';
 import Button from '../../button';
@@ -18,6 +19,7 @@ function SignIn() {
   const [ password, setPassword ] = useState('');
   const [ errors, setErrors] = useState({});
   const { setLoading } = useLoading();
+  const { handleAlerts } = useAlerts();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -31,7 +33,8 @@ function SignIn() {
     const data = {email, password};
     return (
       dispatch(thunkSignIn(data))
-      .then(() => {
+      .then((alert) => {
+        handleAlerts(alert)
         navigate('/dashboard')
         setLoading(undefined);
       })
@@ -49,7 +52,8 @@ function SignIn() {
     const data = {email: 'demo@email.com' , password: 'password'}
     return (
       dispatch(thunkSignIn(data))
-      .then(() => {
+      .then((alert) => {
+        handleAlerts(alert)
         navigate('/dashboard')
         setLoading(undefined);
       })

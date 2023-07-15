@@ -28,7 +28,8 @@
     width: 75%;
 }
 
-.confirm--content h2 {
+.confirm--content h2,
+.confirm--title {
     margin: 0 0 10px 0;
     color: var(--text-heading);
 }
@@ -50,4 +51,35 @@
     position: absolute;
     top: 15px;
     right: 15px;
+}
+
+.confirm--list {
+    height: 400px;
+    overflow-y: scroll;
+    padding: 10px 0;
+    margin: 0;
+}
+
+
+
+.confirm--item {
+    height: 45px;
+    padding: 0 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.confirm--item:hover {
+    background-color: var(--white-hover);
+}
+
+.selected {
+    background-color: var(--orange);
+    color: white;
+}
+
+.selected:hover {
+    background-color: var(--orange-hover);
 }

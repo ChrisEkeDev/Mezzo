@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import LoadingData from '../loading/loadingData';
+import { useLoading } from '../../context/loading';
+import { useAlerts } from '../../context/alerts';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetArtist, thunkDeleteArtist } from '../../store/artists';
+import { thunkAddArtistToFavorites, thunkRemoveArtistFromFavorites } from '../../store/favorites';
 import Modal from '../modal';
 import placeholder from '../../assets/mezzo-placeholder.svg'
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -10,48 +13,93 @@ import './artists.css';
 import IconButton from '../button/iconButton';
 import SongItem from '../songs/songItem';
 import Button from '../button';
-import { TbPlayerPlayFilled, TbDots, TbEdit, TbTrash, TbX, TbHeartPlus, TbPlus } from 'react-icons/tb';
+import { TbPlayerPlayFilled, TbDots, TbEdit, TbTrash, TbX, TbHeartPlus, TbPlus, TbHeartFilled, TbHeartMinus } from 'react-icons/tb';
 
 function Artist() {
     const user = useSelector(state => state.session.user);
+    const [ isLoading, setIsLoading] = useState(true)
     const { ref, isVisible, setIsVisible } = useOutsideClick();
-    const [ loading, setLoading ] = useState(true);
-    const [ deletingArtist, setDeletingArtist ] = useState(false)
+    const [ deletingArtist, setDeletingArtist ] = useState(false);
+    const { setLoading } = useLoading();
+    const { handleAlerts } = useAlerts();
     const { id } = useParams();
+    const favoritesData = useSelector(state => state.favorites.artists);
+    const favorites = Object.values(favoritesData)
     const artist = useSelector(state => state.artists.current)
     const history = useHistory();
     const dispatch = useDispatch();
-
-    console.log(artist)
 
     const navigate = (route) => {
         history.push(route);
     }
 
-    const deleteArtist = () => {
-        dispatch(thunkDeleteArtist(artist))
-        .then(() => navigate('/dashboard/artists'))
+    const isFavorited = favorites.some(favorite => favorite.artistId === artist.id);
+
+    const deleteArtist = async () => {
+        setLoading({message: 'Deleting artist...'})
+        try {
+            const message = await dispatch(thunkDeleteArtist(artist))
+            handleAlerts(message);
+            navigate('/dashboard/artists')
+        } catch(error) {
+            const message = error.json()
+            handleAlerts(message);
+        } finally {
+            setLoading(undefined)
+        }
+    }
+
+    const handleAddFavorite = async (id) => {
+        setLoading({message: 'Adding artist to favorites...'})
+        try {
+            const data = await dispatch(thunkAddArtistToFavorites({artistId: id}))
+            const message = data.message;
+            handleAlerts(message);
+            setIsVisible(false)
+        } catch(error) {
+            handleAlerts(error);
+        } finally {
+            setLoading(undefined)
+        }
+    }
+
+    const handleRemoveFavorite = async (id) => {
+        setLoading({message: 'Removing artist from favorites...'})
+        try {
+            const data = await dispatch(thunkRemoveArtistFromFavorites({artistId: id}))
+            const message = data.message;
+            handleAlerts(message);
+            setIsVisible(false)
+        } catch (error) {
+            handleAlerts(error);
+        } finally {
+            setLoading(undefined)
+        }
     }
 
     useEffect(() => {
         dispatch(thunkGetArtist(id))
-        .then(() => setLoading(false))
+        .then(() => setIsLoading(false))
     }, [dispatch])
 
-    if (loading || !artist) return <LoadingData></LoadingData>
+    if (isLoading || !artist) return <LoadingData></LoadingData>
 
     const isAuth = user.id === artist.User.id;
 
     return (
         <div className='artist--wrapper'>
-            <header className='artist_header--wrapper'>
+            <header>
+                <div className='artist_header--wrapper'>
                 <div className='artist_header--contents'>
                 <div className='artist--image' style={{backgroundImage: `url(${artist?.image})`}}>
                     {artist?.image ? null : <img src={placeholder}/> }
                 </div>
                 <div className='artist--data'>
                     <div className='artist--text'>
-                        <h1>{artist?.name}</h1>
+                        <span className='artist--text_span'>
+                            <h1>{artist?.name}</h1>
+                            { isFavorited ? <span className='artist--favorite'><TbHeartFilled/></span> : null }
+                        </span>
                         <p>{artist?.bio}</p>
                     </div>
                     <IconButton
@@ -61,18 +109,22 @@ function Artist() {
                     />
                 </div>
                 </div>
-                <div onClick={() => setIsVisible(true)} className='artist_manage--wrapper'>
-                    <span className='artist_manage--title'>Manage Artist</span>
-                    <IconButton
-                        style='secondary'
-                        icon={<TbDots/>}
-                    />
+                <div className='artist_manage--wrapper'>
+                    <div className='artist_manage--label' onClick={() => setIsVisible(true)}>
+                        <span className='artist_manage--title'>Manage Artist</span>
+                        <IconButton
+                            style='secondary'
+                            icon={<TbDots/>}
+
+                        />
+                    </div>
+
                     {   isVisible ?
                         <div ref={ref} className='hover_menu--wrapper'>
                             {
                                 isAuth ?
                                 <>
-                                <span onClick={() => navigate(`/dashboard/artist/${artist?.id}/update`)} className='hover_menu--option'>
+                                <span onClick={() => navigate(`/dashboard/artists/${artist?.id}/update`)} className='hover_menu--option'>
                                     <span className='hover_menu--label'>Update Artist</span>
                                     <span className='hover_menu--icon'><TbEdit/></span>
                                 </span>
@@ -83,10 +135,18 @@ function Artist() {
                                 </> :
                                 null
                             }
-                                <span onClick={() => alert('Feature coming soon.')} className='hover_menu--option'>
+                            {
+                                isFavorited ?
+                                <span onClick={() => handleRemoveFavorite(artist.id)} className='hover_menu--option'>
+                                    <span className='hover_menu--label'>Remove from favorites</span>
+                                    <span className='hover_menu--icon'><TbHeartMinus/></span>
+                                </span> :
+                                <span onClick={() => handleAddFavorite(artist.id)} className='hover_menu--option'>
                                     <span className='hover_menu--label'>Add to favorites</span>
                                     <span className='hover_menu--icon'><TbHeartPlus/></span>
                                 </span>
+                            }
+
                                 <span onClick={() => setIsVisible(false)} className='hover_menu--option'>
                                     <span className='hover_menu--label'>Close</span>
                                     <span className='hover_menu--icon'><TbX/></span>
@@ -128,16 +188,15 @@ function Artist() {
                     </Modal> :
                     null
                 }
-            </header>
-            <section className='artist_songs--wrapper'>
-                <header className='artist_songs--header'>
+                </div>
+                <div className={`artist_songs--header ${!isAuth ? 'no-top-padding' : ''}`}>
                     <div className='artist_songs--top_header'>
                     { isAuth ?
                         <Button
                             label='New Song'
                             style='new-artist'
                             left={<TbPlus/>}
-                            action={() => navigate(`/dashboard/artist/${artist.id}/new-song`)}
+                            action={() => navigate(`/dashboard/artists/${artist.id}/new-song`)}
                         /> :
                         null
                     }
@@ -156,6 +215,7 @@ function Artist() {
                             </span>
                         </div>
                     </div>
+                </div>
                 </header>
                 <ul className='songs--list'>
                     {
@@ -164,7 +224,6 @@ function Artist() {
                         ))
                     }
                 </ul>
-            </section>
         </div>
     )
 }

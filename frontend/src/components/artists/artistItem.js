@@ -3,10 +3,14 @@ import { useHistory } from 'react-router-dom';
 import placeholder from '../../assets/mezzo-placeholder.svg';
 import { useSelector } from 'react-redux';
 import IconButton from '../button/iconButton';
-import { TbPlayerPlayFilled } from 'react-icons/tb';
+import { TbPlayerPlayFilled, TbHeartFilled } from 'react-icons/tb';
 
 function ArtistItem({artist}) {
+  const favoritesData = useSelector(state => state.favorites.artists);
+  const favorites = Object.values(favoritesData)
   const history = useHistory();
+
+  const isFavorited = favorites.some(favorite => favorite.artistId === artist.id);
 
   const navigate = (route) => {
     history.push(route);
@@ -19,7 +23,7 @@ function ArtistItem({artist}) {
 
 
   return (
-      <article onClick={() => navigate(`/dashboard/artist/${artist?.id}`)} className='artist_item--wrapper'>
+      <article onClick={() => navigate(`/dashboard/artists/${artist?.id}`)} className='artist_item--wrapper'>
         <div className='artist_item--image' style={{backgroundImage: `url(${artist?.image})`}}>
           {artist?.image ? null : <img src={placeholder}/> }
           <div className='artist_item--overlay'>
@@ -32,7 +36,10 @@ function ArtistItem({artist}) {
             </span>
           </div>
         </div>
-        <h3 className='artist_item--name'>{artist?.name}</h3>
+        <span className='artist_item--name_span'>
+          <h3 className='artist_item--name'>{artist?.name}</h3>
+          { isFavorited ? <span className='artist_item--favorite'><TbHeartFilled/></span> : null }
+        </span>
       </article>
   )
 }
