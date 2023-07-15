@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
     session: sessionReducer,
     artists: artistsReducer,
     songs: songsReducer,
-    playists: playlistsReducer,
+    playlists: playlistsReducer,
     favorites: favoritesReducer
 });
 

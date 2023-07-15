@@ -7,6 +7,8 @@ import NewArtist from '../newArtist';
 import NewSong from '../newSong';
 import Aside from '../aside';
 import Artists from '../artists';
+import Playlists from '../playlists';
+import Playlist from '../playlists/playlist';
 import MyArtists from '../artists/myArtists'
 import MySongs from '../songs/mySongs';
 import Artist from '../artists/artist';
@@ -36,6 +38,12 @@ function Dashboard() {
                 </Route>
                 <Route exact path='/dashboard/songs'>
                     <Songs/>
+                </Route>
+                <Route exact path='/dashboard/playlists'>
+                    <Playlists/>
+                </Route>
+                <Route exact path='/dashboard/playlist/:id'>
+                    <Playlist/>
                 </Route>
                 <Route exact path='/dashboard/my-artists'>
                     <MyArtists/>

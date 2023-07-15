@@ -18,9 +18,9 @@ function NavUser() {
 
     const signOut = () => {
         setLoading(true);
+        navigate('/')
         dispatch(thunkSignOut())
         .then(() => {
-            navigate('/')
             setLoading(false);
         })
     }

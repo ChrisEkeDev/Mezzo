@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import LoadingData from '../loading/loadingData';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetArtist, thunkDeleteArtist } from '../../store/artists';
+import { thunkAddArtistToFavorites, thunkRemoveArtistFromFavorites } from '../../store/favorites';
 import Modal from '../modal';
 import placeholder from '../../assets/mezzo-placeholder.svg'
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -10,7 +11,7 @@ import './artists.css';
 import IconButton from '../button/iconButton';
 import SongItem from '../songs/songItem';
 import Button from '../button';
-import { TbPlayerPlayFilled, TbDots, TbEdit, TbTrash, TbX, TbHeartPlus, TbPlus } from 'react-icons/tb';
+import { TbPlayerPlayFilled, TbDots, TbEdit, TbTrash, TbX, TbHeartPlus, TbPlus, TbHeartFilled, TbHeartMinus } from 'react-icons/tb';
 
 function Artist() {
     const user = useSelector(state => state.session.user);
@@ -18,19 +19,31 @@ function Artist() {
     const [ loading, setLoading ] = useState(true);
     const [ deletingArtist, setDeletingArtist ] = useState(false)
     const { id } = useParams();
+    const favoritesData = useSelector(state => state.favorites.artists);
+    const favorites = Object.values(favoritesData)
     const artist = useSelector(state => state.artists.current)
     const history = useHistory();
     const dispatch = useDispatch();
-
-    console.log(artist)
 
     const navigate = (route) => {
         history.push(route);
     }
 
+    const isFavorited = favorites.some(favorite => favorite.artistId === artist.id);
+
     const deleteArtist = () => {
         dispatch(thunkDeleteArtist(artist))
         .then(() => navigate('/dashboard/artists'))
+    }
+
+    const handleAddFavorite = (id) => {
+        dispatch(thunkAddArtistToFavorites({artistId: id}))
+        .then(setIsVisible(false))
+    }
+
+    const handleRemoveFavorite = (id) => {
+        dispatch(thunkRemoveArtistFromFavorites({artistId: id}))
+        .then(setIsVisible(false))
     }
 
     useEffect(() => {
@@ -51,7 +64,10 @@ function Artist() {
                 </div>
                 <div className='artist--data'>
                     <div className='artist--text'>
-                        <h1>{artist?.name}</h1>
+                        <span className='artist--text_span'>
+                            <h1>{artist?.name}</h1>
+                            { isFavorited ? <span className='artist--favorite'><TbHeartFilled/></span> : null }
+                        </span>
                         <p>{artist?.bio}</p>
                     </div>
                     <IconButton
@@ -61,12 +77,16 @@ function Artist() {
                     />
                 </div>
                 </div>
-                <div onClick={() => setIsVisible(true)} className='artist_manage--wrapper'>
-                    <span className='artist_manage--title'>Manage Artist</span>
-                    <IconButton
-                        style='secondary'
-                        icon={<TbDots/>}
-                    />
+                <div className='artist_manage--wrapper'>
+                    <div className='artist_manage--label' onClick={() => setIsVisible(true)}>
+                        <span className='artist_manage--title'>Manage Artist</span>
+                        <IconButton
+                            style='secondary'
+                            icon={<TbDots/>}
+
+                        />
+                    </div>
+
                     {   isVisible ?
                         <div ref={ref} className='hover_menu--wrapper'>
                             {
@@ -83,10 +103,18 @@ function Artist() {
                                 </> :
                                 null
                             }
-                                <span onClick={() => alert('Feature coming soon.')} className='hover_menu--option'>
+                            {
+                                isFavorited ?
+                                <span onClick={() => handleRemoveFavorite(artist.id)} className='hover_menu--option'>
+                                    <span className='hover_menu--label'>Remove from favorites</span>
+                                    <span className='hover_menu--icon'><TbHeartMinus/></span>
+                                </span> :
+                                <span onClick={() => handleAddFavorite(artist.id)} className='hover_menu--option'>
                                     <span className='hover_menu--label'>Add to favorites</span>
                                     <span className='hover_menu--icon'><TbHeartPlus/></span>
                                 </span>
+                            }
+
                                 <span onClick={() => setIsVisible(false)} className='hover_menu--option'>
                                     <span className='hover_menu--label'>Close</span>
                                     <span className='hover_menu--icon'><TbX/></span>

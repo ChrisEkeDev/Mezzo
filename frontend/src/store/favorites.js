@@ -40,7 +40,7 @@ const actionRemoveSongFromFavorites = (songs) => ({
 })
 
 // THUNKS
-export const thunkGetFavoriteArtists = async dispatch => {
+export const thunkGetFavoriteArtists = () => async dispatch => {
     const res = await csrfFetch(`/api/favorites/artists`)
     if (res.ok) {
         const data = await res.json()
@@ -51,7 +51,7 @@ export const thunkGetFavoriteArtists = async dispatch => {
     }
 }
 
-export const thunkGetFavoriteSongs = async dispatch => {
+export const thunkGetFavoriteSongs = () => async dispatch => {
     const res = await csrfFetch(`/api/favorites/songs`)
     if (res.ok) {
         const data = await res.json()
@@ -62,7 +62,7 @@ export const thunkGetFavoriteSongs = async dispatch => {
     }
 }
 
-export const thunkAddArtistToFavorites = (artistId) = async dispatch => {
+export const thunkAddArtistToFavorites = (artistId) => async dispatch => {
     const res = await csrfFetch(`/api/favorites/artists`, {
         method: 'POST',
         body: JSON.stringify(artistId)
@@ -76,7 +76,7 @@ export const thunkAddArtistToFavorites = (artistId) = async dispatch => {
     }
 }
 
-export const thunkAddSongToFavorites = (songId) = async dispatch => {
+export const thunkAddSongToFavorites = (songId) => async dispatch => {
     const res = await csrfFetch(`/api/favorites/songs`, {
         method: 'POST',
         body: JSON.stringify(songId)

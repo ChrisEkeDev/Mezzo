@@ -6,6 +6,7 @@ const GET_PLAYLIST = '/mezzo/playlists/GET_PLAYLIST';
 const CREATE_PLAYLIST = '/mezzo/playlists/CREATE_PLAYLIST';
 const ADD_TO_PLAYLIST = '/mezzo/playlists/ADD_TO_PLAYLIST';
 const REMOVE_FROM_PLAYLIST = '/mezzo/playlists/REMOVE_FROM_PLAYLIST';
+const UPDATE_PLAYLIST = '/mezzo/playlists/UPDATE_PLAYLIST'
 const DELETE_PLAYLIST = '/mezzo/playlists/DELETE_PLAYLIST';
 
 // ACTIONS
@@ -34,8 +35,14 @@ const actionRemoveFromPlaylist = (playlist) => ({
     payload: playlist
 })
 
+const actionUpdatePlaylist = (playlist) => ({
+    type: UPDATE_PLAYLIST,
+    payload: playlist
+})
+
 const actionDeletePlaylist = (playlist) => ({
-    type: DELETE_PLAYLIST
+    type: DELETE_PLAYLIST,
+    payload: playlist
 })
 
 // THUNKS
@@ -106,13 +113,29 @@ export const thunkRemoveFromPlaylist = (songId, playlistId) => async dispatch =>
     }
 }
 
+export const thunkUpdatePlaylist = (playlistData) => async dispatch => {
+    const res = await csrfFetch(`/api/playlists/${playlistData.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(playlistData)
+    })
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(actionUpdatePlaylist(data.Playlist))
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
+
 export const thunkDeletePlaylist = (playlist) => async dispatch => {
     const res = await csrfFetch(`/api/playlists/${playlist.id}`, {
         method: 'DELETE'
     })
     if (res.ok) {
         const message = await res.json();
-        dispatch(actionDeletePlaylist(song))
+        dispatch(actionDeletePlaylist(playlist))
         return message
     } else {
         const errors = await res.json();
@@ -133,7 +156,8 @@ const playlistsReducer = (state = initialState, action) => {
             action.payload.forEach(playlist => newState.all[playlist.id] = playlist);
             return newState;
         }
-        case GET_PLAYLIST: {
+        case GET_PLAYLIST:
+        case UPDATE_PLAYLIST: {
             const newState = { ...state };
             newState.current = action.payload;
             return newState;
@@ -152,6 +176,7 @@ const playlistsReducer = (state = initialState, action) => {
         }
         case DELETE_PLAYLIST: {
             const newState = { ...state };
+            newState.current = {};
             delete newState.all[action.payload.id]
             return newState
         }

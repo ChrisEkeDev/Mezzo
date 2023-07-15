@@ -28,7 +28,8 @@
     width: 75%;
 }
 
-.confirm--content h2 {
+.confirm--content h2,
+.confirm--title {
     margin: 0 0 10px 0;
     color: var(--text-heading);
 }
@@ -50,4 +51,16 @@
     position: absolute;
     top: 15px;
     right: 15px;
+}
+
+.confirm--list {
+    height: 400px;
+    overflow-y: scroll;
+    padding: 0;
+    margin: 0;
+}
+
+.selected {
+    background-color: var(--orange);
+    color: white;
 }

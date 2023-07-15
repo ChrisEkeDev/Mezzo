@@ -7,7 +7,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 // Route Get Playlists for User
-router.get('/current', requireAuth, async (req, res) => {
+router.get('/', requireAuth, async (req, res) => {
     const user = req.user;
 
     const playlists = await Playlist.findAll({
@@ -199,7 +199,7 @@ router.post('/:playlistId', requireAuth, async(req, res) => {
     }
 
 
-    if (user.id === playlist.id) {
+    if (user.id === playlist.userId) {
         await PlaylistSong.create({
             playlistId,
             songId
@@ -265,8 +265,24 @@ router.delete('/:playlistId', requireAuth, async(req, res) => {
 
     if (user.id === playlist.userId) {
         await playlistSong.destroy()
+        const updatedPlaylist = await Playlist.findByPk(playlistId, {
+            include: [
+                {
+                    model: Song,
+                    include: [
+                        {
+                            model: Artist
+                        },
+                        {
+                            model: Genre
+                        }
+                    ]
+                }
+            ]
+        })
         return res.status(200).json({
-            message: 'Song was removed from playlist successfully.'
+            message: 'Song was removed from playlist successfully.',
+            Playlist: updatedPlaylist
         })
     } else {
         return res.status(403).json({

@@ -1,17 +1,32 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { thunkGetPlaylists } from '../../store/playlists'
+import { thunkGetFavoriteArtists, thunkGetFavoriteSongs } from '../../store/favorites'
 import mezzo from '../../assets/mezzo-color.svg';
 import Button from '../button'
 import AsideGroupItem from './asideGroupItem';
 import { TbPlus, TbMicrophone2, TbMusic, TbHeart, TbPlaylist, TbClockHour4, TbGridDots  } from 'react-icons/tb';
 import './aside.css'
+import AsidePlaylists from './asidePlaylists';
+
 
 function Aside() {
+    const [ loading, setLoading ] = useState(true);
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const navigate = (route) => {
         history.push(route);
     }
+
+    useEffect(() => {
+         dispatch(thunkGetFavoriteArtists())
+        .then(() => dispatch(thunkGetFavoriteSongs()))
+        .then(() => setLoading(false))
+    }, [dispatch])
+
+    if (loading) return <div id="aside--wrapper"></div>
 
     return (
         <div id="aside--wrapper">
@@ -43,14 +58,7 @@ function Aside() {
                     action={() => navigate('/dashboard/songs')}
                 />
             </div>
-            <div className='aside_group--wrapper'>
-                <h2 className='aside_group--label'>Playlists</h2>
-                <AsideGroupItem
-                    label='All Playlists'
-                    icon={<TbGridDots className='playlist'/>}
-                    action={() => alert('Feature coming soon.')}
-                />
-            </div>
+            <AsidePlaylists/>
             <div className='aside_group--wrapper'>
                 <h2 className='aside_group--label'>My Music</h2>
                 <AsideGroupItem

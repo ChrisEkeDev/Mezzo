@@ -135,7 +135,7 @@ export const thunkDeleteSong = (song) => async dispatch => {
 }
 
 // REDUCER
-const initialState = { all: {}, current: {}, user: {} }
+const initialState = { all: {}, user: {} }
 
 const songsReducer = (state = initialState, action) => {
     switch(action.type) {
