@@ -43,8 +43,9 @@ function AsidePlaylists() {
             />
             <AsideGroupItem
                 label='All Playlists'
-                icon={<TbGridDots className='playlist_item'/>}
+                icon={<TbPlaylist className='playlist'/>}
                 action={() => navigate('/dashboard/playlists')}
+                path='playlists'
             />
             {/* {
                 playlists && playlists.map(playlist => {

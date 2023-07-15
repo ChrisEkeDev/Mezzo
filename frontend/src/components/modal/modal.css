@@ -56,11 +56,30 @@
 .confirm--list {
     height: 400px;
     overflow-y: scroll;
-    padding: 0;
+    padding: 10px 0;
     margin: 0;
+}
+
+
+
+.confirm--item {
+    height: 45px;
+    padding: 0 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.confirm--item:hover {
+    background-color: var(--white-hover);
 }
 
 .selected {
     background-color: var(--orange);
     color: white;
+}
+
+.selected:hover {
+    background-color: var(--orange-hover);
 }

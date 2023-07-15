@@ -4,6 +4,7 @@ import mezzo from '../../../assets/mezzo-color.svg';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoading } from '../../../context/loading';
+import { useAlerts } from '../../../context/alerts';
 import { thunkSignUp, thunkSignIn } from '../../../store/session';
 import Input from '../../input';
 import Button from '../../button';
@@ -19,6 +20,7 @@ function SignUp() {
   const [ confirmPassword, setConfirmPassword ] = useState('');
   const [ errors, setErrors] = useState({});
   const { setLoading } = useLoading();
+  const { handleAlerts } = useAlerts();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -32,8 +34,9 @@ function SignUp() {
     const data = {email, username, password};
     return (
       dispatch(thunkSignUp(data))
-      .then(() => {
-        navigate('/dashboard')
+      .then((alert) => {
+        handleAlerts(alert)
+        navigate('/dashboard/recently-added')
         setLoading(undefined);
       })
       .catch(async(errors) => {
@@ -50,8 +53,9 @@ function SignUp() {
     const data = {email: 'demo@email.com' , password: 'password'}
     return (
       dispatch(thunkSignIn(data))
-      .then(() => {
-        navigate('/dashboard')
+      .then((alert) => {
+        handleAlerts(alert)
+        navigate('/dashboard/recently-added')
         setLoading(undefined);
       })
       .catch(async(errors) => {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import LoadingData from '../loading/loadingData';
+import { useLoading } from '../../context/loading';
+import { useAlerts } from '../../context/alerts';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetPlaylist, thunkDeletePlaylist } from '../../store/playlists';
 import Modal from '../modal';
@@ -12,14 +14,17 @@ import SongItem from '../songs/songItem';
 import Button from '../button';
 import { TbPlayerPlayFilled, TbDots, TbEdit, TbTrash, TbX, TbHeartPlus, TbPlus, TbArrowsShuffle } from 'react-icons/tb';
 import UpdatePlaylist from '../updatePlaylist.js';
+import '../songs/songs.css';
 
 function Playlist() {
     const user = useSelector(state => state.session.user);
     const { ref, isVisible, setIsVisible } = useOutsideClick();
-    const [ loading, setLoading ] = useState(true);
+    const [ isLoading, setIsLoading ] = useState(true);
     const [ deletingPlaylist, setDeletingPlaylist ] = useState(false);
     const [ updatingPlaylist, setUpdatingPlaylist ] = useState(false);
     const { id } = useParams();
+    const { setLoading } = useLoading();
+    const { handleAlerts } = useAlerts();
     const playlist = useSelector(state => state.playlists.current)
     const history = useHistory();
     const dispatch = useDispatch();
@@ -28,21 +33,31 @@ function Playlist() {
         history.push(route);
     }
 
-    const deletePlaylist = () => {
-        dispatch(thunkDeletePlaylist(playlist))
-        .then(() => navigate('/dashboard/playlists'))
+    const deletePlaylist = async () => {
+        setLoading({message: 'Deleting your playlist...'})
+        try {
+            const message = await dispatch(thunkDeletePlaylist(playlist))
+            handleAlerts(message);
+            navigate('/dashboard/playlists')
+        } catch(error) {
+            const message = error.json()
+            handleAlerts(message);
+        } finally {
+            setLoading(undefined)
+        }
     }
 
     useEffect(() => {
         dispatch(thunkGetPlaylist(id))
-        .then(() => setLoading(false))
+        .then(() => setIsLoading(false))
     }, [dispatch, id])
 
-    if (loading || !playlist) return <LoadingData></LoadingData>
+    if (isLoading || !playlist) return <LoadingData></LoadingData>
 
     return (
         <div className='playlist--wrapper'>
-            <header className='playlist_header--wrapper'>
+            <header>
+                <div className='playlist_header--wrapper'>
                 <div className='playlist_header--contents'>
                 <div className='playlist--image'>
                     <img src={placeholder}/>
@@ -128,9 +143,8 @@ function Playlist() {
                     </Modal> :
                     null
                 }
-            </header>
-            <section className='playlist_songs--wrapper'>
-                <header className='playlist_songs--header'>
+                </div>
+                <div className='playlist_songs--header'>
                     <div className=''>
                         <div className='songs_header--wrapper song--grid'>
                             <span>Song</span>
@@ -145,6 +159,7 @@ function Playlist() {
                             </span>
                         </div>
                     </div>
+                </div>
                 </header>
                 <ul className='songs--list'>
                     {   playlist.Songs?.length ?
@@ -154,7 +169,6 @@ function Playlist() {
                         null
                     }
                 </ul>
-            </section>
         </div>
     )
 }

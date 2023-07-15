@@ -51,11 +51,14 @@ function Aside() {
                     label='Artists'
                     icon={<TbMicrophone2/>}
                     action={() => navigate('/dashboard/artists')}
+                    path='artists'
                 />
                 <AsideGroupItem
                     label='Songs'
                     icon={<TbMusic/>}
                     action={() => navigate('/dashboard/songs')}
+                    path='songs'
+
                 />
             </div>
             <AsidePlaylists/>
@@ -65,16 +68,19 @@ function Aside() {
                     label='My Artists'
                     icon={<TbMicrophone2/>}
                     action={() => navigate('/dashboard/my-artists')}
+                    path='my-artists'
                 />
                 <AsideGroupItem
                     label='My Songs'
                     icon={<TbMusic/>}
                     action={() => navigate('/dashboard/my-songs')}
+                    path='my-songs'
                 />
                 <AsideGroupItem
                     label='Favorites'
                     icon={<TbHeart/>}
-                    action={() => alert('Feature coming soon.')}
+                    action={() => navigate('/dashboard/favorites')}
+                    path='favorites'
                 />
             </div>
         </div>

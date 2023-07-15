@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TbX } from 'react-icons/tb';
 import { useLoading } from '../../context/loading';
+import { useAlerts } from '../../context/alerts';
 import IconButton from '../button/iconButton';
 import { useDispatch } from 'react-redux';
 import Input from '../input';
@@ -11,17 +12,26 @@ function UpdatePlaylist({playlist, close}) {
     const [ name, setName ] = useState(playlist.name);
     const [ errors, setErrors] = useState({})
     const { setLoading } = useLoading();
+    const { handleAlerts } = useAlerts();
     const dispatch = useDispatch();
 
-    const handleUpdatePlaylist = () => {
-        setLoading(true)
-        const data = { id: playlist.id, name: name === playlist.name ? playlist.name : name }
-        return (
-            dispatch(thunkUpdatePlaylist(data))
-            .then(() => close())
-            .then(() => setLoading(false))
-        )
-
+    const handleUpdatePlaylist = async () => {
+        setLoading({message: 'Updating your playlist...'})
+        try {
+            const playlistData = { id: playlist.id, name: name === playlist.name ? playlist.name : name }
+            const data = await dispatch(thunkUpdatePlaylist(playlistData));
+            const message = data.message;
+            handleAlerts(message)
+            close()
+        } catch(error) {
+            let errors;
+            if (errors.json()) errors = await error.json()
+            else console.log(errors);
+            if (errors.errors) setErrors(errors.errors)
+            handleAlerts({message: 'There was an error while submitting your request.'})
+        } finally {
+            setLoading(undefined)
+        }
     }
 
     useEffect(() => {

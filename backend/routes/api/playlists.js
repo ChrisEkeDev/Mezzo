@@ -193,7 +193,7 @@ router.post('/:playlistId/add', requireAuth, async(req, res) => {
     })
 
     if (playlistSong) {
-        return res.status(404).json({
+        return res.status(400).json({
             message: "This song is already in this playlist."
         })
     }
@@ -281,7 +281,7 @@ router.delete('/:playlistId/remove', requireAuth, async(req, res) => {
             ]
         })
         return res.status(200).json({
-            message: 'Song was removed from playlist successfully.',
+            message: { message: 'Song was removed from playlist successfully.'},
             Playlist: updatedPlaylist
         })
     } else {

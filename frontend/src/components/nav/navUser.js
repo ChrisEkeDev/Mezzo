@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { thunkSignOut } from '../../store/session';
 import { useLoading } from '../../context/loading';
-import { TbUserCircle, TbLogout } from 'react-icons/tb'
+import { TbUserCircle, TbLogout, TbX } from 'react-icons/tb'
 import useOutsideClick from '../../hooks/useOutsideClick';
 
 function NavUser() {
@@ -30,10 +30,14 @@ function NavUser() {
             <span onClick={() => setIsVisible(true)} className='nav_user--icon'><TbUserCircle/></span>
             {
                 isVisible ?
-                <div ref={ref} className='nav_user_menu--wrapper'>
-                    <span onClick={signOut} className='nav_user_menu--option'>
-                        <span className='nav_user_menu--icon'><TbLogout/></span>
-                        <span className='nav_user_menu--label'>Sign Out</span>
+                <div ref={ref} className='hover_menu--wrapper'>
+                    <span onClick={signOut} className='hover_menu--option'>
+                        <span className='hover_menu--label'>Sign Out</span>
+                        <span className='hover_menu--icon'><TbLogout/></span>
+                    </span>
+                    <span onClick={() => setIsVisible(false)} className='hover_menu--option'>
+                        <span className='hover_menu--label'>Close</span>
+                        <span className='hover_menu--icon'><TbX/></span>
                     </span>
                 </div> :
                 null

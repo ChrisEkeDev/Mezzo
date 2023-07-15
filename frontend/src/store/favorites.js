@@ -70,6 +70,7 @@ export const thunkAddArtistToFavorites = (artistId) => async dispatch => {
     if (res.ok) {
         const data = await res.json()
         dispatch(actionAddArtistToFavorites(data.FavoriteArtists))
+        return data
     } else {
         const errors = await res.json();
         return errors
@@ -84,6 +85,7 @@ export const thunkAddSongToFavorites = (songId) => async dispatch => {
     if (res.ok) {
         const data = await res.json()
         dispatch(actionAddSongToFavorites(data.FavoriteSongs))
+        return data
     } else {
         const errors = await res.json();
         return errors
@@ -98,6 +100,7 @@ export const thunkRemoveArtistFromFavorites = (artistId) => async dispatch => {
     if (res.ok) {
         const data = await res.json()
         dispatch(actionRemoveArtistFromFavorites(data.FavoriteArtists))
+        return data
     } else {
         const errors = await res.json();
         return errors
@@ -112,6 +115,7 @@ export const thunkRemoveSongFromFavorites = (songId) => async dispatch => {
     if (res.ok) {
         const data = await res.json()
         dispatch(actionRemoveSongFromFavorites(data.FavoriteSongs))
+        return data
     } else {
         const errors = await res.json();
         return errors

@@ -19,7 +19,7 @@ function PlaylistItem({playlist}) {
     }
 
     return (
-        <article onClick={() => navigate(`/dashboard/playlist/${playlist?.id}`)} className='playlist_item--wrapper'>
+        <article onClick={() => navigate(`/dashboard/playlists/${playlist?.id}`)} className='playlist_item--wrapper'>
             <div className='playlist_item--image'>
                 <div className='playlist_item--overlay'>
                     <span className='playlist_item--play'>

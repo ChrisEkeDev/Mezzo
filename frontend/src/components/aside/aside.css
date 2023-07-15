@@ -65,3 +65,8 @@
 .playlist_item {
     color: var(--text-body)
 }
+
+
+.current--navigation {
+    background-color: var(--white-hover);
+}

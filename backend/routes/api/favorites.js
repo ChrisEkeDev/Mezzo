@@ -101,7 +101,7 @@ router.delete('/artists', requireAuth, async(req, res) => {
         })
 
         return res.status(200).json({
-            message: 'Artist was removed from favorites successfully.',
+            message: { message: 'Artist was removed from favorites successfully.'},
             FavoriteArtists: favoriteArtists
         })
     } else {
@@ -121,7 +121,15 @@ router.get('/songs', requireAuth, async(req, res) => {
         },
         include: [
             {
-                model: Song
+                model: Song,
+                include: [
+                    {
+                        model: Artist
+                    },
+                    {
+                        model: Genre
+                    }
+                ]
             }
         ]
     })
@@ -161,13 +169,21 @@ router.post('/songs', requireAuth, async(req, res) => {
         },
         include: [
             {
-                model: Song
+                model: Song,
+                include: [
+                    {
+                        model: Artist
+                    },
+                    {
+                        model: Genre
+                    }
+                ]
             }
         ]
     })
 
     return res.status(200).json({
-        message: { message: "Song was added to favorites successfully."},
+        message: { message: "Song was added to favorites successfully." },
         FavoriteSongs: favoriteSongs
     })
 
@@ -202,13 +218,21 @@ router.delete('/songs', requireAuth, async(req, res) => {
             },
             include: [
                 {
-                    model: Song
+                    model: Song,
+                    include: [
+                        {
+                            model: Artist
+                        },
+                        {
+                            model: Genre
+                        }
+                    ]
                 }
             ]
         })
 
         return res.status(200).json({
-            message: 'Song was removed from favorites successfully.',
+            message: { message: 'Song was removed from favorites successfully.' },
             FavoriteSongs: favoriteSongs
         })
     } else {

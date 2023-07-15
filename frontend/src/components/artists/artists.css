@@ -12,6 +12,13 @@
     height: 100%;
 }
 
+.artist--wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1;
+    overflow-y: scroll;
+}
+
 .artist_item--wrapper {
     cursor: pointer;
 }
@@ -65,6 +72,7 @@
     align-items: flex-end;
     background-color: var(--background);
 }
+
 
 .artist_header--contents {
     position: relative;
@@ -129,6 +137,11 @@
     padding: 15px 15px 0 15px;
     border-bottom: 1px solid var(--border);
 }
+
+.no-top-padding {
+    padding-top: 0;
+}
+
 
 .artist_item--name_span {
     display: block;

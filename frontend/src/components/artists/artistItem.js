@@ -23,7 +23,7 @@ function ArtistItem({artist}) {
 
 
   return (
-      <article onClick={() => navigate(`/dashboard/artist/${artist?.id}`)} className='artist_item--wrapper'>
+      <article onClick={() => navigate(`/dashboard/artists/${artist?.id}`)} className='artist_item--wrapper'>
         <div className='artist_item--image' style={{backgroundImage: `url(${artist?.image})`}}>
           {artist?.image ? null : <img src={placeholder}/> }
           <div className='artist_item--overlay'>

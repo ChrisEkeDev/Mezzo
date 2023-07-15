@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Input from '../input';
 import { useHistory } from 'react-router-dom';
 import { useLoading } from '../../context/loading';
+import { useAlerts } from '../../context/alerts';
 import { thunkUpdateArtist } from '../../store/artists';
 import { useParams } from 'react-router-dom';
 import Button from '../button';
@@ -16,6 +17,7 @@ function UpdateArtist({artist}) {
     const [ image, setImage ] = useState(artist.image);
     const [ errors, setErrors ] = useState({})
     const { setLoading } = useLoading();
+    const { handleAlerts } = useAlerts();
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -23,27 +25,29 @@ function UpdateArtist({artist}) {
         history.push(route);
     }
 
-    const updateArtist = (e) => {
+    const updateArtist = async (e) => {
         e.preventDefault();
         setLoading({message: "Updating your artist..."});
-        const data = {
-            name: name === artist.name ? artist.name : name,
-            bio: bio === artist.bio ? artist.bio : bio === "" ? null : bio,
-            image: image === artist.image ? artist.image : image === "" ? null : image,
+        try {
+            const artistData = {
+                name: name === artist.name ? artist.name : name,
+                bio: bio === artist.bio ? artist.bio : bio === "" ? null : bio,
+                image: image === artist.image ? artist.image : image === "" ? null : image,
+            }
+            const data = await dispatch(thunkUpdateArtist(artist.id, artistData))
+            const message = data.message;
+            const updatedArtist = data.Artist;
+            handleAlerts(message);
+            navigate(`/dashboard/artists/${updatedArtist.id}`)
+        } catch(error) {
+            let errors;
+            if (errors.json()) errors = await error.json()
+            else console.log(errors);
+            if (errors.errors) setErrors(errors.errors)
+            handleAlerts({message: 'There was an error while submitting your request.'})
+        } finally {
+            setLoading(undefined);
         }
-        return (
-            dispatch(thunkUpdateArtist(artist.id, data))
-            .then((res) => {
-                const artist = res.Artist;
-                navigate(`/dashboard/artist/${artist.id}`)
-                setLoading(undefined);
-            })
-            .catch(async(errors) => {
-                const data = await errors.json();
-                if (data && data.errors) setErrors(data)
-                setLoading(undefined);
-            })
-        )
     }
 
     useEffect(() => {

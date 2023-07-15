@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useLoading } from '../../context/loading';
+import { useAlerts } from '../../context/alerts';
 import { thunkAddToPlaylist } from '../../store/playlists';
 import Button from '../button';
 import { TbPlaylistAdd } from 'react-icons/tb';
@@ -7,6 +9,8 @@ import { TbPlaylistAdd } from 'react-icons/tb';
 function AddToPlaylist({song, close}) {
     const playlistData = useSelector(state => state.playlists.all)
     const playlists = Object.values(playlistData);
+    const { setLoading } = useLoading();
+    const { handleAlerts } = useAlerts();
     const dispatch = useDispatch();
     const [ selectedPlaylist, setSelectedPlaylist ] = useState(undefined);
 
@@ -14,10 +18,19 @@ function AddToPlaylist({song, close}) {
         setSelectedPlaylist(playlist)
     }
 
-    const handleAddToPlaylist = () => {
+    const handleAddToPlaylist = async () => {
+        setLoading({message: 'Adding song to playlist...'})
         const id = {songId: song.id}
-        dispatch(thunkAddToPlaylist(id, selectedPlaylist.id))
-        .then(() => close())
+        try {
+            const data = await dispatch(thunkAddToPlaylist(id, selectedPlaylist.id))
+            const message = data.message;
+            handleAlerts(message)
+            setLoading(undefined)
+        } catch(error) {
+            const message = await error.json()
+            handleAlerts(message)
+            setLoading(undefined)
+        }
     }
 
     return (

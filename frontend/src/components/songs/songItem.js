@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Modal from '../modal';
 import IconButton from '../button/iconButton';
+import { useLoading } from '../../context/loading';
+import { useAlerts } from '../../context/alerts';
 import { useSelector, useDispatch } from 'react-redux';
 import { thunkDeleteSong } from '../../store/songs';
 import { thunkGetArtist } from '../../store/artists';
@@ -17,6 +19,8 @@ function SongItem({song, isAuth, artist, playlist}) {
     const [ addingToPlaylist, setAddingToPlaylist ] = useState(false);
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const favoritesData = useSelector(state => state.favorites.songs);
+    const { setLoading } = useLoading();
+    const { handleAlerts } = useAlerts();
     const favorites = Object.values(favoritesData)
     const history = useHistory();
     const dispatch = useDispatch();
@@ -27,25 +31,62 @@ function SongItem({song, isAuth, artist, playlist}) {
         history.push(route);
     }
 
-    const deleteSong = () => {
-        dispatch(thunkDeleteSong(song))
-        .then(() => dispatch(thunkGetArtist(artist.id)))
+    const deleteSong = async () => {
+        setLoading({message: 'Deleting song...'})
+        try {
+            const message = await dispatch(thunkDeleteSong(song));
+            handleAlerts(message);
+            dispatch(thunkGetArtist(artist.id))
+        } catch (error) {
+            const message = await error.json();
+            handleAlerts(message)
+        } finally {
+            setLoading(undefined)
+        }
     }
 
-    const handleRemoveFromPlaylist = () => {
+    const handleRemoveFromPlaylist = async () => {
+        setLoading({message: 'Removing song from playlist...'})
         const id = {songId: song.id}
-        dispatch(thunkRemoveFromPlaylist(id, playlist))
-        .then(() => setIsVisible(false))
+        try {
+            const data = await dispatch(thunkRemoveFromPlaylist(id, playlist))
+            const message = data.message;
+            handleAlerts(message);
+        } catch(error) {
+            const message = error.json()
+            handleAlerts(message);
+        } finally {
+            setLoading(undefined)
+        }
     }
 
-    const handleAddFavorite = (id) => {
-        dispatch(thunkAddSongToFavorites({songId: id}))
-        .then(setIsVisible(false))
+    const handleAddFavorite = async (id) => {
+        setLoading({message: 'Adding song to favorites...'})
+        try {
+            const data = await dispatch(thunkAddSongToFavorites({songId: id}))
+            const message = data.message;
+            handleAlerts(message);
+            setIsVisible(false)
+        } catch(error) {
+            handleAlerts(error);
+        } finally {
+            setLoading(undefined)
+        }
     }
 
-    const handleRemoveFavorite = (id) => {
-        dispatch(thunkRemoveSongFromFavorites({songId: id}))
-        .then(setIsVisible(false))
+    const handleRemoveFavorite = async (id) => {
+        setLoading({message: 'Removing song from favorites...'})
+        try {
+            const data = await dispatch(thunkRemoveSongFromFavorites({songId: id}))
+            const message = data.message;
+            handleAlerts(message);
+            setIsVisible(false)
+        } catch(error) {
+            handleAlerts(error);
+        } finally {
+            setLoading(undefined)
+        }
+
     }
 
     return (
@@ -73,7 +114,7 @@ function SongItem({song, isAuth, artist, playlist}) {
                             {
                                 isAuth ?
                                 <>
-                                <span onClick={() => navigate(`/dashboard/artist/${artist.id}/songs/${song?.id}/update`)} className='hover_menu--option'>
+                                <span onClick={() => navigate(`/dashboard/artists/${artist.id}/songs/${song?.id}/update`)} className='hover_menu--option'>
                                     <span className='hover_menu--label'>Update Song</span>
                                     <span className='hover_menu--icon'><TbEdit/></span>
                                 </span>
@@ -153,7 +194,7 @@ function SongItem({song, isAuth, artist, playlist}) {
                     </Modal> :
                     null
                 }
-            <div className='song_item--artist' onClick={() => navigate(`/dashboard/artist/${artist.id}`)}>{artist.name}</div>
+            <div className='song_item--artist' onClick={() => navigate(`/dashboard/artists/${artist.id}`)}>{artist.name}</div>
             <div className='song_item--genre'>{song.Genre.name}</div>
             <div className='song_item--time'>0:00</div>
         </li>
