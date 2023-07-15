@@ -170,7 +170,7 @@ router.delete('/:playlistId', requireAuth, async(req, res) => {
 })
 
 // Route to add song to playlist
-router.post('/:playlistId', requireAuth, async(req, res) => {
+router.post('/:playlistId/add', requireAuth, async(req, res) => {
     const user = req.user;
     const { playlistId } = req.params;
     const { songId } = req.body;
@@ -235,7 +235,7 @@ router.post('/:playlistId', requireAuth, async(req, res) => {
 })
 
 // Route to remove a song from the playlist
-router.delete('/:playlistId', requireAuth, async(req, res) => {
+router.delete('/:playlistId/remove', requireAuth, async(req, res) => {
     const user = req.user;
     const { playlistId } = req.params;
     const { songId } = req.body;

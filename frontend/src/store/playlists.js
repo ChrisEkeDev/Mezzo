@@ -84,7 +84,7 @@ export const thunkCreatePlaylist = (playlistData) => async dispatch => {
 }
 
 export const thunkAddToPlaylist = (songId, playlistId) => async dispatch => {
-    const res = await csrfFetch(`/api/playlists/${playlistId}`, {
+    const res = await csrfFetch(`/api/playlists/${playlistId}/add`, {
         method: 'POST',
         body: JSON.stringify(songId)
     })
@@ -99,7 +99,7 @@ export const thunkAddToPlaylist = (songId, playlistId) => async dispatch => {
 }
 
 export const thunkRemoveFromPlaylist = (songId, playlistId) => async dispatch => {
-    const res = await csrfFetch(`/api/playlists/${playlistId}`, {
+    const res = await csrfFetch(`/api/playlists/${playlistId}/remove`, {
         method: 'DELETE',
         body: JSON.stringify(songId)
     })
