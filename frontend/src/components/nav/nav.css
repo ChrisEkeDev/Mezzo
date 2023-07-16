@@ -2,13 +2,16 @@
 
 #nav--wrapper {
     border-bottom: 1px solid var(--border);
-    padding: 15px;
+    padding: 10px 15px;
     display: flex;
     justify-content: space-between;
 }
 
 .nav_user--wrapper {
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .nav_user--icon {
@@ -57,4 +60,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.now_playing_controls--wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 30px;
 }

@@ -8,6 +8,7 @@ const GET_SONG = '/mezzo/songs/GET_SONG'
 const CREATE_SONG = '/mezzo/songs/CREATE_SONG'
 const UPDATE_SONG = '/mezzo/songs/UPDATE_SONG'
 const DELETE_SONG = '/mezzo/songs/DELETE_SONG'
+const SET_NOW_PLAYING = '/mezzo/songs/SET_NOW_PLAYING'
 
 // ACTIONS
 const actionGetAllSongs = (songs) => ({
@@ -45,6 +46,11 @@ const actionDeleteSong = (song) => ({
     payload: song
 })
 
+const actionSetNowPlaying =(song) => ({
+    type: SET_NOW_PLAYING,
+    payload: song
+})
+
 // THUNKS
 export const thunkGetAllSongs = () => async dispatch => {
     const res = await csrfFetch(`/api/songs`)
@@ -68,16 +74,16 @@ export const thunkGetUserSongs = () => async dispatch => {
     }
 }
 
-export const thunkGetGenreSongs = (genre) => async dispatch => {
-    const res = await csrfFetch(`/api/songs/${genre}`)
-    if (res.ok) {
-        const data = await res.json();
-        dispatch(actionGetGenreSongs(data.Songs))
-    } else {
-        const errors = await res.json();
-        return errors
-    }
-}
+// export const thunkGetGenreSongs = (genre) => async dispatch => {
+//     const res = await csrfFetch(`/api/songs/${genre}`)
+//     if (res.ok) {
+//         const data = await res.json();
+//         dispatch(actionGetGenreSongs(data.Songs))
+//     } else {
+//         const errors = await res.json();
+//         return errors
+//     }
+// }
 
 export const thunkGetSong = (id) => async dispatch => {
     const res = await csrfFetch(`/api/songs/${id}`)
@@ -134,8 +140,12 @@ export const thunkDeleteSong = (song) => async dispatch => {
     }
 }
 
+export const thunkSetNowPlaying = (song =>async dispatch => {
+    dispatch(actionSetNowPlaying(song))
+})
+
 // REDUCER
-const initialState = { all: {}, user: {} }
+const initialState = { all: {}, user: {}, current: {}, nowPlaying: {} }
 
 const songsReducer = (state = initialState, action) => {
     switch(action.type) {
@@ -150,7 +160,7 @@ const songsReducer = (state = initialState, action) => {
             return newState;
         }
         case GET_SONG: {
-            const newState = { ...state };
+            const newState = { ...state, current: {} };
             newState.current = action.payload
             return newState;
         }
@@ -158,6 +168,11 @@ const songsReducer = (state = initialState, action) => {
             const newState = { ...state };
             newState.current = action.payload
             newState.all = { ...newState.all, [action.payload.id]: action.payload }
+            return newState;
+        }
+        case SET_NOW_PLAYING: {
+            const newState = { ...state, nowPlaying: {}}
+            newState.nowPlaying = action.payload;
             return newState;
         }
         case CREATE_SONG: {

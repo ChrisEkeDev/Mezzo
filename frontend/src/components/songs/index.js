@@ -7,11 +7,11 @@ import SongItem from './songItem';
 
 function Songs() {
     const [ loading, setLoading ] = useState(true)
-    const user = useSelector(state => state.session.user)
+    const user = useSelector(state => state.session.user);
+    const playlists = useSelector(state => state.session.playlists)
     const data = useSelector(state => state.songs.all)
     const songs = Object.values(data);
     const dispatch = useDispatch()
-
 
     useEffect(() => {
         dispatch(thunkGetAllSongs())

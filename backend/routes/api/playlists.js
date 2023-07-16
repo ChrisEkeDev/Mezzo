@@ -13,7 +13,12 @@ router.get('/', requireAuth, async (req, res) => {
     const playlists = await Playlist.findAll({
         where: {
             userId: user.id
-        }
+        },
+        include: [
+            {
+                model: PlaylistSong
+            }
+        ]
     })
 
     return res.status(200).json({
@@ -36,6 +41,9 @@ router.get('/:playlistId', requireAuth, async(req, res) => {
                     },
                     {
                         model: Genre
+                    },
+                    {
+                        model: PlaylistSong
                     }
                 ]
             }

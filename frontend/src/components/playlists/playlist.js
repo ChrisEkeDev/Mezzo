@@ -40,7 +40,8 @@ function Playlist() {
             handleAlerts(message);
             navigate('/dashboard/playlists')
         } catch(error) {
-            const message = error.json()
+            let message;
+            if (error.json()) message = await error.json()
             handleAlerts(message);
         } finally {
             setLoading(undefined)
@@ -164,7 +165,7 @@ function Playlist() {
                 <ul className='songs--list'>
                     {   playlist.Songs?.length ?
                         playlist.Songs?.map(song => (
-                            <SongItem playlist={playlist.id} key={song.id}  artist={song.Artist} isAuth={user.id === song.Artist.userId} song={song} />
+                            <SongItem onPlaylistPage={playlist.id} key={song.id}  artist={song.Artist} isAuth={user.id === song.Artist.userId} song={song} />
                         )) :
                         null
                     }

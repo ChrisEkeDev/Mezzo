@@ -56,6 +56,9 @@
 .confirm--list {
     height: 400px;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     padding: 10px 0;
     margin: 0;
 }
@@ -82,4 +85,10 @@
 
 .selected:hover {
     background-color: var(--orange-hover);
+}
+
+.confirm--icon {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
 }

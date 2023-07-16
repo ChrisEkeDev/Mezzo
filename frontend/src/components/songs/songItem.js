@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Modal from '../modal';
 import IconButton from '../button/iconButton';
@@ -7,28 +7,52 @@ import { useAlerts } from '../../context/alerts';
 import { useSelector, useDispatch } from 'react-redux';
 import { thunkDeleteSong } from '../../store/songs';
 import { thunkGetArtist } from '../../store/artists';
+import { thunkGetSong } from '../../store/songs';
+import { thunkSetNowPlaying } from '../../store/songs';
+import { useNowPlaying } from '../../context/nowPlaying';
 import { thunkAddSongToFavorites, thunkRemoveSongFromFavorites } from '../../store/favorites';
 import AddToPlaylist from '../addToPlaylist';
 import { thunkRemoveFromPlaylist } from '../../store/playlists';
 import Button from '../button';
-import { TbPlayerPlayFilled, TbDots, TbEdit, TbTrash, TbX, TbHeartPlus,TbHeartMinus, TbPlaylistX,  TbPlaylistAdd, TbHeartFilled } from 'react-icons/tb';
+import { TbPlayerPlayFilled,TbPlayerPauseFilled, TbDots, TbEdit, TbTrash, TbX, TbHeartPlus,TbHeartMinus, TbPlaylistX, TbPlayerPlay,  TbPlaylistAdd, TbHeartFilled } from 'react-icons/tb';
 import useOutsideClick from '../../hooks/useOutsideClick';
 
-function SongItem({song, isAuth, artist, playlist}) {
+function SongItem({song, isAuth, artist, onPlaylistPage}) {
     const [ deletingSong, setDeletingSong ] = useState(false);
     const [ addingToPlaylist, setAddingToPlaylist ] = useState(false);
     const { ref, isVisible, setIsVisible } = useOutsideClick();
+    const playlist = useSelector(state => state.playlists.current)
     const favoritesData = useSelector(state => state.favorites.songs);
+    const nowPlaying = useSelector(state => state.songs.nowPlaying)
     const { setLoading } = useLoading();
+    const currentSong = useSelector(state => state.songs.current)
     const { handleAlerts } = useAlerts();
     const favorites = Object.values(favoritesData)
     const history = useHistory();
     const dispatch = useDispatch();
+    const { playerState, setPlayerState } = useNowPlaying();
 
     const isFavorited = favorites.some(favorite => favorite.songId === song.id);
 
     const navigate = (route) => {
         history.push(route);
+    }
+
+    const handlePlayState = (state) => {
+        setPlayerState(state)
+        setIsVisible(false)
+    }
+
+
+
+    const handleSelectSong = (songId) => {
+        dispatch(thunkGetSong(songId))
+    }
+
+    const handlePlaySong = (song) => {
+        dispatch(thunkSetNowPlaying(song))
+        .then(() => setPlayerState('play'))
+        .then(() => setIsVisible(false))
     }
 
     const deleteSong = async () => {
@@ -49,7 +73,7 @@ function SongItem({song, isAuth, artist, playlist}) {
         setLoading({message: 'Removing song from playlist...'})
         const id = {songId: song.id}
         try {
-            const data = await dispatch(thunkRemoveFromPlaylist(id, playlist))
+            const data = await dispatch(thunkRemoveFromPlaylist(id, playlist.id))
             const message = data.message;
             handleAlerts(message);
         } catch(error) {
@@ -89,19 +113,45 @@ function SongItem({song, isAuth, artist, playlist}) {
 
     }
 
-    return (
-        <li className='song_item--wrapper song--grid'>
-            <div className='song_item--name'>
-                <div className='song_item--image' style={{backgroundImage: `url(${artist.image})`}}>
+    if (song.id === currentSong) {
+        console.Console('match')
+    }
 
+    // useEffect(() => {
+    //     console.log(currentSong)
+    // }, [currentSong])
+
+    return (
+        <li id={`${song.id === currentSong?.id ? 'selectedSong' : ''}`}onClick={() => handleSelectSong(song.id) } className={`song_item--wrapper song--grid`}>
+            <div className='song_item--name'>
+                <div onClick={() => handlePlaySong(song)} className='song_item--image' style={{backgroundImage: `url(${artist.image})`}}>
+                    <span className='song_item--image--overlay'>
+                        <TbPlayerPlayFilled/>
+                    </span>
                 </div>
                 <span>{song.name}</span>
                 { isFavorited ? <span className='song_item--favorite'><TbHeartFilled/></span> : null }
                 <span onClick={() => setIsVisible(true)} className='song_item--icon'><TbDots/></span>
                 {   isVisible ?
                         <div ref={ref} className='hover_menu--wrapper'>
+                                {nowPlaying.id === song.id ?
+                                playerState === 'pause' || playerState === "stop" ?
+                                <span onClick={() => handlePlayState('play')} className='hover_menu--option'>
+                                    <span className='hover_menu--label'>Play Now</span>
+                                    <span className='hover_menu--icon'><TbPlayerPlay/></span>
+                                </span> :
+                                <span onClick={() => handlePlayState('pause')} className='hover_menu--option'>
+                                    <span className='hover_menu--label'>Pause Song</span>
+                                    <span className='hover_menu--icon'><TbPlayerPauseFilled/></span>
+                                </span>:
+                                <span onClick={() => handlePlaySong(song)} className='hover_menu--option'>
+                                    <span className='hover_menu--label'>Play Now</span>
+                                    <span className='hover_menu--icon'><TbPlayerPlay/></span>
+                                </span>
+                                }
+
                             {
-                                playlist ?
+                                onPlaylistPage ?
                                 <span onClick={handleRemoveFromPlaylist} className='hover_menu--option'>
                                     <span className='hover_menu--label'>Remove from Playlist</span>
                                     <span className='hover_menu--icon'><TbPlaylistX/></span>
@@ -141,7 +191,6 @@ function SongItem({song, isAuth, artist, playlist}) {
                                     <span className='hover_menu--label'>Close</span>
                                     <span className='hover_menu--icon'><TbX/></span>
                                 </span>
-
                         </div> :
                         null
                     }

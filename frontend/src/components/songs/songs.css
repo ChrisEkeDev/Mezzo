@@ -66,6 +66,10 @@
 
 }
 
+.song_item--image:hover .song_item--image--overlay {
+    opacity: 1;
+}
+
 .song_item--icon {
     position: absolute;
     font-size: 20px;
@@ -116,4 +120,25 @@
 
 .song_item--wrapper:hover {
     background-color: var(--white-hover);
+}
+
+#selectedSong {
+    background-color: rgba(255, 122, 0, .15);
+}
+
+#selectedSong:hover {
+    background-color: rgba(255, 122, 0, .30);
+}
+
+.song_item--image--overlay {
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    height: 100%;
+    width: 100;
+    background-color: rgba(0,0,0,.50);
+    color: white;
+    font-size: 25px;
 }

@@ -6,6 +6,7 @@ import Auth from './components/auth';
 import Dashboard from './components/dashboard';
 import { thunkRestoreUser } from './store/session';
 import { thunkGetPlaylists } from './store/playlists';
+import NowPlayingProvider from './context/nowPlaying';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,7 +34,9 @@ function App() {
           <Auth/>
         </Route>
         <Route path="/dashboard">
-          <Dashboard/>
+          <NowPlayingProvider>
+            <Dashboard/>
+          </NowPlayingProvider>
         </Route>
       </Switch>
     </div>

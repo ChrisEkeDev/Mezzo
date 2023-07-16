@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLoading } from '../../context/loading';
 import { useAlerts } from '../../context/alerts';
 import { thunkAddToPlaylist } from '../../store/playlists';
 import Button from '../button';
-import { TbPlaylistAdd } from 'react-icons/tb';
+import { TbCircleCheck, TbPlaylistAdd } from 'react-icons/tb';
 
-function AddToPlaylist({song, close}) {
+function AddToPlaylist({song, close, playlist}) {
     const playlistData = useSelector(state => state.playlists.all)
     const playlists = Object.values(playlistData);
     const { setLoading } = useLoading();
@@ -25,13 +25,16 @@ function AddToPlaylist({song, close}) {
             const data = await dispatch(thunkAddToPlaylist(id, selectedPlaylist.id))
             const message = data.message;
             handleAlerts(message)
-            setLoading(undefined)
+            close();
         } catch(error) {
             const message = await error.json()
             handleAlerts(message)
+        } finally {
             setLoading(undefined)
         }
     }
+
+    console.log(playlists[0].PlaylistSongs[0])
 
     return (
         <>
@@ -40,7 +43,18 @@ function AddToPlaylist({song, close}) {
                 {
                     playlists?.map(playlist => {
                         return (
-                            <li key={playlist.id} className={`confirm--item ${selectedPlaylist?.id === playlist.id ? 'selected' : null}`} onClick={() => handleSelectPlaylist(playlist)}>{playlist.name}</li>
+                            <li
+                                key={playlist.id}
+                                // isInPlaylist={playlists.find(isInPlaylist)}
+                                className={`confirm--item ${selectedPlaylist?.id === playlist.id ? 'selected' : null}`}
+                                onClick={() => handleSelectPlaylist(playlist)}>
+                                    <span>{playlist.name}</span>
+                                    {
+                                        playlist?.PlaylistSongs?.filter(pls => pls.songId === song.id).length ?
+                                        <span className='confirm--icon'><TbCircleCheck/></span> :
+                                        null
+                                    }
+                            </li>
                         )
                     })
                 }
