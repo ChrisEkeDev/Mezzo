@@ -5,11 +5,35 @@ const { check } = require('express-validator');
 const { Op } = require('sequelize');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
+const AWS = require('aws-sdk');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const bodyParser = require('body-parser');
+const s3 = new AWS.S3();
+
+AWS.config.update({
+    region: process.env.AWS_S3_REGION,
+})
+
+router.use(bodyParser.json())
+
+const upload = multer({
+    storage: multerS3({
+        s3: s3,
+        acl: 'public-read',
+        bucket: 'mezzo-bucket',
+        key: function (req, file, cb) {
+            console.log(file);
+            cb(null, file.originalname); //use Date.now() for unique file keys
+        }
+    })
+})
+
 
 // Route for getting all songs
 router.get('/', requireAuth, async(req, res) => {
     const songs = await Song.findAll({
-        attributes: ["name", "id", "file", "genreId"],
+        attributes: ["name", "id", "song", "genreId"],
         include: [
             {
                 model: Artist,
@@ -42,7 +66,7 @@ router.get('/current', requireAuth, async(req, res) => {
         where: {
             artistId: ids
         },
-        attributes: ["name", "id", "file", "genreId"],
+        attributes: ["name", "id", "song", "genreId"],
         include: [
             {
                 model: Artist,
@@ -64,7 +88,7 @@ router.get('/current', requireAuth, async(req, res) => {
 router.get('/:songId', requireAuth, async(req, res) => {
     const { songId } = req.params;
     const song = await Song.findByPk(songId, {
-        attributes: ['name', 'id', 'description'],
+        attributes: ["name", "id", "song", "genreId", "description"],
         include: [
             {
                 model: Artist
@@ -126,27 +150,21 @@ router.get('/:songId', requireAuth, async(req, res) => {
 // })
 
 // Validate creating song
-const validateCreateSong = [
-    check("name").exists({checkFalsy: true}).withMessage('Please enter a name for the song.'),
-    check("description").isLength({max: 500}).withMessage('Description can\'t be over 500 characters.'),
-    check("file").exists({checkFalsy: true}).withMessage('Please provide a file for the song.'),
-    check("genreId").exists({checkFalsy: true}).withMessage('Please select a genre for the song.'),
-    check("artistId").exists({checkFalsy: true}).withMessage('The song must belong to an artist.'),
-    handleValidationErrors
-]
 
 // Route for creating a song
-router.post('/', requireAuth, validateCreateSong, async(req, res) => {
-    const { name, description, file, genreId, artistId } = req.body;
+router.post('/', requireAuth, upload.single('song'), async(req, res) => {
+    const { name, description, genreId, artistId } = req.body;
+    const song = req.file;
+
     const newSong = await Song.create({
         name,
         description,
-        file,
+        song: song.location,
         genreId,
         artistId
     })
 
-    const song = await Song.findByPk(newSong.id, {
+    const theSong = await Song.findByPk(newSong.id, {
         include: [
             {
                 model: Artist,
@@ -161,42 +179,50 @@ router.post('/', requireAuth, validateCreateSong, async(req, res) => {
 
     return res.status(200).json({
         message: { message: 'Song was created successfully.'},
-        Song: song
+        Song: theSong
     })
 })
 
-const validateUpdateSong = [
-    check("name").optional().exists({checkFalsy: true}).withMessage('Please enter a name for the song.'),
-    check("description").optional().isLength({max: 500}).withMessage('Description can\'t be over 500 characters.'),
-    check("file").optional().exists({checkFalsy: true}).withMessage('Please provide a file for the song.'),
-    check("genreId").optional().exists({checkFalsy: true}).withMessage('Please select a genre for the song.'),
-    handleValidationErrors
-]
 
 // Route for updating a song
-router.put('/:songId', requireAuth, validateUpdateSong, async(req, res) => {
+router.put('/:songId', requireAuth, upload.single('song'), async(req, res) => {
     const user = req.user;
     const { songId } = req.params;
-    const { name, description, file, genreId, artistId } = req.body;
+    const { name, description, genreId } = req.body;
+    const song = req.file
 
-    const artist = await Artist.findByPk(artistId)
-    const song = await Song.findByPk(songId)
+    const thisSong = await Song.findByPk(songId)
+    const artist = await Artist.findByPk(thisSong.artistId)
 
-    if (!song) {
+    if (!thisSong) {
         return res.status(404).json({
             message: "Song couldn't be found."
         })
     }
 
     if (user.id === artist.userId) {
-        await song.set({
-            name: name ? name : song.name,
-            description: description ? description : song.description,
-            file: file ? file : song.file,
-            genreId: genreId ? genreId : song.genreId
+        if (song) {
+            const songKey = thisSong.song.split('/');
+            const songKeyUnencoded = songKey[songKey.length - 1];
+            const key = decodeURI(songKeyUnencoded)
+            const params = {
+                Bucket: "mezzo-bucket",
+                Key: key
+            }
+            s3.deleteObject(params, (err, data) => {
+                if (err) {
+                    console.log({error: err, message: "There was an issue deleting the old song.", data})
+                }
+            })
+        }
+        await thisSong.set({
+            name,
+            description,
+            song: song ? song.location : thisSong.song,
+            genreId
         })
 
-        await song.save()
+        await thisSong.save()
 
         const updatedSong = await Song.findByPk(songId, {
             include: [
@@ -236,6 +262,18 @@ router.delete('/:songId', requireAuth, async(req, res) => {
     }
 
     if (user.id === artist.userId) {
+        const songKey = song.song.split('/');
+        const songKeyUnencoded = songKey[songKey.length - 1];
+        const key = decodeURI(songKeyUnencoded)
+        const params = {
+            Bucket: "mezzo-bucket",
+            Key: key
+        }
+        s3.deleteObject(params, (err, data) => {
+            if (err) {
+                console.log({error: err, message: "There was an issue deleting the old song.", data})
+            }
+        })
         await song.destroy();
         return res.status(200).json({
             message: 'Song was deleted successfully.'

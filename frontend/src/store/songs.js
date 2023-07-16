@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import Cookies from 'js-cookie';
 
 // TYPES
 const GET_ALL_SONGS = '/mezzo/songs/GET_ALL_SONGS'
@@ -97,14 +98,14 @@ export const thunkGetSong = (id) => async dispatch => {
 }
 
 export const thunkCreateSong = (songData) => async dispatch => {
-    const res = await csrfFetch(`/api/songs`, {
+    const res = await fetch(`/api/songs`, {
         method: 'POST',
-        body: JSON.stringify(songData)
+        headers: {"XSRF-TOKEN": Cookies.get('XSRF-TOKEN')},
+        body: songData
     })
     if (res.ok) {
         const data = await res.json();
         dispatch(actionCreateSong(data.Song))
-        return data
     } else {
         const errors = await res.json();
         return errors
@@ -112,9 +113,10 @@ export const thunkCreateSong = (songData) => async dispatch => {
 }
 
 export const thunkUpdateSong = (id, songData) => async dispatch => {
-    const res = await csrfFetch(`/api/songs/${id}`, {
+    const res = await fetch(`/api/songs/${id}`, {
         method: 'PUT',
-        body: JSON.stringify(songData)
+        headers: {"XSRF-TOKEN": Cookies.get('XSRF-TOKEN')},
+        body: songData
     })
     if (res.ok) {
         const data = await res.json();

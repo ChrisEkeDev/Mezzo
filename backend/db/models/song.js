@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
         max: 500
       }
     },
-    file: {
+    song: {
       type: DataTypes.STRING,
       allowNull: false,
     },

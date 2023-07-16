@@ -238,7 +238,7 @@ function SongItem({song, isAuth, artist, onPlaylistPage}) {
                                     action={() => setAddingToPlaylist(false)}
                                 />
                             </div>
-                            <AddToPlaylist song={song} close={() => setAddingToPlaylist(false)}/>
+                            <AddToPlaylist playlist={playlist} song={song} close={() => setAddingToPlaylist(false)}/>
                         </div>
                     </Modal> :
                     null

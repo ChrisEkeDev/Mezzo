@@ -12,7 +12,7 @@ import Button from '../button';
 function NewSong() {
     const [ name, setName ] = useState('');
     const [ description, setDescription ] = useState('');
-    const [ file, setFile ] = useState('');
+    const [ song, setSong ] = useState(undefined);
     const [ genre, setGenre] = useState(0)
     const [ errors, setErrors ] = useState({})
     const { setLoading } = useLoading();
@@ -21,10 +21,13 @@ function NewSong() {
     const dispatch = useDispatch();
     const artist = useSelector(state => state.artists.current);
 
-    console.log(artist)
-
     const navigate = (route) => {
         history.push(route);
+    }
+
+    const handleSong = (x) => {
+        setSong(x.target.files[0])
+        console.log(song)
     }
 
     const createSong = async (e) => {
@@ -34,21 +37,27 @@ function NewSong() {
             const songData = {
                 name,
                 description: description ? description : null,
-                file,
+                song,
                 genreId: parseInt(genre),
                 artistId: artist.id
             }
-            const data = await dispatch(thunkCreateSong(songData))
-            const message = data.message;
-            const updatedArtist = data.Song.Artist;
+            const formData = new FormData()
+            formData.append("name", songData.name)
+            formData.append("bio", songData.description)
+            formData.append("song", songData.song)
+            formData.append("genreId", songData.genreId)
+            formData.append("artistId", songData.artistId)
+            const data = await dispatch(thunkCreateSong(formData))
+            const message = {message: "Song created successfully."};
             handleAlerts(message);
-            navigate(`/dashboard/artists/${updatedArtist?.id}`)
+            navigate(`/dashboard/artists/${artist?.id}`)
         } catch(error) {
-            let errors;
-            if (errors.json()) errors = await error.json()
-            else console.log(errors);
-            if (errors.errors) setErrors(errors.errors)
-            handleAlerts({message: 'There was an error while submitting your request.'})
+            console.log(error)
+            // let errors;
+            // if (errors.json()) errors = await error.json()
+            // else console.log(errors);
+            // if (errors.errors) setErrors(errors.errors)
+            // handleAlerts({message: 'There was an error while submitting your request.'})
         } finally {
             setLoading(undefined);
         }
@@ -62,20 +71,21 @@ function NewSong() {
         if (description.trim().length > 500) {
           errors.description = 'Song Description must be less than 500 characters';
         }
-        if (file === '') {
-            errors.file = 'Please add a file for the song';
-        }
         if (!genre) {
             errors.genre = 'Please add a genre for the song';
         }
+        const validFileTypes = ['audio/mp3', 'audio/wav', 'audio/ogg', 'audio/mpeg']
+        if (!song || !validFileTypes.find(type => type === song.type)) {
+            errors.song = "Please select a valid file type (mp3, wav, ogg)"
+        }
         setErrors(errors)
-    }, [name, description, file, genre])
+    }, [name, description, song, genre])
 
 
     return (
         <div className='new_artist--wrapper'>
             <h1 className='new_artist--title'>Create New Song</h1>
-            <form className='new_artist--form' onSubmit={createSong}>
+            <form encType='multipart/form-data' className='new_artist--form' onSubmit={createSong}>
             <Input
                 name='artist'
                 label='Artist Name'
@@ -104,13 +114,8 @@ function NewSong() {
                 setValue={setGenre}
                 error={errors.genre}
             />
-            <Input
-                name='file'
-                label='Song File'
-                value={file}
-                setValue={setFile}
-                error={errors.file}
-            />
+            <input onChange={(x) => handleSong(x)} type='file' name='song' id='song' accept="audio/*"/>
+            {errors.song  && <span>{errors.song}</span>}
             <div className='new_artist--action'>
                 <Button
                 label='Create Song'

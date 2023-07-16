@@ -14,7 +14,7 @@ import '../newArtist/newArtist.css';
 function UpdateArtist({artist}) {
     const [ name, setName ] = useState(artist.name);
     const [ bio, setBio ] = useState(artist.bio);
-    const [ image, setImage ] = useState(artist.image);
+    const [ image, setImage ] = useState(undefined);
     const [ errors, setErrors ] = useState({})
     const { setLoading } = useLoading();
     const { handleAlerts } = useAlerts();
@@ -23,6 +23,10 @@ function UpdateArtist({artist}) {
 
     const navigate = (route) => {
         history.push(route);
+    }
+
+    const handleImage = (x) => {
+        setImage(x.target.files[0])
     }
 
     const updateArtist = async (e) => {
@@ -34,7 +38,11 @@ function UpdateArtist({artist}) {
                 bio: bio === artist.bio ? artist.bio : bio === "" ? null : bio,
                 image: image === artist.image ? artist.image : image === "" ? null : image,
             }
-            const data = await dispatch(thunkUpdateArtist(artist.id, artistData))
+            const formData = new FormData()
+            formData.append("name", artistData.name)
+            formData.append("bio", artistData.bio)
+            formData.append("image", artistData.image)
+            const data = await dispatch(thunkUpdateArtist(artist.id, formData))
             const message = data.message;
             const updatedArtist = data.Artist;
             handleAlerts(message);
@@ -58,13 +66,17 @@ function UpdateArtist({artist}) {
         if (bio && bio.trim().length > 500) {
           errors.bio = 'Artist Bio must be less than 500 characters';
         }
+        const validFileTypes = ['image/jpg', 'image/jpeg', 'image/png']
+        if (image && !validFileTypes.find(type => type === image.type)) {
+            errors.image = "Please select a valid file type (png, jpg)"
+        }
         setErrors(errors)
     }, [name, bio, image])
 
     return (
         <div className='new_artist--wrapper'>
             <h1 className='new_artist--title'>Update Artist</h1>
-            <form className='new_artist--form' onSubmit={updateArtist}>
+            <form encType='multipart/form-data'  className='new_artist--form' onSubmit={updateArtist}>
             <Input
                 name='name'
                 label='Artist Name'
@@ -80,13 +92,7 @@ function UpdateArtist({artist}) {
                 setValue={setBio}
                 error={errors.bio}
             />
-            <Input
-                name='image'
-                label='Artist Image URL'
-                value={image}
-                setValue={setImage}
-                error={errors.image}
-            />
+            <input onChange={(x) => handleImage(x)} type='file' name='image' id='image' accept='image/*'/>
             <div className='new_artist--action'>
                 <Button
                 label='Update Artist'

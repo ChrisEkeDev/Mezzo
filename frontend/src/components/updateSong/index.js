@@ -16,7 +16,7 @@ import '../newSong/newSong.css';
 function UpdateSong({song}) {
     const [ name, setName ] = useState(song.name);
     const [ description, setDescription ] = useState(song.description);
-    const [ file, setFile ] = useState(song.file);
+    const [ songUrl, setSongUrl ] = useState(undefined);
     const [ genre, setGenre] = useState(song.genreId)
     const [ errors, setErrors ] = useState({})
     const { setLoading } = useLoading();
@@ -29,28 +29,33 @@ function UpdateSong({song}) {
         history.push(route);
     }
 
+    const handleSong = (x) => {
+        setSongUrl(x.target.files[0])
+        console.log(songUrl)
+    }
+
     const updateSong = async (e) => {
         e.preventDefault();
         setLoading({message: 'Updating your song...'});
         try {
-            const songData = {
-                name: name === song.name ? song.name : name,
-                description: description === song.description ? song.description : description === "" ? null : description,
-                file: file === song.file ? song.file : file,
-                genreId: parseInt(genre),
-                artistId: artist.id
+            const formData = new FormData()
+            formData.append("name", name)
+            formData.append("description", description)
+            formData.append("genreId", parseInt(genre))
+            if (songUrl) {
+                formData.append("song", songUrl)
             }
-            const data = await dispatch(thunkUpdateSong(song.id, songData))
-            const message = data.message;
-            const updatedArtist = data.Song.Artist
+            const data = await dispatch(thunkUpdateSong(song.id, formData))
+            const message = {message: "Song updated successfully."};
             handleAlerts(message);
-            navigate(`/dashboard/artists/${updatedArtist?.id}`)
+            navigate(`/dashboard/artists/${artist?.id}`)
         } catch(error) {
-            let errors;
-            if (errors.json()) errors = await error.json()
-            else console.log(errors);
-            if (errors.errors) setErrors(errors.errors)
-            handleAlerts({message: 'There was an error while submitting your request.'})
+            console.log(error)
+            // let errors;
+            // if (errors.json()) errors = await error.json()
+            // else console.log(errors);
+            // if (errors.errors) setErrors(errors.errors)
+            // handleAlerts({message: 'There was an error while submitting your request.'})
         } finally {
             setLoading(undefined);
         }
@@ -64,20 +69,21 @@ function UpdateSong({song}) {
         if (description && description.trim().length > 500) {
           errors.description = 'Song Description must be less than 500 characters';
         }
-        if (file === '') {
-            errors.file = 'Please add a file for the song';
-        }
         if (!genre) {
             errors.genre = 'Please add a genre for the song';
         }
+        const validFileTypes = ['audio/mp3', 'audio/wav', 'audio/ogg', 'audio/mpeg']
+        if (songUrl && !validFileTypes.find(type => type === songUrl.type)) {
+            errors.songUrl = "Please select a valid file type (mp3, wav, ogg)"
+        }
         setErrors(errors)
-    }, [name, description, file, genre])
+    }, [name, description, songUrl, genre])
 
 
     return (
         <div className='new_artist--wrapper'>
             <h1 className='new_artist--title'>Update Song</h1>
-            <form className='new_artist--form' onSubmit={updateSong}>
+            <form encType='multipart/form-data' className='new_artist--form' onSubmit={updateSong}>
             <Input
                 name='artist'
                 label='Artist Name'
@@ -106,13 +112,8 @@ function UpdateSong({song}) {
                 setValue={setGenre}
                 error={errors.genre}
             />
-            <Input
-                name='file'
-                label='Song File'
-                value={file}
-                setValue={setFile}
-                error={errors.file}
-            />
+            <input onChange={(x) => handleSong(x)} type='file' name='song' id='song' accept="audio/*"/>
+            {errors.songUrl  && <span>{errors.songUrl}</span>}
             <div className='new_artist--action'>
                 <Button
                 label='Update Song'

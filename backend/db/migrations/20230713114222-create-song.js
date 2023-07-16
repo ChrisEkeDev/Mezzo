@@ -24,7 +24,7 @@ module.exports = {
         allowNull: true,
         defaultValue: null
       },
-      file: {
+      song: {
         type: Sequelize.STRING,
         allowNull: false,
       },

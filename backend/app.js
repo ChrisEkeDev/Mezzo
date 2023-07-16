@@ -4,13 +4,14 @@ const morgan = require('morgan');
 const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
+const fileUpload = require("express-fileupload");
 const cookieParser = require('cookie-parser');
 const { ValidationError } = require('sequelize');
 const { environment } = require('./config');
 const isProduction = environment === 'production';
 
 const app = express();
-
+// app.use(fileUpload());
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
@@ -23,7 +24,6 @@ app.use(csurf({cookie: {
       }}));
 
 const routes = require('./routes');
-
 app.use(routes);
 
 app.use((_req, _res, next) => {

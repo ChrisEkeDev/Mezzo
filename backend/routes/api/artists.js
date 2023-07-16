@@ -2,8 +2,31 @@ const express = require('express');
 const { requireAuth } = require('../../utils/auth');
 const { Artist, User, Song, Genre } = require('../../db/models')
 const { check } = require('express-validator');
+const AWS = require('aws-sdk');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const bodyParser = require('body-parser');
+const s3 = new AWS.S3();
+
+AWS.config.update({
+    region: process.env.AWS_S3_REGION,
+})
+
+router.use(bodyParser.json())
+
+const upload = multer({
+    storage: multerS3({
+        s3: s3,
+        acl: 'public-read',
+        bucket: 'mezzo-bucket',
+        key: function (req, file, cb) {
+            console.log(file);
+            cb(null, file.originalname); //use Date.now() for unique file keys
+        }
+    })
+})
 
 // Route for getting all artists
 router.get('/', requireAuth, async(req, res) => {
@@ -38,7 +61,7 @@ router.get('/:artistId', requireAuth, async(req, res) => {
             },
             {
                 model: Song,
-                attributes: ["name", "id", "file", "genreId"],
+                attributes: ["name", "id", "song", "genreId"],
                 include: [
                     {
                         model: Genre,
@@ -63,23 +86,16 @@ router.get('/:artistId', requireAuth, async(req, res) => {
     })
 })
 
-// Validate creating artist
-const validateCreateArtist = [
-    check('name').exists({checkFalsy: true}).withMessage('Please enter a name for the artist.'),
-    check('name').isLength({min: 1, max: 30}).withMessage('Name must between 1 and 30 characters.'),
-    check('bio').isLength({max: 500}).withMessage('Bio can\'t be over 500 characters.'),
-    handleValidationErrors
-]
-
 // Route for creating an artist
-router.post('/', requireAuth, validateCreateArtist, async(req, res) => {
+router.post('/', requireAuth, upload.single('image'), async(req, res) => {
     const user = req.user;
-    const { name, bio, image } = req.body;
+    const { name, bio } = req.body;
+    const image = req.file;
     const newArtist = await Artist.create({
         userId: user.id,
         name,
         bio,
-        image: image ? image : null
+        image: image ? image.location : null
     })
 
     const artist = await Artist.findByPk(newArtist.id)
@@ -90,19 +106,13 @@ router.post('/', requireAuth, validateCreateArtist, async(req, res) => {
     })
 })
 
-// Validate Update artist
-const validateUpdateArtist = [
-    check('name').optional().exists({checkFalsy: true}).withMessage('Please enter a name for the artist.'),
-    check('name').optional().isLength({min: 1, max: 30}).withMessage('Name must between 1 and 30 characters.'),
-    check('bio').optional().isLength({max: 500}).withMessage('Bio can\'t be over 500 characters.'),
-    handleValidationErrors
-]
 
 // Route for updating artist
-router.put('/:artistId', requireAuth, validateUpdateArtist, async(req, res) => {
+router.put('/:artistId', requireAuth,  upload.single('image'), async(req, res) => {
     const user = req.user;
     const { artistId } = req.params;
-    const { name, bio, image } = req.body;
+    const { name, bio } = req.body;
+    const image = req.file;
 
     const artist = await Artist.findByPk(artistId)
 
@@ -113,10 +123,23 @@ router.put('/:artistId', requireAuth, validateUpdateArtist, async(req, res) => {
     }
 
     if (user.id === artist.userId) {
+        const imageKey = artist.image.split('/');
+        const imageKeyUnencoded = imageKey[imageKey.length - 1];
+        const key = decodeURI(imageKeyUnencoded)
+        const params = {
+            Bucket: "mezzo-bucket",
+            Key: key
+        }
+        s3.deleteObject(params, (err, data) => {
+            if (err) {
+                console.log({error: err, message: "There was an issue deleting the old image.", data})
+            }
+        })
+
         await artist.set({
             name: name ? name : artist.name,
             bio: bio ? bio : artist.bio,
-            image: image ? image : artist.image
+            image: image ? image.location : artist.image
         })
 
         await artist.save()
@@ -154,10 +177,23 @@ router.delete('/:artistId', requireAuth, async(req, res) => {
     }
 
     if (user.id === artist.userId) {
+        const imageKey = artist.image.split('/');
+        const imageKeyUnencoded = imageKey[imageKey.length - 1];
+        const key = decodeURI(imageKeyUnencoded)
         await artist.destroy();
+        const params = {
+            Bucket: "mezzo-bucket",
+            Key: key
+        }
+        s3.deleteObject(params, (err, data) => {
+            if (err) {
+                console.log({error: err, message: "There was an issue deleting the old image.", data})
+            }
+        })
         return res.status(200).json({
             message: 'Artist was deleted successfully.'
         })
+
     } else {
         return res.status(403).json({
             message: "You're not authorized to perform this action."
