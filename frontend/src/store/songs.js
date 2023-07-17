@@ -4,7 +4,6 @@ import Cookies from 'js-cookie';
 // TYPES
 const GET_ALL_SONGS = '/mezzo/songs/GET_ALL_SONGS'
 const GET_USER_SONGS = '/mezzo/songs/GET_USER_SONGS'
-const GET_GENRE_SONGS = '/mezzo/songs/GET_GENRE_SONGS'
 const GET_SONG = '/mezzo/songs/GET_SONG'
 const CREATE_SONG = '/mezzo/songs/CREATE_SONG'
 const UPDATE_SONG = '/mezzo/songs/UPDATE_SONG'
@@ -19,11 +18,6 @@ const actionGetAllSongs = (songs) => ({
 
 const actionGetUserSongs = (songs) => ({
     type: GET_USER_SONGS,
-    payload: songs
-})
-
-const actionGetGenreSongs = (songs) => ({
-    type: GET_GENRE_SONGS,
     payload: songs
 })
 
@@ -47,9 +41,9 @@ const actionDeleteSong = (song) => ({
     payload: song
 })
 
-const actionSetNowPlaying =(song) => ({
+const actionSetNowPlaying = (songs) => ({
     type: SET_NOW_PLAYING,
-    payload: song
+    payload: songs
 })
 
 // THUNKS
@@ -74,17 +68,6 @@ export const thunkGetUserSongs = () => async dispatch => {
         return errors
     }
 }
-
-// export const thunkGetGenreSongs = (genre) => async dispatch => {
-//     const res = await csrfFetch(`/api/songs/${genre}`)
-//     if (res.ok) {
-//         const data = await res.json();
-//         dispatch(actionGetGenreSongs(data.Songs))
-//     } else {
-//         const errors = await res.json();
-//         return errors
-//     }
-// }
 
 export const thunkGetSong = (id) => async dispatch => {
     const res = await csrfFetch(`/api/songs/${id}`)
@@ -142,9 +125,9 @@ export const thunkDeleteSong = (song) => async dispatch => {
     }
 }
 
-export const thunkSetNowPlaying = (song =>async dispatch => {
-    dispatch(actionSetNowPlaying(song))
-})
+export const thunkSetNowPlaying = (songs) => async dispatch => {
+    dispatch(actionSetNowPlaying(songs))
+}
 
 // REDUCER
 const initialState = { all: {}, user: {}, current: {}, nowPlaying: {} }
@@ -174,7 +157,7 @@ const songsReducer = (state = initialState, action) => {
         }
         case SET_NOW_PLAYING: {
             const newState = { ...state, nowPlaying: {}}
-            newState.nowPlaying = action.payload;
+            action.payload.forEach(song => newState.nowPlaying[song.id] = song);
             return newState;
         }
         case CREATE_SONG: {

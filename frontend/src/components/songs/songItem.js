@@ -49,9 +49,8 @@ function SongItem({song, isAuth, artist, onPlaylistPage}) {
         dispatch(thunkGetSong(songId))
     }
 
-    const handlePlaySong = (song) => {
-        dispatch(thunkSetNowPlaying(song))
-        .then(() => setPlayerState('play'))
+    const handlePlaySong = () => {
+        dispatch(thunkSetNowPlaying([song]))
         .then(() => setIsVisible(false))
     }
 

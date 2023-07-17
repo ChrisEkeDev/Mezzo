@@ -33,7 +33,6 @@ const upload = multer({
 // Route for getting all songs
 router.get('/', requireAuth, async(req, res) => {
     const songs = await Song.findAll({
-        attributes: ["name", "id", "song", "genreId"],
         include: [
             {
                 model: Artist,
@@ -66,7 +65,6 @@ router.get('/current', requireAuth, async(req, res) => {
         where: {
             artistId: ids
         },
-        attributes: ["name", "id", "song", "genreId"],
         include: [
             {
                 model: Artist,
@@ -88,7 +86,6 @@ router.get('/current', requireAuth, async(req, res) => {
 router.get('/:songId', requireAuth, async(req, res) => {
     const { songId } = req.params;
     const song = await Song.findByPk(songId, {
-        attributes: ["name", "id", "song", "genreId", "description"],
         include: [
             {
                 model: Artist
@@ -111,45 +108,6 @@ router.get('/:songId', requireAuth, async(req, res) => {
     })
 })
 
-// Route for getting songs of certain genre
-// router.get('/:genreName', requireAuth, async(req, res) => {
-//     const { genreName } = req.params;
-//     const genre = await Genre.findOne({
-//         where: {
-//             name: genreName
-//         }
-//     })
-
-//     if (!genre) {
-//         return res.status(404).json({
-//             message: "Genre couldn't be found."
-//         })
-//     }
-
-//     const songs = await Song.findAll({
-//         where: {
-//             genreId: genre.id
-//         },
-//         attributes: ["name", "id", "file", "genreId"],
-//         include: [
-//             {
-//                 model: Artist,
-//                 attributes: ["id", "name", "image", "userId"]
-//             },
-//             {
-//                 model: Genre,
-//                 attributes: ["name"]
-//             }
-//         ]
-//     })
-
-//     return res.status(200).json({
-//         Songs: songs
-//     })
-
-// })
-
-// Validate creating song
 
 // Route for creating a song
 router.post('/', requireAuth, upload.single('song'), async(req, res) => {

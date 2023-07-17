@@ -16,11 +16,7 @@ function NowPlayingModal({state, setFull}) {
             <div className='now_playing_modal--contents'>
                 <div className='now_playing_modal--information'>
                     <div className={`now_playing_modal--image`} style={{backgroundImage: `url(${nowPlaying?.Artist?.image})`}}></div>
-                    <div className='now_playing_modal--text'>
-                        <h1>{nowPlaying?.name}</h1>
-                        <h2>{nowPlaying?.Artist?.name}</h2>
-                        <p>{nowPlaying?.description} {nowPlaying?.Artist?.bio}</p>
-                    </div>
+
                 </div>
                 <div className='now_playing_modal--player'>
                     <div className='now_playing_modal--slider'>

@@ -8,6 +8,7 @@ import { thunkGetPlaylist, thunkDeletePlaylist } from '../../store/playlists';
 import Modal from '../modal';
 import placeholder from '../../assets/mezzo-placeholder.svg'
 import useOutsideClick from '../../hooks/useOutsideClick';
+import { thunkSetNowPlaying } from '../../store/songs';
 import './playlists.css';
 import IconButton from '../button/iconButton';
 import SongItem from '../songs/songItem';
@@ -48,6 +49,10 @@ function Playlist() {
         }
     }
 
+    const handlePlay = () => {
+        dispatch(thunkSetNowPlaying(playlist.Songs))
+    }
+
     useEffect(() => {
         dispatch(thunkGetPlaylist(id))
         .then(() => setIsLoading(false))
@@ -72,6 +77,7 @@ function Playlist() {
                             label='Play'
                             style='primary'
                             left={<TbPlayerPlayFilled/>}
+                            action={handlePlay}
                         />
                         <Button
                             label='Shuffle'

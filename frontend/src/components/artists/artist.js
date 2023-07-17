@@ -6,6 +6,7 @@ import { useAlerts } from '../../context/alerts';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetArtist, thunkDeleteArtist } from '../../store/artists';
 import { thunkAddArtistToFavorites, thunkRemoveArtistFromFavorites } from '../../store/favorites';
+import { thunkSetNowPlaying } from '../../store/songs'
 import Modal from '../modal';
 import placeholder from '../../assets/mezzo-placeholder.svg'
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -77,6 +78,10 @@ function Artist() {
         }
     }
 
+    const handlePlay = () => {
+        dispatch(thunkSetNowPlaying(artist.Songs))
+    }
+
     useEffect(() => {
         dispatch(thunkGetArtist(id))
         .then(() => setIsLoading(false))
@@ -105,7 +110,7 @@ function Artist() {
                     <IconButton
                         style='primary'
                         icon={<TbPlayerPlayFilled/>}
-                        action={() => alert('Feature coming soon.')}
+                        action={handlePlay}
                     />
                 </div>
                 </div>

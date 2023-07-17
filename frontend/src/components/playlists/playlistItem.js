@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import mezzo from '../../assets/mezzo-placeholder.svg';
+import { useDispatch } from 'react-redux';
+import { thunkSetNowPlaying } from '../../store/songs';
 import IconButton from '../button/iconButton';
 import { TbPlayerPlayFilled } from 'react-icons/tb';
 
@@ -8,6 +10,7 @@ import { TbPlayerPlayFilled } from 'react-icons/tb';
 
 function PlaylistItem({playlist}) {
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const navigate = (route) => {
         history.push(route);
@@ -15,7 +18,7 @@ function PlaylistItem({playlist}) {
 
     const handlePlay = (e) => {
         e.stopPropagation();
-        alert('Feature coming soon.')
+        dispatch(thunkSetNowPlaying(playlist.Songs))
     }
 
     return (

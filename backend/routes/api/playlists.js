@@ -16,6 +16,17 @@ router.get('/', requireAuth, async (req, res) => {
         },
         include: [
             {
+                model: Song,
+                include: [
+                    {
+                        model: Artist
+                    },
+                    {
+                        model: Genre
+                    },
+                ]
+            },
+            {
                 model: PlaylistSong
             }
         ]

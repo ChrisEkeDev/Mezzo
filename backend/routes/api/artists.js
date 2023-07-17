@@ -30,7 +30,14 @@ const upload = multer({
 
 // Route for getting all artists
 router.get('/', requireAuth, async(req, res) => {
-    const artists = await Artist.findAll()
+    const artists = await Artist.findAll({
+        include: [{
+            model: Song,
+            include: [
+                { model: Genre }
+            ]
+        }]
+    })
     return res.status(200).json({
         Artists: artists
     })

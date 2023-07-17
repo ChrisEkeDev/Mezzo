@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import placeholder from '../../assets/mezzo-placeholder.svg';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { thunkSetNowPlaying } from '../../store/songs'
 import IconButton from '../button/iconButton';
 import { TbPlayerPlayFilled, TbHeartFilled } from 'react-icons/tb';
 
@@ -9,6 +10,7 @@ function ArtistItem({artist}) {
   const favoritesData = useSelector(state => state.favorites.artists);
   const favorites = Object.values(favoritesData)
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const isFavorited = favorites.some(favorite => favorite.artistId === artist.id);
 
@@ -18,7 +20,7 @@ function ArtistItem({artist}) {
 
   const handlePlay = (e) => {
     e.stopPropagation();
-    alert('Feature coming soon.')
+    dispatch(thunkSetNowPlaying(artist.Songs))
   }
 
 
