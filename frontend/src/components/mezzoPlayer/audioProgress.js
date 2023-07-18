@@ -24,7 +24,7 @@ function AudioProgress({fullScreen, progressRef, audioRef, progress, duration })
       <div className='now_playing_progress--contents'>
         <span className='mezzo_player--current_time'>{formatTime(progress)}</span>
           <input className="mezzo_player--progress_bar" type='range' ref={progressRef} onChange={handleProgress}/>
-          <div className="mezzo_player--progress_bar_highlight" style={{width: `${Math.floor((progress/duration) * 100)}%`}}></div>
+          <div className="mezzo_player--progress_bar_highlight" style={{width: `${Math.floor((progress/duration) * 100) + 1}%`}}></div>
         <span className='mezzo_player--time'>{formatTime(duration)}</span>
       </div>
     </div>

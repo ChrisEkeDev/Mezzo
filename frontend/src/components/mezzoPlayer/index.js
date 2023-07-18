@@ -30,7 +30,7 @@ function MezzoPlayer() {
 
     return (
         <div id="mezzo_player---wrapper" className={`${fullScreen ? 'mezzo_player--full' : 'mezzo_player--mini'}`}>
-            {fullScreen ? <span className='now_playing_model--close' onClick={() => setFullScreen(false)}><TbX/></span> : null}
+            {fullScreen ? <span className='now_playing_modal--close' onClick={() => setFullScreen(false)}><TbX/></span> : null}
             <AudioControls { ...{ loop, setLoop, fullScreen, tracks, trackIndex, setTrackIndex, setCurrentTrack, audioRef, setPlayerState, playerState, progressRef, duration, setProgress }}/>
             <div className='mezzo_player--player'>
             <AudioDisplay { ...{ loop, fullScreen, setFullScreen, tracks, trackIndex, setTrackIndex, setCurrentTrack, currentTrack, nowPlaying, audioRef, setDuration, progressRef }}/>

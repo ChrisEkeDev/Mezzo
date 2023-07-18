@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import '../nowPlaying/nowPlaying.css';
 import { TbArrowsMaximize,TbPlayerPauseFilled, TbPlayerPlayFilled, TbPlayerSkipBackFilled ,TbArrowsShuffle,TbRepeat, TbPlayerSkipForwardFilled } from 'react-icons/tb';
 
 function AudioControls({ loop, setLoop, fullScreen, tracks, trackIndex, setTrackIndex, setCurrentTrack, playerState, setPlayerState, audioRef, progressRef, duration, setProgress}) {

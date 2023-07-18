@@ -34,10 +34,9 @@ function AudioDisplay({ loop, fullScreen, currentTrack, setFullScreen, tracks, t
               <h2>{currentTrack?.Artist?.name}</h2>
               <p>{currentTrack?.description} {currentTrack?.Artist?.bio}</p>
           </div> :
-          <div className='now_playing_player--song'>
-            <span className='now_playing_player--name'>
+          <div className='now_playing_player--name'>
               {
-                nowPlaying ?
+                currentTrack ?
                 <>
                 <span className='now_playing_player--song'>{currentTrack?.name}</span>
                   <span>-</span>
@@ -45,7 +44,6 @@ function AudioDisplay({ loop, fullScreen, currentTrack, setFullScreen, tracks, t
                 </> :
                 <span>Pick a song</span>
               }
-            </span>
           </div>
         }
       </div>
