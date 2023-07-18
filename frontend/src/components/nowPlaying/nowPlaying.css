@@ -63,15 +63,7 @@
     color: var(--text-body);
 }
 
-.now_playing_player--image {
-    height: 45px;
-    aspect-ratio: 1;
-    background-color: var(--placeholder);
-    background-position: center;
-    background-size: cover;
-    border-radius: 5px 0 0 5px;
-    background-repeat: no-repeat;
-}
+
 
 
 
