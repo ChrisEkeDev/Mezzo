@@ -49,7 +49,7 @@ function SignIn() {
   const demoSignIn = (e) => {
     e.preventDefault();
     setLoading({message: 'Signing you in...'});
-    const data = {email: 'demo@email.com' , password: 'password'}
+    const data = {email: 'fassounds@email.com' , password: 'password'}
     return (
       dispatch(thunkSignIn(data))
       .then((alert) => {
