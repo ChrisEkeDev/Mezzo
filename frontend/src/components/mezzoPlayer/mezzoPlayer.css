@@ -161,9 +161,20 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+        background-color: var(--placeholder);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
         aspect-ratio: 1;
         border-radius: 10px;
         margin: 0 auto;
+    }
+
+    .now_playing_player--image img {
+        height: 200px;
+        position: relative;
+        right: 15px;
     }
 
     .mezzo_player--current_time {

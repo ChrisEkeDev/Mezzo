@@ -53,7 +53,7 @@ function AudioControls({ loop, setLoop, tracks, trackIndex, setTrackIndex, setCu
     return (
         <div className='now_playing_controls--wrapper'>
             <span className='now_playing_control'>
-                <TbArrowsShuffle/>
+
             </span>
             <span className='now_playing_control skip' onClick={handlePrevious}>
                 <TbPlayerSkipBackFilled/>

@@ -1,6 +1,15 @@
 import { csrfFetch } from "./csrf";
 import Cookies from 'js-cookie';
 
+function isJSON(res) {
+    try {
+      JSON.parse(res);
+      return true;
+    } catch (err) {
+      return false;
+    }
+}
+
 // TYPES
 const GET_ALL_SONGS = '/mezzo/songs/GET_ALL_SONGS'
 const GET_USER_SONGS = '/mezzo/songs/GET_USER_SONGS'
@@ -64,8 +73,13 @@ export const thunkGetAllSongs = () => async dispatch => {
         const data = await res.json();
         dispatch(actionGetAllSongs(data.Songs))
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -75,8 +89,13 @@ export const thunkGetUserSongs = () => async dispatch => {
         const data = await res.json();
         dispatch(actionGetUserSongs(data.Songs))
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -86,8 +105,13 @@ export const thunkGetSong = (id) => async dispatch => {
         const data = await res.json();
         dispatch(actionGetSong(data.Song))
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -101,8 +125,13 @@ export const thunkCreateSong = (songData) => async dispatch => {
         const data = await res.json();
         dispatch(actionCreateSong(data.Song))
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -117,21 +146,32 @@ export const thunkUpdateSong = (id, songData) => async dispatch => {
         dispatch(actionUpdateSong(data.Song))
         return data
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
 export const thunkDeleteSong = (song) => async dispatch => {
-    try {
-        const res = await csrfFetch(`/api/songs/${song.id}`, {
-            method: 'DELETE'
-        })
+    const res = await csrfFetch(`/api/songs/${song.id}`, {
+        method: 'DELETE'
+    })
+    if (res.ok) {
         const message = await res.json();
         dispatch(actionDeleteSong(song))
         return message
-    } catch(error) {
-        console.log('Error deleting song:', error)
+    } else {
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -149,8 +189,13 @@ export const thunkGetGenres = () => async dispatch => {
         const data = await res.json();
         dispatch(actionGetGenres(data))
     } else {
-        const errors = await res.json();
-        return errors;
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 

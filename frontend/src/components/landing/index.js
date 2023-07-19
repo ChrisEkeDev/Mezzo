@@ -1,5 +1,6 @@
 import React from 'react'
 import mezzo from '../../assets/mezzo-color.svg';
+import landing from '../../assets/mezzo-landing.png'
 import { useHistory } from 'react-router-dom';
 import Button from '../button';
 import './landing.css';
@@ -13,6 +14,7 @@ function Landing() {
 
     return (
         <div id='landing--wrapper'>
+            {/* <img className='landing--image' src={landing}/> */}
             <header className='landing_nav--wrapper'>
                 <nav className='landing_nav--nav'>
                     <div className='landing_nav--logo'>

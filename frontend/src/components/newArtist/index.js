@@ -23,9 +23,6 @@ function NewArtist() {
         history.push(route);
     }
 
-    const handleImage = (x) => {
-        setImage(x.target.files[0])
-    }
     const createArtist = async (e) => {
         e.preventDefault();
         setLoading({message: 'Creating your artist...'});

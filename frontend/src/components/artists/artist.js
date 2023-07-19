@@ -6,7 +6,6 @@ import { useAlerts } from '../../context/alerts';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetArtist, thunkDeleteArtist } from '../../store/artists';
 import { thunkAddArtistToFavorites, thunkRemoveArtistFromFavorites } from '../../store/favorites';
-import { thunkSetNowPlaying } from '../../store/songs';
 import { useNowPlaying } from '../../context/nowPlaying';
 import Modal from '../modal';
 import placeholder from '../../assets/mezzo-placeholder.svg'
@@ -24,7 +23,7 @@ function Artist() {
     const [ deletingArtist, setDeletingArtist ] = useState(false);
     const { setLoading } = useLoading();
     const { handleAlerts } = useAlerts();
-    const { handlePlay } = useNowPlaying();
+    const { handlePlaySongs } = useNowPlaying();
     const { id } = useParams();
     const favoritesData = useSelector(state => state.favorites.artists);
     const favorites = Object.values(favoritesData)
@@ -80,10 +79,6 @@ function Artist() {
         }
     }
 
-    const handlePlayArtist = () => {
-        dispatch(thunkSetNowPlaying(artist.Songs))
-    }
-
     useEffect(() => {
         dispatch(thunkGetArtist(id))
         .then(() => setIsLoading(false))
@@ -112,7 +107,7 @@ function Artist() {
                     <IconButton
                         style='primary'
                         icon={<TbPlayerPlayFilled/>}
-                        action={handlePlayArtist}
+                        action={artist.Songs.length ? () => handlePlaySongs(artist.Songs): null}
                     />
                 </div>
                 </div>

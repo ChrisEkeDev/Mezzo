@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { thunkDeleteSong } from '../../store/songs';
 import { thunkGetArtist } from '../../store/artists';
 import { thunkGetSong } from '../../store/songs';
-import { thunkSetNowPlaying } from '../../store/songs';
 import { useNowPlaying } from '../../context/nowPlaying';
 import { thunkAddSongToFavorites, thunkRemoveSongFromFavorites } from '../../store/favorites';
 import AddToPlaylist from '../addToPlaylist';
@@ -23,6 +22,7 @@ function SongItem({song, isAuth, artist, onPlaylistPage}) {
     const [ songDuration, setSongDuration] = useState(undefined);
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const playlist = useSelector(state => state.playlists.current)
+    const playlists = useSelector(state => state.playlists.user);
     const favoritesData = useSelector(state => state.favorites.songs);
     const { setLoading } = useLoading();
     const currentSong = useSelector(state => state.songs.current)
@@ -30,7 +30,7 @@ function SongItem({song, isAuth, artist, onPlaylistPage}) {
     const favorites = Object.values(favoritesData)
     const history = useHistory();
     const dispatch = useDispatch();
-    const { playerState, handlePlay, handlePause, currentTrack, handleClear } = useNowPlaying();
+    const { playerState, handlePlaySongs, handlePlay, handlePause, currentTrack, handleClear } = useNowPlaying();
     const audioRef = useRef(null)
 
     const isFavorited = favorites.some(favorite => favorite.songId === song.id);
@@ -41,11 +41,6 @@ function SongItem({song, isAuth, artist, onPlaylistPage}) {
 
     const handleSelectSong = (songId) => {
         dispatch(thunkGetSong(songId))
-    }
-
-    const handlePlaySong = () => {
-        dispatch(thunkSetNowPlaying([song]))
-        .then(() => handlePlay())
     }
 
     const deleteSong = async () => {
@@ -131,7 +126,7 @@ function SongItem({song, isAuth, artist, onPlaylistPage}) {
         <li id={`${song.id === currentSong?.id ? 'selectedSong' : ''}`}onClick={() => handleSelectSong(song.id) } className={`song_item--wrapper song--grid`}>
             <audio ref={audioRef} onLoadedMetadata={onLoadedMetadata}/>
             <div className='song_item--name'>
-                <div onClick={() => handlePlaySong(song)} className='song_item--image' style={{backgroundImage: `url(${artist.image})`}}>
+                <div onClick={() => handlePlaySongs([song])} className='song_item--image' style={{backgroundImage: `url(${artist.image})`}}>
                     { currentTrack?.id === song.id && playerState === "playing" ?
                         <span className='song_item_playing--overlay'>
                             <div className='playing--graphic'>
@@ -161,7 +156,7 @@ function SongItem({song, isAuth, artist, onPlaylistPage}) {
                                             <span className='hover_menu--label'>Pause Song</span>
                                             <span className='hover_menu--icon'><TbPlayerPauseFilled/></span>
                                         </span>:
-                                    <span onClick={() => handlePlaySong(song)} className='hover_menu--option'>
+                                    <span onClick={() => handlePlaySongs([song])} className='hover_menu--option'>
                                         <span className='hover_menu--label'>Play Now</span>
                                         <span className='hover_menu--icon'><TbPlayerPlay/></span>
                                     </span>

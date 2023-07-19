@@ -1,5 +1,5 @@
 import { useState, createContext, useContext, useRef, useEffect } from 'react';
-import { thunkClearNowPlaying } from '../store/songs';
+import { thunkClearNowPlaying, thunkSetNowPlaying } from '../store/songs';
 import { useDispatch, useSelector } from 'react-redux';
 const NowPlayingContext = createContext();
 
@@ -38,6 +38,14 @@ function NowPlayingProvider({children}) {
         audioRef.current.currentTime = 0;
     }
 
+    const handlePlaySongs = (songs) => {
+        dispatch(thunkSetNowPlaying(songs))
+        .then(() => {
+            setPlayerState("playing")
+            audioRef.current.play();
+        })
+    }
+
     const handlePlay = () => {
         setPlayerState("playing")
         audioRef.current.play();
@@ -74,7 +82,7 @@ function NowPlayingProvider({children}) {
                 audioRef,
                 progressRef,
                 tracks,
-                handlePlay, handlePause, handleClear
+                handlePlaySongs, handlePlay, handlePause, handleClear
             }}>
             <audio ref={audioRef} src={currentTrack?.song} onLoadedMetadata={onLoadedMetadata} onEnded={handleNext} loop={loop}></audio>
             {children}

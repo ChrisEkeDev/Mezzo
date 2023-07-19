@@ -1,6 +1,15 @@
 import { csrfFetch } from "./csrf";
 import Cookies from 'js-cookie';
 
+function isJSON(res) {
+  try {
+    JSON.parse(res);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 // TYPES
 const GET_ALL_ARTISTS = '/mezzo/artists/GET_ALL_ARTISTS'
 const GET_USER_ARTISTS = '/mezzo/artists/GET_USER_ARTISTS'
@@ -48,8 +57,13 @@ export const thunkGetAllArtists = () => async dispatch => {
         const data = await res.json();
         dispatch(actionGetAllArtists(data.Artists))
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -59,8 +73,13 @@ export const thunkGetUserArtists = () => async dispatch => {
         const data = await res.json();
         dispatch(actionGetUserArtists(data.Artists))
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -70,8 +89,13 @@ export const thunkGetArtist = (id) => async dispatch => {
         const data = await res.json();
         dispatch(actionGetArtist(data.Artist))
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -86,8 +110,13 @@ export const thunkCreateArtist = (artistData) => async dispatch => {
         dispatch(actionCreateArtist(data.Artist))
         return data
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -102,8 +131,13 @@ export const thunkUpdateArtist = (id, artistData) => async dispatch => {
         dispatch(actionUpdateArtist(data.Artist))
         return data
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -116,8 +150,13 @@ export const thunkDeleteArtist = (artist) => async dispatch => {
         dispatch(actionDeleteArtist(artist))
         return message
     } else {
-        const errors = await res.json();
-        return errors;
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 

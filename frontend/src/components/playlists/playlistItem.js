@@ -1,8 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import mezzo from '../../assets/mezzo-placeholder.svg';
-import { useDispatch } from 'react-redux';
-import { thunkSetNowPlaying } from '../../store/songs';
+import { useNowPlaying } from '../../context/nowPlaying';
 import IconButton from '../button/iconButton';
 import { TbPlayerPlayFilled } from 'react-icons/tb';
 
@@ -10,7 +9,7 @@ import { TbPlayerPlayFilled } from 'react-icons/tb';
 
 function PlaylistItem({playlist}) {
     const history = useHistory();
-    const dispatch = useDispatch();
+    const { handlePlaySongs } = useNowPlaying();
 
     const navigate = (route) => {
         history.push(route);
@@ -18,12 +17,21 @@ function PlaylistItem({playlist}) {
 
     const handlePlay = (e) => {
         e.stopPropagation();
-        dispatch(thunkSetNowPlaying(playlist.Songs))
+        if (playlist.Songs.length) {
+            handlePlaySongs(playlist.Songs)
+        }
     }
 
     return (
         <article onClick={() => navigate(`/dashboard/playlists/${playlist?.id}`)} className='playlist_item--wrapper'>
             <div className='playlist_item--image'>
+                {
+                    playlist.Songs.slice(0,4).map(song => (
+                        <div className='playlist_item--image_square' style={{backgroundImage: `url(${song?.Artist?.image})`}}>
+                            { song?.Artist?.image ? null : <img src={mezzo}/>}
+                        </div>
+                    ))
+                }
                 <div className='playlist_item--overlay'>
                     <span className='playlist_item--play'>
                     <IconButton
@@ -33,7 +41,7 @@ function PlaylistItem({playlist}) {
                     />
                     </span>
                 </div>
-                <img src={mezzo}/>
+                {/*  */}
             </div>
             <h3 className='playlist_item--label'>{playlist.name}</h3>
         </article>

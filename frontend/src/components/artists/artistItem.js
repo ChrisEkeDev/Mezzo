@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import placeholder from '../../assets/mezzo-placeholder.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import { thunkSetNowPlaying } from '../../store/songs'
+import { useSelector } from 'react-redux';
+import { useNowPlaying } from '../../context/nowPlaying';
 import IconButton from '../button/iconButton';
 import { TbPlayerPlayFilled, TbHeartFilled } from 'react-icons/tb';
 
@@ -10,8 +10,7 @@ function ArtistItem({artist}) {
   const favoritesData = useSelector(state => state.favorites.artists);
   const favorites = Object.values(favoritesData)
   const history = useHistory();
-  const dispatch = useDispatch();
-
+  const { handlePlaySongs } = useNowPlaying();
   const isFavorited = favorites.some(favorite => favorite.artistId === artist.id);
 
   const navigate = (route) => {
@@ -20,7 +19,9 @@ function ArtistItem({artist}) {
 
   const handlePlay = (e) => {
     e.stopPropagation();
-    dispatch(thunkSetNowPlaying(artist.Songs))
+    if (artist.Songs.length) {
+      handlePlaySongs(artist.Songs)
+    }
   }
 
 

@@ -6,7 +6,7 @@ import { thunkAddToPlaylist } from '../../store/playlists';
 import Button from '../button';
 import { TbCircleCheckFilled, TbPlaylistAdd } from 'react-icons/tb';
 
-function AddToPlaylist({song, close, playlist}) {
+function AddToPlaylist({song, close}) {
     const playlistData = useSelector(state => state.playlists.all)
     const playlists = Object.values(playlistData);
     const { setLoading } = useLoading();
@@ -34,7 +34,6 @@ function AddToPlaylist({song, close, playlist}) {
         }
     }
 
-    console.log(playlists[0].PlaylistSongs[0])
 
     return (
         <>
@@ -45,7 +44,6 @@ function AddToPlaylist({song, close, playlist}) {
                         return (
                             <li
                                 key={playlist.id}
-                                // isInPlaylist={playlists.find(isInPlaylist)}
                                 className={`confirm--item ${selectedPlaylist?.id === playlist.id ? 'selected' : null}`}
                                 onClick={() => handleSelectPlaylist(playlist)}>
                                     <span>{playlist.name}</span>
