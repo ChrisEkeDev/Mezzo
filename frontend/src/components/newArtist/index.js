@@ -37,8 +37,8 @@ function NewArtist() {
             }
             const formData = new FormData()
             formData.append("name", artistData.name)
-            formData.append("bio", artistData.bio)
-            formData.append("image", artistData.image)
+            if (artistData.bio) formData.append("bio", artistData.bio)
+            if (artistData.image) formData.append("image", artistData.image)
             const data = await dispatch(thunkCreateArtist(formData))
             const message = data.message;
             const newArtist = data.Artist;

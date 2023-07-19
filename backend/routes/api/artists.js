@@ -217,19 +217,38 @@ router.delete('/:artistId', requireAuth, async(req, res) => {
     }
 
     if (user.id === artist.userId) {
-        const imageKey = artist.image.split('/');
-        const imageKeyUnencoded = imageKey[imageKey.length - 1];
-        const key = decodeURI(imageKeyUnencoded)
-        await artist.destroy();
-        const params = {
-            Bucket: "mezzo-bucket",
-            Key: key
+        if (artist.image) {
+            const imageKey = artist.image.split('/');
+            const imageKeyUnencoded = imageKey[imageKey.length - 1];
+            const key = decodeURI(imageKeyUnencoded)
+            const params = {
+                Bucket: "mezzo-bucket",
+                Key: key
+            }
+            await s3.deleteObject(params).promise()
         }
-        s3.deleteObject(params, (err, data) => {
-            if (err) {
-                console.log({error: err, message: "There was an issue deleting the old image.", data})
+
+        const artistSongs = await Song.findAll({
+            where: {
+                artistId: artistId
             }
         })
+
+        if (artistSongs.length) {
+            artistSongs.forEach(async (song) => {
+                const songKey = song.song.split('/');
+                const songKeyUnencoded = songKey[songKey.length - 1];
+                const key = decodeURI(songKeyUnencoded)
+                const params = {
+                    Bucket: "mezzo-bucket",
+                    Key: key
+                }
+                await s3.deleteObject(params).promise()
+            })
+
+        }
+
+        await artist.destroy();
         return res.status(200).json({
             message: 'Artist was deleted successfully.'
         })

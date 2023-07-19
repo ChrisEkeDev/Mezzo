@@ -167,11 +167,7 @@ router.put('/:songId', requireAuth, upload.single('song'), async(req, res) => {
                 Bucket: "mezzo-bucket",
                 Key: key
             }
-            s3.deleteObject(params, (err, data) => {
-                if (err) {
-                    console.log({error: err, message: "There was an issue deleting the old song.", data})
-                }
-            })
+            await s3.deleteObject(params).promise()
         }
         await thisSong.set({
             name,
@@ -227,11 +223,7 @@ router.delete('/:songId', requireAuth, async(req, res) => {
             Bucket: "mezzo-bucket",
             Key: key
         }
-        s3.deleteObject(params, (err, data) => {
-            if (err) {
-                console.log({error: err, message: "There was an issue deleting the old song.", data})
-            }
-        })
+        await s3.deleteObject(params).promise()
         await song.destroy();
         return res.status(200).json({
             message: 'Song was deleted successfully.'
