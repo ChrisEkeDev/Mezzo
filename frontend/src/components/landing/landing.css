@@ -9,11 +9,6 @@
 }
 
 .landing--image {
-    position: absolute;
-    width: 50%;
-    right: 10%;
-    bottom: -20%;
-    z-index: -1;
 }
 
 .landing_nav--wrapper {
@@ -46,9 +41,11 @@
 .landing_main--wrapper {
     flex: 1;
     flex-shrink: 0;
+    width: 1110px;
     display: flex;
     align-items: center;
-    padding: 0 15%;
+    margin: 0 auto;
+    /* padding: 0 15%; */
 }
 
 .landing_nav--actions,

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../auth.css';
-import mezzo from '../../../assets/mezzo-color.svg';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoading } from '../../../context/loading';
@@ -100,7 +99,6 @@ function SignUp() {
         left={<TbChevronLeft/>}
       />
       <form className='auth_form--form' onSubmit={signUp}>
-        <img src={mezzo} />
         <header className='auth_form--header'>
           <h1>Sign Up</h1>
           <p>Sign up to experience Mezzo.</p>

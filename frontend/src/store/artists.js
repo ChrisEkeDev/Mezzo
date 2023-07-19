@@ -53,7 +53,7 @@ const actionDeleteArtist = (artist) => ({
 // THUNKS
 export const thunkGetAllArtists = () => async dispatch => {
     const res = await csrfFetch(`/api/artists`)
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json();
         dispatch(actionGetAllArtists(data.Artists))
     } else {
@@ -69,7 +69,7 @@ export const thunkGetAllArtists = () => async dispatch => {
 
 export const thunkGetUserArtists = () => async dispatch => {
     const res = await csrfFetch(`/api/artists/current`)
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json();
         dispatch(actionGetUserArtists(data.Artists))
     } else {
@@ -85,7 +85,7 @@ export const thunkGetUserArtists = () => async dispatch => {
 
 export const thunkGetArtist = (id) => async dispatch => {
     const res = await csrfFetch(`/api/artists/${id}`)
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json();
         dispatch(actionGetArtist(data.Artist))
     } else {
@@ -105,7 +105,7 @@ export const thunkCreateArtist = (artistData) => async dispatch => {
         headers: {"XSRF-TOKEN": Cookies.get('XSRF-TOKEN')},
         body: artistData
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json();
         dispatch(actionCreateArtist(data.Artist))
         return data
@@ -126,7 +126,7 @@ export const thunkUpdateArtist = (id, artistData) => async dispatch => {
         headers: {"XSRF-TOKEN": Cookies.get('XSRF-TOKEN')},
         body: artistData
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json();
         dispatch(actionUpdateArtist(data.Artist))
         return data
@@ -145,7 +145,7 @@ export const thunkDeleteArtist = (artist) => async dispatch => {
     const res = await csrfFetch(`/api/artists/${artist.id}`, {
         method: 'DELETE'
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const message = await res.json();
         dispatch(actionDeleteArtist(artist))
         return message

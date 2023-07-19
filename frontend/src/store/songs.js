@@ -69,7 +69,7 @@ const actionGetGenres = (genres) => ({
 // THUNKS
 export const thunkGetAllSongs = () => async dispatch => {
     const res = await csrfFetch(`/api/songs`)
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json();
         dispatch(actionGetAllSongs(data.Songs))
     } else {
@@ -85,7 +85,7 @@ export const thunkGetAllSongs = () => async dispatch => {
 
 export const thunkGetUserSongs = () => async dispatch => {
     const res = await csrfFetch(`/api/songs/current`)
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json();
         dispatch(actionGetUserSongs(data.Songs))
     } else {
@@ -101,7 +101,7 @@ export const thunkGetUserSongs = () => async dispatch => {
 
 export const thunkGetSong = (id) => async dispatch => {
     const res = await csrfFetch(`/api/songs/${id}`)
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json();
         dispatch(actionGetSong(data.Song))
     } else {
@@ -121,7 +121,7 @@ export const thunkCreateSong = (songData) => async dispatch => {
         headers: {"XSRF-TOKEN": Cookies.get('XSRF-TOKEN')},
         body: songData
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json();
         dispatch(actionCreateSong(data.Song))
     } else {
@@ -141,7 +141,7 @@ export const thunkUpdateSong = (id, songData) => async dispatch => {
         headers: {"XSRF-TOKEN": Cookies.get('XSRF-TOKEN')},
         body: songData
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json();
         dispatch(actionUpdateSong(data.Song))
         return data
@@ -160,7 +160,7 @@ export const thunkDeleteSong = (song) => async dispatch => {
     const res = await csrfFetch(`/api/songs/${song.id}`, {
         method: 'DELETE'
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const message = await res.json();
         dispatch(actionDeleteSong(song))
         return message
@@ -185,7 +185,7 @@ export const thunkClearNowPlaying = () => async dispatch => {
 
 export const thunkGetGenres = () => async dispatch => {
     const res = await csrfFetch(`/api/genres`)
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json();
         dispatch(actionGetGenres(data))
     } else {

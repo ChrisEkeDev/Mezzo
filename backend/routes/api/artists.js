@@ -159,11 +159,7 @@ router.put('/:artistId', requireAuth,  upload.single('image'), async(req, res) =
             Bucket: "mezzo-bucket",
             Key: key
         }
-        s3.deleteObject(params, (err, data) => {
-            if (err) {
-                console.log({error: err, message: "There was an issue deleting the old image.", data})
-            }
-        })
+        await s3.deleteObject(params).promise()
 
         await artist.set({
             name: name ? name : artist.name,

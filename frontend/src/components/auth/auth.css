@@ -6,9 +6,40 @@
     height: 100%;
 }
 
+.auth--icon {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    height: 35px;
+}
+
 .auth--image {
     flex: 1;
     background-color: var(--border);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative
+}
+
+.auth--image--credits {
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    display: flex;
+    text-align: right;
+    flex-direction: column;
+    color: white;
+    font-size: 15px;
+}
+
+.auth--image--credits a {
+    text-decoration: none;
+    color: var(--orange)
+}
+
+.auth--image--credits a:hover {
+    text-decoration: underline;
 }
 
 .auth_form--wrapper {

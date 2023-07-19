@@ -54,6 +54,7 @@ function UpdatePlaylist({playlist, close}) {
                     action={close}
                 />
             </div>
+            <h2 className='confirm--title'>Update Playlist</h2>
             <Input
                 name="name"
                 label='Update Playlist Name'

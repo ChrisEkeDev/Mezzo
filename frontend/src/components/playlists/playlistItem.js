@@ -27,7 +27,7 @@ function PlaylistItem({playlist}) {
             <div className='playlist_item--image'>
                 {
                     playlist.Songs.slice(0,4).map(song => (
-                        <div className='playlist_item--image_square' style={{backgroundImage: `url(${song?.Artist?.image})`}}>
+                        <div key={song.id} className='playlist_item--image_square' style={{backgroundImage: `url(${song?.Artist?.image})`}}>
                             { song?.Artist?.image ? null : <img src={mezzo}/>}
                         </div>
                     ))

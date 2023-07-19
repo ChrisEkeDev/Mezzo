@@ -1,5 +1,14 @@
 import { csrfFetch } from "./csrf";
 
+function isJSON(res) {
+    try {
+      JSON.parse(res);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
 // TYPES
 const GET_PLAYLISTS = '/mezzo/playlists/GET_PLAYLISTS';
 const GET_PLAYLIST = '/mezzo/playlists/GET_PLAYLIST';
@@ -48,23 +57,33 @@ const actionDeletePlaylist = (playlist) => ({
 // THUNKS
 export const thunkGetPlaylists = () => async dispatch => {
     const res = await csrfFetch(`/api/playlists`)
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json()
         dispatch(actionGetPlaylists(data.Playlists))
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
 export const thunkGetPlaylist = (id) => async dispatch => {
     const res = await csrfFetch(`/api/playlists/${id}`)
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json()
         dispatch(actionGetPlaylist(data.Playlist))
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -73,13 +92,18 @@ export const thunkCreatePlaylist = (playlistData) => async dispatch => {
         method: 'POST',
         body: JSON.stringify(playlistData)
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json()
         dispatch(actionCreatePlaylist(data.Playlist))
         return data
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -88,13 +112,18 @@ export const thunkAddToPlaylist = (songId, playlistId) => async dispatch => {
         method: 'POST',
         body: JSON.stringify(songId)
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json()
         dispatch(actionAddToPlaylist(data.Playlist))
         return data
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -103,13 +132,18 @@ export const thunkRemoveFromPlaylist = (songId, playlistId) => async dispatch =>
         method: 'DELETE',
         body: JSON.stringify(songId)
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json()
         dispatch(actionRemoveFromPlaylist(data.Playlist))
         return data
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -118,13 +152,18 @@ export const thunkUpdatePlaylist = (playlistData) => async dispatch => {
         method: 'PUT',
         body: JSON.stringify(playlistData)
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json();
         dispatch(actionUpdatePlaylist(data.Playlist))
         return data
-    } else {
-        const errors = await res.json();
-        return errors;
+    }  else {
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -133,13 +172,18 @@ export const thunkDeletePlaylist = (playlist) => async dispatch => {
     const res = await csrfFetch(`/api/playlists/${playlist.id}`, {
         method: 'DELETE'
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const message = await res.json();
         dispatch(actionDeletePlaylist(playlist))
         return message
     } else {
-        const errors = await res.json();
-        return errors;
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 

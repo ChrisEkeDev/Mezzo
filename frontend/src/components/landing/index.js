@@ -46,6 +46,7 @@ function Landing() {
                         />
                     </div>
                 </section>
+                <img className='landing--image' src={landing}/>
             </main>
         </div>
     )

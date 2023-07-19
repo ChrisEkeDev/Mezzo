@@ -124,7 +124,7 @@ function SongItem({song, isAuth, artist, onPlaylistPage}) {
 
     return (
         <li id={`${song.id === currentSong?.id ? 'selectedSong' : ''}`}onClick={() => handleSelectSong(song.id) } className={`song_item--wrapper song--grid`}>
-            <audio ref={audioRef} onLoadedMetadata={onLoadedMetadata}/>
+            <audio ref={audioRef} src={song.song} onLoadedMetadata={onLoadedMetadata}/>
             <div className='song_item--name'>
                 <div onClick={() => handlePlaySongs([song])} className='song_item--image' style={{backgroundImage: `url(${artist.image})`}}>
                     { currentTrack?.id === song.id && playerState === "playing" ?
@@ -139,7 +139,6 @@ function SongItem({song, isAuth, artist, onPlaylistPage}) {
                             <TbPlayerPlayFilled/>
                         </span>
                     }
-
                 </div>
                 <span>{song.name}</span>
                 { isFavorited ? <span className='song_item--favorite'><TbHeartFilled/></span> : null }

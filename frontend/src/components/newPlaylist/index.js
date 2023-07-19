@@ -54,6 +54,7 @@ function NewPlaylist({close}) {
                     action={close}
                 />
             </div>
+            <h2 className='confirm--title'>Create Playlist</h2>
             <Input
                 name="name"
                 label='New Playlist Name'

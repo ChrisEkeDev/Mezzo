@@ -1,5 +1,14 @@
 import { csrfFetch } from "./csrf";
 
+function isJSON(res) {
+    try {
+      JSON.parse(res);
+      return true;
+    } catch (err) {
+      return false;
+    }
+}
+
 // TYPES
 const GET_FAVORITE_ARTISTS = '/mezzo/favorites/GET_FAVORITE_ARTISTS'
 const GET_FAVORITE_SONGS = '/mezzo/favorites/GET_FAVORITE_SONGS'
@@ -42,23 +51,33 @@ const actionRemoveSongFromFavorites = (songs) => ({
 // THUNKS
 export const thunkGetFavoriteArtists = () => async dispatch => {
     const res = await csrfFetch(`/api/favorites/artists`)
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json()
         dispatch(actionGetFavoriteArtists(data.FavoriteArtists))
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
 export const thunkGetFavoriteSongs = () => async dispatch => {
     const res = await csrfFetch(`/api/favorites/songs`)
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json()
         dispatch(actionGetFavoriteSongs(data.FavoriteSongs))
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -67,13 +86,18 @@ export const thunkAddArtistToFavorites = (artistId) => async dispatch => {
         method: 'POST',
         body: JSON.stringify(artistId)
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json()
         dispatch(actionAddArtistToFavorites(data.FavoriteArtists))
         return data
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -82,13 +106,18 @@ export const thunkAddSongToFavorites = (songId) => async dispatch => {
         method: 'POST',
         body: JSON.stringify(songId)
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json()
         dispatch(actionAddSongToFavorites(data.FavoriteSongs))
         return data
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -97,13 +126,18 @@ export const thunkRemoveArtistFromFavorites = (artistId) => async dispatch => {
         method: 'DELETE',
         body: JSON.stringify(artistId)
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json()
         dispatch(actionRemoveArtistFromFavorites(data.FavoriteArtists))
         return data
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
@@ -112,13 +146,18 @@ export const thunkRemoveSongFromFavorites = (songId) => async dispatch => {
         method: 'DELETE',
         body: JSON.stringify(songId)
     })
-    if (res.ok) {
+    if (res && res.ok) {
         const data = await res.json()
         dispatch(actionRemoveSongFromFavorites(data.FavoriteSongs))
         return data
     } else {
-        const errors = await res.json();
-        return errors
+        let errors;
+        if (isJSON(res)) {
+            errors = await res.json()
+            return errors;
+        } else {
+            console.log(res)
+        }
     }
 }
 
