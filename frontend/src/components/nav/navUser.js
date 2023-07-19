@@ -5,6 +5,7 @@ import { thunkSignOut } from '../../store/session';
 import { useLoading } from '../../context/loading';
 import { TbUserCircle, TbLogout, TbX } from 'react-icons/tb'
 import useOutsideClick from '../../hooks/useOutsideClick';
+import { thunkClearNowPlaying } from '../../store/songs';
 
 function NavUser() {
     const { ref, isVisible, setIsVisible } = useOutsideClick();
@@ -21,6 +22,7 @@ function NavUser() {
         navigate('/')
         dispatch(thunkSignOut())
         .then(() => {
+            dispatch(thunkClearNowPlaying())
             setLoading(false);
         })
     }

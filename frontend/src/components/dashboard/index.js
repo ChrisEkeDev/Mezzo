@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Nav from '../nav';
 import NewArtist from '../newArtist';
@@ -14,12 +14,14 @@ import MyArtists from '../artists/myArtists'
 import MySongs from '../songs/mySongs';
 import Artist from '../artists/artist';
 import Songs from '../songs';
+import { thunkGetGenres } from '../../store/songs';
 import UpdateArtistWrapper from '../updateArtist';
 import UpdateSongWrapper from '../updateSong';
 import './dashboard.css'
 
 function Dashboard() {
     const user = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
     const history = useHistory();
 
     const navigate = (route) => {
@@ -27,6 +29,10 @@ function Dashboard() {
     }
 
     if (!user) navigate('/')
+
+    useEffect(() => {
+        dispatch(thunkGetGenres())
+    }, [dispatch])
 
     return (
         <main id='dashboard--wrapper'>

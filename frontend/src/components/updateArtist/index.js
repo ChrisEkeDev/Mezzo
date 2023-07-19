@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Input from '../input';
+import Image from '../input/image';
 import { useHistory } from 'react-router-dom';
 import { useLoading } from '../../context/loading';
 import { useAlerts } from '../../context/alerts';
@@ -92,7 +93,13 @@ function UpdateArtist({artist}) {
                 setValue={setBio}
                 error={errors.bio}
             />
-            <input onChange={(x) => handleImage(x)} type='file' name='image' id='image' accept='image/*'/>
+            <Image
+                name='image'
+                label='Artist Image'
+                value={image}
+                setValue={setImage}
+                error={errors.image}
+            />
             <div className='new_artist--action'>
                 <Button
                 label='Update Artist'

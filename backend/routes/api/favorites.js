@@ -15,7 +15,14 @@ router.get('/artists', requireAuth, async(req, res) => {
         },
         include: [
             {
-                model: Artist
+                model: Artist,
+                include: [{
+                    model: Song,
+                    include: [
+                        { model: Genre },
+                        { model: Artist }
+                    ]
+                }]
             }
         ]
     })
@@ -55,7 +62,14 @@ router.post('/artists', requireAuth, async(req, res) => {
         },
         include: [
             {
-                model: Artist
+                model: Artist,
+                include: [{
+                    model: Song,
+                    include: [
+                        { model: Genre },
+                        { model: Artist }
+                    ]
+                }]
             }
         ]
     })
@@ -95,7 +109,14 @@ router.delete('/artists', requireAuth, async(req, res) => {
             },
             include: [
                 {
-                    model: Artist
+                    model: Artist,
+                    include: [{
+                        model: Song,
+                        include: [
+                            { model: Genre },
+                            { model: Artist }
+                        ]
+                    }]
                 }
             ]
         })

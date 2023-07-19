@@ -142,6 +142,10 @@
     padding-top: 0;
 }
 
+.bottom-padding {
+    padding-bottom: 15px;
+}
+
 
 .artist_item--name_span {
     display: block;

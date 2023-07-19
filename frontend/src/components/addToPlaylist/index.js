@@ -4,7 +4,7 @@ import { useLoading } from '../../context/loading';
 import { useAlerts } from '../../context/alerts';
 import { thunkAddToPlaylist } from '../../store/playlists';
 import Button from '../button';
-import { TbCircleCheck, TbPlaylistAdd } from 'react-icons/tb';
+import { TbCircleCheckFilled, TbPlaylistAdd } from 'react-icons/tb';
 
 function AddToPlaylist({song, close, playlist}) {
     const playlistData = useSelector(state => state.playlists.all)
@@ -25,12 +25,12 @@ function AddToPlaylist({song, close, playlist}) {
             const data = await dispatch(thunkAddToPlaylist(id, selectedPlaylist.id))
             const message = data.message;
             handleAlerts(message)
-            close();
         } catch(error) {
             const message = await error.json()
             handleAlerts(message)
         } finally {
             setLoading(undefined)
+            close();
         }
     }
 
@@ -51,7 +51,7 @@ function AddToPlaylist({song, close, playlist}) {
                                     <span>{playlist.name}</span>
                                     {
                                         playlist?.PlaylistSongs?.filter(pls => pls.songId === song.id).length ?
-                                        <span className='confirm--icon'><TbCircleCheck/></span> :
+                                        <span className='confirm--icon'><TbCircleCheckFilled/></span> :
                                         null
                                     }
                             </li>

@@ -1,24 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { csrfFetch } from "../../store/csrf";
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { TbExclamationCircle } from 'react-icons/tb';
 import './input.css';
 
 function Select({name, label, value, setValue, error, disabled}) {
-    const [ genres, setGenres ] = useState([])
-
-    const getGenres = async () => {
-        const res = await csrfFetch(`/api/genres`)
-        if (res.ok) {
-            const data = await res.json();
-            setGenres(data)
-        }
-    }
-
-    useEffect(() => {
-        getGenres();
-    }, [])
-
-    if (!genres.length) return <></>
+    const genreData = useSelector(state => state.songs.genres)
+    const genres = Object.values(genreData)
 
     return (
         <label className="select--select" htmlFor={name}>

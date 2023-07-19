@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Input from '../input';
+import Audio from '../input/audio';
 import { useHistory } from 'react-router-dom';
 import { useLoading } from '../../context/loading';
 import { useAlerts } from '../../context/alerts';
 import { thunkUpdateSong } from '../../store/songs';
+import { useNowPlaying } from '../../context/nowPlaying';
 import { useParams } from 'react-router-dom';
 import Button from '../button';
 import Select from '../input/select'
@@ -21,6 +23,7 @@ function UpdateSong({song}) {
     const [ errors, setErrors ] = useState({})
     const { setLoading } = useLoading();
     const { handleAlerts } = useAlerts();
+    const { currentTrack, handleClear } = useNowPlaying();
     const history = useHistory();
     const dispatch = useDispatch();
     const artist = useSelector(state => state.artists.current);
@@ -29,18 +32,16 @@ function UpdateSong({song}) {
         history.push(route);
     }
 
-    const handleSong = (x) => {
-        setSongUrl(x.target.files[0])
-        console.log(songUrl)
-    }
-
     const updateSong = async (e) => {
         e.preventDefault();
         setLoading({message: 'Updating your song...'});
         try {
+            if (song.id === currentTrack.id) {
+                handleClear();
+            }
             const formData = new FormData()
             formData.append("name", name)
-            formData.append("description", description)
+            if (description) formData.append("description", description)
             formData.append("genreId", parseInt(genre))
             if (songUrl) {
                 formData.append("song", songUrl)
@@ -112,8 +113,13 @@ function UpdateSong({song}) {
                 setValue={setGenre}
                 error={errors.genre}
             />
-            <input onChange={(x) => handleSong(x)} type='file' name='song' id='song' accept="audio/*"/>
-            {errors.songUrl  && <span>{errors.songUrl}</span>}
+            <Audio
+                name={song}
+                label="Song File"
+                value={songUrl}
+                setValue={setSongUrl}
+                error={errors.song}
+            />
             <div className='new_artist--action'>
                 <Button
                 label='Update Song'

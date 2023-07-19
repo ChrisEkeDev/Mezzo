@@ -34,7 +34,8 @@ router.get('/', requireAuth, async(req, res) => {
         include: [{
             model: Song,
             include: [
-                { model: Genre }
+                { model: Genre },
+                { model: Artist }
             ]
         }]
     })
@@ -49,7 +50,14 @@ router.get('/current', requireAuth, async(req, res) => {
     const artists = await Artist.findAll({
         where: {
             userId: user.id
-        }
+        },
+        include: [{
+            model: Song,
+            include: [
+                { model: Genre },
+                { model: Artist }
+            ]
+        }]
     })
 
     return res.status(200).json({
@@ -105,7 +113,21 @@ router.post('/', requireAuth, upload.single('image'), async(req, res) => {
         image: image ? image.location : null
     })
 
-    const artist = await Artist.findByPk(newArtist.id)
+    const artist = await Artist.findByPk(newArtist.id, {
+        include: [
+            {
+                model: Song,
+                include: [
+                    {
+                        model: Artist
+                    },
+                    {
+                        model: Genre
+                    }
+                ]
+            }
+        ]
+    })
 
     return res.status(200).json({
         message: { message: 'Artist was created successfully.'},
@@ -156,6 +178,17 @@ router.put('/:artistId', requireAuth,  upload.single('image'), async(req, res) =
                 {
                     model: User,
                     attributes: ["id", "username"]
+                },
+                {
+                    model: Song,
+                    include: [
+                        {
+                            model: Artist
+                        },
+                        {
+                            model: Genre
+                        }
+                    ]
                 }
             ]
         })

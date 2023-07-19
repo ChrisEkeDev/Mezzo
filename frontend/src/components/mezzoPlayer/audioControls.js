@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { TbArrowsMaximize,TbPlayerPauseFilled, TbPlayerPlayFilled, TbPlayerSkipBackFilled ,TbArrowsShuffle,TbRepeat, TbPlayerSkipForwardFilled } from 'react-icons/tb';
+import React, { useEffect, useCallback, useRef } from 'react';
+import { TbPlayerPauseFilled, TbPlayerPlayFilled, TbPlayerSkipBackFilled ,TbArrowsShuffle,TbRepeat, TbPlayerSkipForwardFilled } from 'react-icons/tb';
 
-function AudioControls({ loop, setLoop, fullScreen, tracks, trackIndex, setTrackIndex, setCurrentTrack, playerState, setPlayerState, audioRef, progressRef, duration, setProgress}) {
-    const nowPlaying = useSelector(state => state.songs.nowPlaying);
+function AudioControls({ loop, setLoop, tracks, trackIndex, setTrackIndex, setCurrentTrack, playerState, setPlayerState, audioRef, progressRef, duration, setProgress}) {
     const playAnimationRef = useRef();
 
     const repeat = useCallback(() => {
         const currentTime = audioRef.current?.currentTime;
         setProgress(currentTime);
-        progressRef.current.value = currentTime;
-        progressRef.current.style.setProperty(
-          '--range-progress',
-          `${(progressRef.current.value / duration) * 100}%`
-        );
+        if (progressRef.current) {
+            progressRef.current.value = currentTime;
+            progressRef.current.style.setProperty(
+                '--range-progress',
+                `${(progressRef.current.value / duration) * 100}%`
+                );
+        }
 
         playAnimationRef.current = requestAnimationFrame(repeat);
     }, [audioRef, duration, progressRef, setProgress]);

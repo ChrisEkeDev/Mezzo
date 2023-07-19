@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import Modal from '../modal';
 import IconButton from '../button/iconButton';
@@ -20,17 +20,18 @@ import useOutsideClick from '../../hooks/useOutsideClick';
 function SongItem({song, isAuth, artist, onPlaylistPage}) {
     const [ deletingSong, setDeletingSong ] = useState(false);
     const [ addingToPlaylist, setAddingToPlaylist ] = useState(false);
+    const [ songDuration, setSongDuration] = useState(undefined);
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const playlist = useSelector(state => state.playlists.current)
     const favoritesData = useSelector(state => state.favorites.songs);
-    const nowPlaying = useSelector(state => state.songs.nowPlaying)
     const { setLoading } = useLoading();
     const currentSong = useSelector(state => state.songs.current)
     const { handleAlerts } = useAlerts();
     const favorites = Object.values(favoritesData)
     const history = useHistory();
     const dispatch = useDispatch();
-    const { playerState, setPlayerState } = useNowPlaying();
+    const { playerState, handlePlay, handlePause, currentTrack, handleClear } = useNowPlaying();
+    const audioRef = useRef(null)
 
     const isFavorited = favorites.some(favorite => favorite.songId === song.id);
 
@@ -38,31 +39,26 @@ function SongItem({song, isAuth, artist, onPlaylistPage}) {
         history.push(route);
     }
 
-    const handlePlayState = (state) => {
-        setPlayerState(state)
-        setIsVisible(false)
-    }
-
-
-
     const handleSelectSong = (songId) => {
         dispatch(thunkGetSong(songId))
     }
 
     const handlePlaySong = () => {
         dispatch(thunkSetNowPlaying([song]))
-        .then(() => setIsVisible(false))
+        .then(() => handlePlay())
     }
 
     const deleteSong = async () => {
         setLoading({message: 'Deleting song...'})
+        if (currentTrack?.id === song.id) {
+            handleClear()
+        }
         try {
             const message = await dispatch(thunkDeleteSong(song));
             handleAlerts(message);
             dispatch(thunkGetArtist(artist.id))
         } catch (error) {
-            const message = await error.json();
-            handleAlerts(message)
+            handleAlerts({message: 'There was an issue deleting your song.'})
         } finally {
             setLoading(undefined)
         }
@@ -112,41 +108,63 @@ function SongItem({song, isAuth, artist, onPlaylistPage}) {
 
     }
 
-    if (song.id === currentSong) {
-        console.Console('match')
+    const formatTime = (time) => {
+        if (time && !isNaN(time)) {
+            const minutes = Math.floor(time / 60);
+            const formatMinutes = minutes < 10 ? `${minutes}` : `${minutes}`;
+            const seconds = Math.floor(time % 60);
+            const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+            return `${formatMinutes}:${formatSeconds}`;
+        }
+        return "00:00"
+    };
+
+    const onLoadedMetadata = () => {
+        const seconds = audioRef.current.duration;
+        setSongDuration(seconds);
     }
 
-    // useEffect(() => {
-    //     console.log(currentSong)
-    // }, [currentSong])
+
+
 
     return (
         <li id={`${song.id === currentSong?.id ? 'selectedSong' : ''}`}onClick={() => handleSelectSong(song.id) } className={`song_item--wrapper song--grid`}>
+            <audio ref={audioRef} onLoadedMetadata={onLoadedMetadata}/>
             <div className='song_item--name'>
                 <div onClick={() => handlePlaySong(song)} className='song_item--image' style={{backgroundImage: `url(${artist.image})`}}>
-                    <span className='song_item--image--overlay'>
-                        <TbPlayerPlayFilled/>
-                    </span>
+                    { currentTrack?.id === song.id && playerState === "playing" ?
+                        <span className='song_item_playing--overlay'>
+                            <div className='playing--graphic'>
+                                <div className='playing--animation playing--1'></div>
+                                <div className='playing--animation playing--2'></div>
+                                <div className='playing--animation playing--3'></div>
+                            </div>
+                        </span> :
+                        <span className='song_item--image--overlay'>
+                            <TbPlayerPlayFilled/>
+                        </span>
+                    }
+
                 </div>
                 <span>{song.name}</span>
                 { isFavorited ? <span className='song_item--favorite'><TbHeartFilled/></span> : null }
                 <span onClick={() => setIsVisible(true)} className='song_item--icon'><TbDots/></span>
                 {   isVisible ?
                         <div ref={ref} className='hover_menu--wrapper'>
-                                {nowPlaying.id === song.id ?
-                                playerState === 'pause' || playerState === "stop" ?
-                                <span onClick={() => handlePlayState('play')} className='hover_menu--option'>
-                                    <span className='hover_menu--label'>Play Now</span>
-                                    <span className='hover_menu--icon'><TbPlayerPlay/></span>
-                                </span> :
-                                <span onClick={() => handlePlayState('pause')} className='hover_menu--option'>
-                                    <span className='hover_menu--label'>Pause Song</span>
-                                    <span className='hover_menu--icon'><TbPlayerPauseFilled/></span>
-                                </span>:
-                                <span onClick={() => handlePlaySong(song)} className='hover_menu--option'>
-                                    <span className='hover_menu--label'>Play Now</span>
-                                    <span className='hover_menu--icon'><TbPlayerPlay/></span>
-                                </span>
+                                {currentTrack?.id === song.id ?
+                                    playerState === 'paused' ?
+                                        <span onClick={() => handlePlay()} className='hover_menu--option'>
+                                            <span className='hover_menu--label'>Resume Song</span>
+                                            <span className='hover_menu--icon'><TbPlayerPlay/></span>
+                                        </span> :
+                                        <span onClick={() => handlePause()} className='hover_menu--option'>
+                                            <span className='hover_menu--label'>Pause Song</span>
+                                            <span className='hover_menu--icon'><TbPlayerPauseFilled/></span>
+                                        </span>:
+                                    <span onClick={() => handlePlaySong(song)} className='hover_menu--option'>
+                                        <span className='hover_menu--label'>Play Now</span>
+                                        <span className='hover_menu--icon'><TbPlayerPlay/></span>
+                                    </span>
                                 }
 
                             {
@@ -244,7 +262,7 @@ function SongItem({song, isAuth, artist, onPlaylistPage}) {
                 }
             <div className='song_item--artist' onClick={() => navigate(`/dashboard/artists/${artist.id}`)}>{artist.name}</div>
             <div className='song_item--genre'>{song.Genre.name}</div>
-            <div className='song_item--time'>0:00</div>
+            <div className='song_item--time'>{formatTime(songDuration)}</div>
         </li>
     )
 }

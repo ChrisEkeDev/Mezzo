@@ -36,7 +36,7 @@ function SignUp() {
       dispatch(thunkSignUp(data))
       .then((alert) => {
         handleAlerts(alert)
-        navigate('/dashboard/recently-added')
+        navigate('/dashboard/artists')
         setLoading(undefined);
       })
       .catch(async(errors) => {
@@ -55,7 +55,7 @@ function SignUp() {
       dispatch(thunkSignIn(data))
       .then((alert) => {
         handleAlerts(alert)
-        navigate('/dashboard/recently-added')
+        navigate('/dashboard/artists')
         setLoading(undefined);
       })
       .catch(async(errors) => {

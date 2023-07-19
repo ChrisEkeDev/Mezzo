@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './favorites.css';
+import placeholder from '../../assets/mezzo-placeholder.svg';
 import ArtistItem from '../artists/artistItem';
 import SongItem from '../songs/songItem';
 import { useSelector } from 'react-redux';
@@ -16,7 +17,7 @@ function Favorites() {
 
     return (
         <div className='favorites--wrapper'>
-            <header className={`favorites_header--wrapper ${tab === 'songs' ? 'no-border' : ''}`}>
+            <header className={`favorites_header--wrapper ${tab === 'songs' && songs.length > 0 ? 'no-border' : ''}`}>
             <div className='favorites--header'>
                 <div
                     onClick={() => setTab('artists')}
@@ -33,7 +34,7 @@ function Favorites() {
                 </div>
             </div>
             {
-                tab === 'songs' ?
+                tab === 'songs' && songs.length > 0 ?
                 <div className='songs--header favorites--songs'>
                     <div className=''>
                     <div className='songs_header--wrapper song--grid'>
@@ -55,20 +56,35 @@ function Favorites() {
             </header>
             {
                 tab === 'artists' ?
-                <ul className='artists--list'>
-                    {
-                        artists.map(favorite => (
-                            <ArtistItem key={favorite.Artist.id} artist={favorite.Artist}/>
-                        ))
-                    }
-                </ul> :
-                <ul className='songs--list'>
-                    {
-                        songs.map(favorite => (
-                            <SongItem key={favorite.Song.id}  artist={favorite.Song.Artist} isAuth={user.id === favorite.userId} song={favorite.Song} />
-                        ))
-                    }
-                </ul>
+                    artists.length > 0 ?
+                        <ul className='artists--list'>
+                            {
+                                artists.map(favorite => (
+                                    <ArtistItem key={favorite.Artist.id} artist={favorite.Artist}/>
+                                ))
+                            }
+                        </ul> :
+                        <div className='no_content--wrapper'>
+                            <div className='no_content--contents'>
+                                <img src={placeholder}/>
+                                <p>You haven't added any artists to your favorites.</p>
+                            </div>
+                        </div>
+                :
+                    songs.length > 0 ?
+                        <ul className='songs--list'>
+                            {
+                                songs.map(favorite => (
+                                    <SongItem key={favorite.Song.id}  artist={favorite.Song.Artist} isAuth={user.id === favorite.Song.Artist.userId} song={favorite.Song} />
+                                ))
+                            }
+                        </ul> :
+                        <div className='no_content--wrapper'>
+                            <div className='no_content--contents'>
+                                <img src={placeholder}/>
+                                <p>You haven't added any songs to your favorites.</p>
+                            </div>
+                        </div>
             }
         </div>
   )

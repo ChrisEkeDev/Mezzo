@@ -35,7 +35,7 @@ function SignIn() {
       dispatch(thunkSignIn(data))
       .then((alert) => {
         handleAlerts(alert)
-        navigate('/dashboard')
+        navigate('/dashboard/artists')
         setLoading(undefined);
       })
       .catch(async(errors) => {
@@ -54,7 +54,7 @@ function SignIn() {
       dispatch(thunkSignIn(data))
       .then((alert) => {
         handleAlerts(alert)
-        navigate('/dashboard')
+        navigate('/dashboard/artists')
         setLoading(undefined);
       })
       .catch(async(errors) => {

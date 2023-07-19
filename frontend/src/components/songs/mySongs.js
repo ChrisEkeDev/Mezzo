@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import placeholder from '../../assets/mezzo-placeholder.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetUserSongs } from '../../store/songs';
 import LoadingData from '../loading/loadingData';
@@ -22,6 +23,9 @@ function MySongs() {
 
     return (
         <div className="songs--wrapper">
+            {
+                songs.length > 0 ?
+                <>
                 <header className='songs--header'>
                     <div></div>
                     <div className=''>
@@ -46,6 +50,15 @@ function MySongs() {
                         ))
                     }
                 </ul>
+                </> :
+                <div className='no_content--wrapper'>
+                    <div className='no_content--contents'>
+                        <img src={placeholder}/>
+                        <p>You haven't created any songs.</p>
+                    </div>
+                 </div>
+            }
+
         </div>
     )
 }

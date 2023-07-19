@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Input from '../input';
+import Audio from '../input/audio'
 import Select from '../input/select'
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,11 +26,6 @@ function NewSong() {
         history.push(route);
     }
 
-    const handleSong = (x) => {
-        setSong(x.target.files[0])
-        console.log(song)
-    }
-
     const createSong = async (e) => {
         e.preventDefault();
         setLoading({message: 'Creating your song...'});
@@ -43,7 +39,7 @@ function NewSong() {
             }
             const formData = new FormData()
             formData.append("name", songData.name)
-            formData.append("bio", songData.description)
+            if (songData.description) formData.append("bio", songData.description)
             formData.append("song", songData.song)
             formData.append("genreId", songData.genreId)
             formData.append("artistId", songData.artistId)
@@ -114,8 +110,13 @@ function NewSong() {
                 setValue={setGenre}
                 error={errors.genre}
             />
-            <input onChange={(x) => handleSong(x)} type='file' name='song' id='song' accept="audio/*"/>
-            {errors.song  && <span>{errors.song}</span>}
+            <Audio
+                name={song}
+                label="Song File"
+                value={song}
+                setValue={setSong}
+                error={errors.song}
+            />
             <div className='new_artist--action'>
                 <Button
                 label='Create Song'

@@ -39,7 +39,7 @@ html, body {
     border: 1px solid var(--border);
     border-radius: 5px;
     color: var(--text-body);
-    z-index: 450;
+    z-index: 200;
 }
 
 .hover_menu--option {
@@ -97,4 +97,30 @@ html, body {
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: var(--orange-hover);
+  }
+
+
+  .no_content--wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .no_content--contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .no_content--contents img {
+    height: 75px;
+    margin-bottom: 15px;
+  }
+
+  .no_content--contents p {
+    font-size: 20px;
+    color: var(--text-label)
   }

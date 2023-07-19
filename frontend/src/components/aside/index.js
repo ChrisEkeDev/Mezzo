@@ -43,11 +43,6 @@ function Aside() {
             <div className='aside_group--wrapper'>
                 <h2 className='aside_group--label'>Browse</h2>
                 <AsideGroupItem
-                    label='Recenlty Added'
-                    icon={<TbClockHour4/>}
-                    action={() => alert('Feature coming soon.')}
-                />
-                <AsideGroupItem
                     label='Artists'
                     icon={<TbMicrophone2/>}
                     action={() => navigate('/dashboard/artists')}

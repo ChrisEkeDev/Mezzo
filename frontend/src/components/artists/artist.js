@@ -6,7 +6,8 @@ import { useAlerts } from '../../context/alerts';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetArtist, thunkDeleteArtist } from '../../store/artists';
 import { thunkAddArtistToFavorites, thunkRemoveArtistFromFavorites } from '../../store/favorites';
-import { thunkSetNowPlaying } from '../../store/songs'
+import { thunkSetNowPlaying } from '../../store/songs';
+import { useNowPlaying } from '../../context/nowPlaying';
 import Modal from '../modal';
 import placeholder from '../../assets/mezzo-placeholder.svg'
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -23,6 +24,7 @@ function Artist() {
     const [ deletingArtist, setDeletingArtist ] = useState(false);
     const { setLoading } = useLoading();
     const { handleAlerts } = useAlerts();
+    const { handlePlay } = useNowPlaying();
     const { id } = useParams();
     const favoritesData = useSelector(state => state.favorites.artists);
     const favorites = Object.values(favoritesData)
@@ -78,7 +80,7 @@ function Artist() {
         }
     }
 
-    const handlePlay = () => {
+    const handlePlayArtist = () => {
         dispatch(thunkSetNowPlaying(artist.Songs))
     }
 
@@ -110,7 +112,7 @@ function Artist() {
                     <IconButton
                         style='primary'
                         icon={<TbPlayerPlayFilled/>}
-                        action={handlePlay}
+                        action={handlePlayArtist}
                     />
                 </div>
                 </div>
@@ -194,7 +196,7 @@ function Artist() {
                     null
                 }
                 </div>
-                <div className={`artist_songs--header ${!isAuth ? 'no-top-padding' : ''}`}>
+                <div className={`artist_songs--header ${!isAuth ? 'no-top-padding' : artist.Songs.length === 0 ? 'bottom-padding' : ''}`}>
                     <div className='artist_songs--top_header'>
                     { isAuth ?
                         <Button
@@ -206,7 +208,9 @@ function Artist() {
                         null
                     }
                     </div>
-                    <div className=''>
+                    {
+                        artist.Songs.length > 0 ?
+                        <div className=''>
                         <div className='songs_header--wrapper song--grid'>
                             <span>Song</span>
                             <span className='songs_header--label'>
@@ -219,16 +223,29 @@ function Artist() {
                                 <span>Time</span>
                             </span>
                         </div>
-                    </div>
+                        </div> :
+                        null
+                    }
+
                 </div>
                 </header>
-                <ul className='songs--list'>
-                    {
-                        artist.Songs.map(song => (
-                            <SongItem key={song.id} artist={artist} isAuth={user.id === artist.User.id} song={song} />
-                        ))
-                    }
-                </ul>
+                {
+                    artist.Songs.length > 0 ?
+                    <ul className='songs--list'>
+                        {
+                            artist.Songs.map(song => (
+                                <SongItem key={song.id} artist={artist} isAuth={user.id === artist.User.id} song={song} />
+                            ))
+                        }
+                    </ul> :
+                    <div className='no_content--wrapper'>
+                        <div className='no_content--contents'>
+                            <img src={placeholder}/>
+                            <p>{artist.name} doesn't have any songs yet.</p>
+                        </div>
+                    </div>
+                }
+
         </div>
     )
 }

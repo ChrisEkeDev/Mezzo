@@ -17,7 +17,6 @@ function Landing() {
                 <nav className='landing_nav--nav'>
                     <div className='landing_nav--logo'>
                         <img src={mezzo} />
-                        {/* <span>Mezzo</span> */}
                     </div>
                     <div className='landing_nav--actions'>
                         <Button

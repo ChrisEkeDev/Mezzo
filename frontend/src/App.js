@@ -5,7 +5,6 @@ import Landing from './components/landing';
 import Auth from './components/auth';
 import Dashboard from './components/dashboard';
 import { thunkRestoreUser } from './store/session';
-import { thunkGetPlaylists } from './store/playlists';
 import NowPlayingProvider from './context/nowPlaying';
 
 function App() {
@@ -19,10 +18,9 @@ function App() {
 
   useEffect(() => {
     dispatch(thunkRestoreUser())
-    .then(() => dispatch(thunkGetPlaylists()))
   }, [dispatch])
 
-  if (user) navigate('/dashboard/recently-added')
+  if (user) navigate('/dashboard/artists')
 
   return (
     <div id="app--wrapper">

@@ -9,6 +9,8 @@ const CREATE_SONG = '/mezzo/songs/CREATE_SONG'
 const UPDATE_SONG = '/mezzo/songs/UPDATE_SONG'
 const DELETE_SONG = '/mezzo/songs/DELETE_SONG'
 const SET_NOW_PLAYING = '/mezzo/songs/SET_NOW_PLAYING'
+const CLEAR_NOW_PLAYING = '/mezzo/songs/CLEAR_NOW_PLAYING'
+const GET_GENRES = '/mezzo/songs/GET_GENRES'
 
 // ACTIONS
 const actionGetAllSongs = (songs) => ({
@@ -44,6 +46,15 @@ const actionDeleteSong = (song) => ({
 const actionSetNowPlaying = (songs) => ({
     type: SET_NOW_PLAYING,
     payload: songs
+})
+
+const actionClearNowPlayling = () => ({
+    type: CLEAR_NOW_PLAYING
+})
+
+const actionGetGenres = (genres) => ({
+    type: GET_GENRES,
+    payload: genres
 })
 
 // THUNKS
@@ -112,16 +123,15 @@ export const thunkUpdateSong = (id, songData) => async dispatch => {
 }
 
 export const thunkDeleteSong = (song) => async dispatch => {
-    const res = await csrfFetch(`/api/songs/${song.id}`, {
-        method: 'DELETE'
-    })
-    if (res.ok) {
+    try {
+        const res = await csrfFetch(`/api/songs/${song.id}`, {
+            method: 'DELETE'
+        })
         const message = await res.json();
         dispatch(actionDeleteSong(song))
         return message
-    } else {
-        const errors = await res.json();
-        return errors;
+    } catch(error) {
+        console.log('Error deleting song:', error)
     }
 }
 
@@ -129,8 +139,23 @@ export const thunkSetNowPlaying = (songs) => async dispatch => {
     dispatch(actionSetNowPlaying(songs))
 }
 
+export const thunkClearNowPlaying = () => async dispatch => {
+    dispatch(actionClearNowPlayling())
+}
+
+export const thunkGetGenres = () => async dispatch => {
+    const res = await csrfFetch(`/api/genres`)
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(actionGetGenres(data))
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
 // REDUCER
-const initialState = { all: {}, user: {}, current: {}, nowPlaying: {} }
+const initialState = { all: {}, user: {}, current: {}, nowPlaying: {}, genres: {} }
 
 const songsReducer = (state = initialState, action) => {
     switch(action.type) {
@@ -160,6 +185,10 @@ const songsReducer = (state = initialState, action) => {
             action.payload.forEach(song => newState.nowPlaying[song.id] = song);
             return newState;
         }
+        case CLEAR_NOW_PLAYING: {
+            const newState = { ...state, nowPlaying: {}}
+            return newState
+        }
         case CREATE_SONG: {
             const newState = { ...state };
             newState.all = { ...newState.all, [action.payload.id]: action.payload }
@@ -169,6 +198,11 @@ const songsReducer = (state = initialState, action) => {
             const newState = { ...state }
             delete newState.all[action.payload.id]
             return newState;
+        }
+        case GET_GENRES: {
+            const newState = { ...state, genres: {} }
+            action.payload.forEach(genre => newState.genres[genre.id] = genre);
+            return newState
         }
         default:
             return state;
