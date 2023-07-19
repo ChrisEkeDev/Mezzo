@@ -55,13 +55,13 @@ Mezzo is a clone of Apple Music. This app allows you to upload and discover song
 ## Screenshots
 
 ### Landing Page
-[Landing Page]('/frontend/src/assets/landing-page-screenshot.png')
+![screencapture-mezzo-onrender-2023-07-19-17_21_55](https://github.com/ChrisEkeDev/Mezzo/assets/52504068/4855260a-bf77-4e0d-9420-c62ada8b7c8e)
 
 ### Dashboard
-[Dashboard]('/frontend/src/assets/dashboard-screenshot.png')
+![screencapture-mezzo-onrender-dashboard-artists-2023-07-19-17_23_01](https://github.com/ChrisEkeDev/Mezzo/assets/52504068/2e2e766d-71fa-4621-8aa2-a33c1efd0246)
 
 ### Now Playing
-[Dashboard]('/frontend/src/assets/now-playing-screenshot.png')
+![screencapture-mezzo-onrender-dashboard-artists-1-2023-07-19-17_23_36](https://github.com/ChrisEkeDev/Mezzo/assets/52504068/0b1d75bb-e217-44ae-aa02-9f043879855c)
 
 ## Contact Me
 
