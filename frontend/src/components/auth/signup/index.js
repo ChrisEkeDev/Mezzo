@@ -70,8 +70,8 @@ function SignUp() {
     if (username.trim().length === 0) {
       errors.username = 'Please enter a Username';
     }
-    if (username.trim().length < 3) {
-      errors.username = 'Username must be at least 3 characters';
+    if (username.trim().length < 4) {
+      errors.username = 'Username must be at least 4 characters';
     }
     if (email.trim().length < 4) {
       errors.email = 'Email must be at least 4 characters';

@@ -6,6 +6,7 @@
     flex-direction: column;
     height: 100%;
     overflow: hidden;
+    background-color: #FCFCFC;
 }
 
 .landing--image {
@@ -72,4 +73,63 @@
     line-height: 30px;
     margin: 0 0 30px 0;
     color: var(--text-body)
+}
+
+
+.landing--footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1110px;
+    border-top: 1px solid var(--border);
+    padding: 30px 0;
+    margin: 0 auto;
+}
+
+.landing--socials {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.landing--repo,
+.landing--technology-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: var(--text-label)
+}
+
+.landing--repo,
+.landing--socials {
+    color: var(--orange)
+}
+
+.landing--repo {
+    cursor: pointer;
+    text-decoration: none;
+}
+.landing--repo:hover {
+    background-color: var(--orange);
+    border: 1px solid var(--orange);
+    color: white;
+}
+
+.landing--technologies {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.landing--socials a {
+    color: var(--orange);
+    cursor: pointer;
+}
+
+.landing--socials a:hover {
+    color: var(--orange-hover)
 }

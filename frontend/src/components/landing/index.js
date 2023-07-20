@@ -4,6 +4,10 @@ import landing from '../../assets/mezzo-landing.png'
 import { useHistory } from 'react-router-dom';
 import Button from '../button';
 import './landing.css';
+import { TbBrandDribbble,TbBrandCss3,TbBrandRedux,  TbBrandGithub, TbBrandJavascript, TbBrandLinkedin, TbBrandReact } from 'react-icons/tb';
+import { FaNodeJs } from 'react-icons/fa';
+import { SiExpress, SiPostgresql } from 'react-icons/si';
+
 
 function Landing() {
     const history = useHistory()
@@ -48,6 +52,53 @@ function Landing() {
                 </section>
                 <img className='landing--image' src={landing}/>
             </main>
+            <footer className="landing--footer">
+                <div className='landing--socials'>
+                    <a target='_blank' href='https://linkedin.com/in/iamchriseke'>
+                        <TbBrandLinkedin/>
+                    </a>
+                    <a target='_blank' href='https://dribbble.com/chriseke'>
+                        <TbBrandDribbble/>
+                    </a>
+                    <a target='_blank' href='https://github.com/ChrisEkeDev'>
+                        <TbBrandGithub/>
+                    </a>
+                </div>
+                <div className='landing--technologies'>
+                    <span className='landing--technology-item'>
+                        <TbBrandReact/>
+                        <span>React</span>
+                    </span>
+                    <span className='landing--technology-item'>
+                        <FaNodeJs/>
+                        <span>Node.js</span>
+                    </span>
+                    <span className='landing--technology-item'>
+                        <TbBrandJavascript/>
+                        <span>Javascript</span>
+                    </span>
+                    <span className='landing--technology-item'>
+                        <TbBrandCss3/>
+                        <span>CSS3</span>
+                    </span>
+                    <span className='landing--technology-item'>
+                        <SiExpress/>
+                        <span>Express</span>
+                    </span>
+                    <span className='landing--technology-item'>
+                        <TbBrandRedux/>
+                        <span>Redux</span>
+                    </span>
+                    <span className='landing--technology-item'>
+                        <SiPostgresql/>
+                        <span>PostgreSQL</span>
+                    </span>
+                </div>
+                <a href="https://github.com/ChrisEkeDev/Mezzo" target="_blank" className='landing--repo'>
+                    <TbBrandGithub/>
+                    <span>Github Repo</span>
+                </a>
+            </footer>
         </div>
     )
 }
