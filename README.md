@@ -13,7 +13,7 @@ Mezzo is a clone of Apple Music. This app allows you to upload and discover song
 
 ## Technologies Used
 
-<img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" /><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" /><img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" /><img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" /><img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" /><img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" /><img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" /><img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white" /><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" /><img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white" />
+<img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" /><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" /><img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" /><img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" /><img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" /><img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" /><img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" /><img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white" /><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" />
 
 ## Features
 
@@ -55,13 +55,13 @@ Mezzo is a clone of Apple Music. This app allows you to upload and discover song
 ## Screenshots
 
 ### Landing Page
-[Landing Page]('/frontend/src/assets/landing-page-screenshot.png')
+![screencapture-mezzo-onrender-2023-07-19-17_21_55](https://github.com/ChrisEkeDev/Mezzo/assets/52504068/4855260a-bf77-4e0d-9420-c62ada8b7c8e)
 
 ### Dashboard
-[Dashboard]('/frontend/src/assets/dashboard-screenshot.png')
+![screencapture-mezzo-onrender-dashboard-artists-2023-07-19-17_23_01](https://github.com/ChrisEkeDev/Mezzo/assets/52504068/2e2e766d-71fa-4621-8aa2-a33c1efd0246)
 
 ### Now Playing
-[Dashboard]('/frontend/src/assets/now-playing-screenshot.png')
+![screencapture-mezzo-onrender-dashboard-artists-1-2023-07-19-17_23_36](https://github.com/ChrisEkeDev/Mezzo/assets/52504068/0b1d75bb-e217-44ae-aa02-9f043879855c)
 
 ## Contact Me
 
