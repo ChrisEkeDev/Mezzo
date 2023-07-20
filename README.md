@@ -73,56 +73,56 @@ Mezzo is a clone of Apple Music. This app allows you to upload and discover song
 ### Session Routes
 | **Request** | **Purpose** | **Returns** |
 |-------------|:-----------:|-------------|
-|**GET** `/api/session`| Route for restoring a user session | ```json { message: "Session Restored", user: {id: 1, email: "email@aa.io", username: "username"}}```|
-|**POST** `/api/session`| Route for signing a user in | ```json { message: "Sign In Successful", user: {id: 1, email: "email@aa.io", username: "username"}}```|
+|**GET** `/api/session`| Route for restoring a user session |   { message: "Session Restored", user: {id: 1, email: "email@aa.io", username: "username"}} |
+|**POST** `/api/session`| Route for signing a user in |   { message: "Sign In Successful", user: {id: 1, email: "email@aa.io", username: "username"}} |
 
 ### Users Routes
 | **Request** | **Purpose** | **Returns** |
 |-------------|:-----------:|-------------|
-|**POST** `/api/users`| Route for signing up a user | ```json { message: "Account created successful", user: {id: 1, email: "email@aa.io", username: "username"}}}```|
+|**POST** `/api/users`| Route for signing up a user |   { message: "Account created successful", user: {id: 1, email: "email@aa.io", username: "username"}} |
 
 ### Artists Routes
 | **Request** | **Purpose** | **Returns** |
 |-------------|:-----------:|-------------|
-|**GET** `/api/artists`| Route to get all artists in the app | ```json {Artists: [{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}]}```|
-|**GET** `/api/artists/:artistId`| Route to get single artist | ```json {Artist: {id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}}``` |
-|**POST** `/api/artists`| Route to create an artist | ```json {message: "Artist created successfully", Artist:{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}}```|
-|**GET** `/api/artists/current`| Route to get all artists created by a user | ```json {Artists: [{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}]}```|
-|**PUT** `/api/artists/:artistId`| Route to update artists information | ```json {message: "Artist updated successfully", Artist:{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}}```|
-|**DELETE** `/api/artists/:artistId` | Route to delete an artists | ```json {message: "Artist deleted successfully" }```
+|**GET** `/api/artists`| Route to get all artists in the app |   {Artists: [{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}]} |
+|**GET** `/api/artists/:artistId`| Route to get single artist |   {Artist: {id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}}  |
+|**POST** `/api/artists`| Route to create an artist |   {message: "Artist created successfully", Artist:{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}} |
+|**GET** `/api/artists/current`| Route to get all artists created by a user |   {Artists: [{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}]} |
+|**PUT** `/api/artists/:artistId`| Route to update artists information |   {message: "Artist updated successfully", Artist:{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}} |
+|**DELETE** `/api/artists/:artistId` | Route to delete an artists |   {message: "Artist deleted successfully" }
 
 ### Songs Routes
 | **Request** | **Purpose** | **Returns** |
 |-------------|:-----------:|-------------|
-|**GET** `/api/songs`| Route to get all songs in the app | ```json {Songs: [{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}]}```|
-|**GET** `/api/songs/:songId`| Route to get single song | ```json {Song: {id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}}``` |
-|**POST** `/api/songs`| Route to create an song | ```json {message: "Song created successfully", Song:{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}}```|
-|**GET** `/api/songs/current`| Route to get all songs created by a user | ```json {Songs: [{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}]}```|
-|**PUT** `/api/songs/:songId`| Route to update songs information | ```json {message: "Song updated successfully", Song:{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}}```|
-|**DELETE** `/api/songs/:songId` | Route to delete a song | ```json {message: "Song deleted successfully" }```|
+|**GET** `/api/songs`| Route to get all songs in the app |   {Songs: [{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}]} |
+|**GET** `/api/songs/:songId`| Route to get single song |   {Song: {id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}}  |
+|**POST** `/api/songs`| Route to create an song |   {message: "Song created successfully", Song:{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}} |
+|**GET** `/api/songs/current`| Route to get all songs created by a user |   {Songs: [{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}]} |
+|**PUT** `/api/songs/:songId`| Route to update songs information |   {message: "Song updated successfully", Song:{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}} |
+|**DELETE** `/api/songs/:songId` | Route to delete a song |   {message: "Song deleted successfully" } |
 
 ### Playlists Routes
 | **Request** | **Purpose** | **Returns** |
 |-------------|:-----------:|-------------|
-|**GET** `/api/playlists`| Route to get all playlists created by the user | ```json{Playlists: [{id: 1, userId: 1, Songs: [Songs Array]}]}```|
-|**GET** `/api/playlists/:playlistId`| Route to get a single playlist |```json{Playlist: {id: 1, userId: 1, Songs: [Songs Array]}}```|
-|**POST** `/api/playlists`| Route to create a new playlist |```json{message: "Playlist created successfully", Playlist: {id: 1, userId: 1, Songs: [Songs Array]}}```|
-|**PUT** `/api/playlists/:playlistId`| Route for updating a playlist name |```json{message: "Playlist updated successfully", Playlist: {id: 1, userId: 1, Songs: [Songs Array]}}```|
-|**DELETE** `/api/playlists/:playlistId` | Route for deleting a playlist |```json{message: "Playlist deleted successfully" }```|
-|**POST** `/api/playlists/:playlistId/add` | Route for adding a song to playlist |```json{message: "Song was added to playlist", Playlist: {id: 1, userId: 1, Songs: [Songs Array]}}```|
-|**DELETE** `/api/playlists/:playlistId/remove`| Route for removing a song from a playlist|```json{message: "Song was removed to playlist", Playlist: {id: 1, userId: 1, Songs: [Songs Array]}}```|
+|**GET** `/api/playlists`| Route to get all playlists created by the user |  {Playlists: [{id: 1, userId: 1, Songs: [Songs Array]}]} |
+|**GET** `/api/playlists/:playlistId`| Route to get a single playlist | {Playlist: {id: 1, userId: 1, Songs: [Songs Array]}} |
+|**POST** `/api/playlists`| Route to create a new playlist | {message: "Playlist created successfully", Playlist: {id: 1, userId: 1, Songs: [Songs Array]}} |
+|**PUT** `/api/playlists/:playlistId`| Route for updating a playlist name | {message: "Playlist updated successfully", Playlist: {id: 1, userId: 1, Songs: [Songs Array]}} |
+|**DELETE** `/api/playlists/:playlistId` | Route for deleting a playlist | {message: "Playlist deleted successfully" } |
+|**POST** `/api/playlists/:playlistId/add` | Route for adding a song to playlist | {message: "Song was added to playlist", Playlist: {id: 1, userId: 1, Songs: [Songs Array]}} |
+|**DELETE** `/api/playlists/:playlistId/remove`| Route for removing a song from a playlist| {message: "Song was removed to playlist", Playlist: {id: 1, userId: 1, Songs: [Songs Array]}} |
 
 ### Favorites Routes
 | **Request** | **Purpose** | **Returns** |
 |-------------|:-----------:|-------------|
-|**GET** `/api/favorites/artists`| Route to get all favorite artists| ```json{FavoriteArtists: [{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}]}```|
-|**GET** `/api/favorites/songs`| Route to get all favorite songs| ```json{FavoriteSongs: [{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}]}```|
-|**POST** `/api/favorites/artists`| Route to add an artist to list of favorites |```json{message: "Artist added to favorites", FavoriteArtists: [{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}] }```|
-|**POST** `/api/favorites/songs`| Route to add a song to list of favorites |```json{message: "Song added to favorites", FavoriteSongs: [{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}]}```|
-|**DELETE** `/api/favorites/artists`| Route to remove an artist from favorites|```json{message: "Artist removed from favorites", FavoriteArtists: [{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}] }```|
-|**DELETE** `/api/favorites/songs`| Route to remove a song from favorites|```json{message: "Song removed from favorites", FavoriteSongs: [{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}]}```|
+|**GET** `/api/favorites/artists`| Route to get all favorite artists|  {FavoriteArtists: [{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}]} |
+|**GET** `/api/favorites/songs`| Route to get all favorite songs|  {FavoriteSongs: [{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}]} |
+|**POST** `/api/favorites/artists`| Route to add an artist to list of favorites | {message: "Artist added to favorites", FavoriteArtists: [{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}] } |
+|**POST** `/api/favorites/songs`| Route to add a song to list of favorites | {message: "Song added to favorites", FavoriteSongs: [{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}]} |
+|**DELETE** `/api/favorites/artists`| Route to remove an artist from favorites| {message: "Artist removed from favorites", FavoriteArtists: [{id: 1, name: "Artist Name", bio: "Artist Bio", image: "Artist Image"}] } |
+|**DELETE** `/api/favorites/songs`| Route to remove a song from favorites| {message: "Song removed from favorites", FavoriteSongs: [{id: 1, name: "Song Name", description: "Song Description", song: "Song URL", artistId: 1, genreId: 1}]} |
 
 ### Genres Routes
 | **Request** | **Purpose** | **Returns** |
 |-------------|:-----------:|-------------|
-|**GET** `/api/genres`| Route to get genres | ```json{Genres: [{id: 1, name: "Genre Name"}]}```|
+|**GET** `/api/genres`| Route to get genres |  {Genres: [{id: 1, name: "Genre Name"}]} |
