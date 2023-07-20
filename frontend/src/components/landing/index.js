@@ -6,7 +6,7 @@ import Button from '../button';
 import './landing.css';
 import { TbBrandDribbble,TbBrandCss3,TbBrandRedux,  TbBrandGithub, TbBrandJavascript, TbBrandLinkedin, TbBrandReact } from 'react-icons/tb';
 import { FaNodeJs } from 'react-icons/fa';
-import { SiExpress, SiPostgresql } from 'react-icons/si';
+import { SiExpress, SiPostgresql, SiRender } from 'react-icons/si';
 
 
 function Landing() {
@@ -23,6 +23,7 @@ function Landing() {
                 <nav className='landing_nav--nav'>
                     <div className='landing_nav--logo'>
                         <img src={mezzo} />
+                        <span>Mezzo</span>
                     </div>
                     <div className='landing_nav--actions'>
                         <Button
@@ -54,13 +55,13 @@ function Landing() {
             </main>
             <footer className="landing--footer">
                 <div className='landing--socials'>
-                    <a target='_blank' href='https://linkedin.com/in/iamchriseke'>
+                    <a target='_blank'  rel="noreferrer" href='https://linkedin.com/in/iamchriseke'>
                         <TbBrandLinkedin/>
                     </a>
-                    <a target='_blank' href='https://dribbble.com/chriseke'>
+                    <a target='_blank'  rel="noreferrer" href='https://dribbble.com/chriseke'>
                         <TbBrandDribbble/>
                     </a>
-                    <a target='_blank' href='https://github.com/ChrisEkeDev'>
+                    <a target='_blank' rel="noreferrer" href='https://github.com/ChrisEkeDev'>
                         <TbBrandGithub/>
                     </a>
                 </div>
@@ -93,8 +94,12 @@ function Landing() {
                         <SiPostgresql/>
                         <span>PostgreSQL</span>
                     </span>
+                    <span className='landing--technology-item'>
+                        <SiRender/>
+                        <span>Render</span>
+                    </span>
                 </div>
-                <a href="https://github.com/ChrisEkeDev/Mezzo" target="_blank" className='landing--repo'>
+                <a href="https://github.com/ChrisEkeDev/Mezzo" rel="noreferrer" target="_blank" className='landing--repo'>
                     <TbBrandGithub/>
                     <span>Github Repo</span>
                 </a>
