@@ -23,6 +23,15 @@ function NewArtist() {
         history.push(route);
     }
 
+    function isJSON(res) {
+        try {
+          JSON.parse(res);
+          return true;
+        } catch (err) {
+          return false;
+        }
+    }
+
     const createArtist = async (e) => {
         e.preventDefault();
         setLoading({message: 'Creating your artist...'});
@@ -43,11 +52,19 @@ function NewArtist() {
             navigate(`/dashboard/artists/${newArtist.id}`)
         } catch(error) {
             console.log(error)
-            let errors;
-            if (errors.json()) errors = await error.json()
-            else console.log(errors);
-            if (errors.errors) setErrors(errors.errors)
-            handleAlerts({message: 'There was an error while submitting your request.'})
+            // let errors;
+            // if (isJSON(error)) {
+            //     errors = await res.json()
+            //     console.log(errors)
+            // } else {
+            //     console.log(error)
+            // }
+            // console.log(error)
+            // let errors;
+            // if (errors.json()) errors = await error.json()
+            // else console.log(errors);
+            // if (errors.errors) setErrors(errors.errors)
+            // handleAlerts({message: 'There was an error while submitting your request.'})
         } finally {
             setLoading(undefined);
         }
