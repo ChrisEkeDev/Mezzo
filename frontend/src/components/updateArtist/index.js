@@ -49,10 +49,7 @@ function UpdateArtist({artist}) {
             handleAlerts(message);
             navigate(`/dashboard/artists/${updatedArtist.id}`)
         } catch(error) {
-            let errors;
-            if (errors.json()) errors = await error.json()
-            else console.log(errors);
-            if (errors.errors) setErrors(errors.errors)
+            console.log(error)
             handleAlerts({message: 'There was an error while submitting your request.'})
         } finally {
             setLoading(undefined);

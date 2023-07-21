@@ -13,6 +13,7 @@ const s3 = new AWS.S3();
 
 AWS.config.update({
     region: process.env.AWS_S3_REGION,
+    correctClockSkew: true
 })
 
 router.use(bodyParser.json())
@@ -23,7 +24,6 @@ const upload = multer({
         acl: 'public-read',
         bucket: 'mezzo-bucket',
         key: function (req, file, cb) {
-            console.log(file);
             cb(null, file.originalname); //use Date.now() for unique file keys
         }
     })

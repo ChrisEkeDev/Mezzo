@@ -52,11 +52,6 @@ function UpdateSong({song}) {
             navigate(`/dashboard/artists/${artist?.id}`)
         } catch(error) {
             console.log(error)
-            // let errors;
-            // if (errors.json()) errors = await error.json()
-            // else console.log(errors);
-            // if (errors.errors) setErrors(errors.errors)
-            // handleAlerts({message: 'There was an error while submitting your request.'})
         } finally {
             setLoading(undefined);
         }
