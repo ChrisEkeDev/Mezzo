@@ -1,3 +1,6 @@
+
+![mezzo-banner](https://github.com/ChrisEkeDev/Mezzo/assets/52504068/1855e464-df00-4791-af68-023b29167d2f)
+
 # Mezzo
 
 Mezzo is a clone of Apple Music. This app allows you to upload and discover songs made from artists just like you.
