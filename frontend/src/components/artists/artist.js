@@ -102,7 +102,11 @@ function Artist() {
                             <h1>{artist?.name}</h1>
                             { isFavorited ? <span className='artist--favorite'><TbHeartFilled/></span> : null }
                         </span>
-                        <p>{artist?.bio}</p>
+                        {
+                            artist?.bio ?
+                            <p>{artist?.bio}</p> :
+                            null
+                        }
                     </div>
                     <IconButton
                         style='primary'

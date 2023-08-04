@@ -445,3 +445,67 @@
 .now_playing_modal--close:hover {
     opacity: .5;
 }
+
+@media screen and (max-width: 1110px) {
+    .mezzo_player--mini {
+        grid-template-columns: 200px auto;
+        width: 90%;
+        grid-template-areas:
+            "controls display"
+        ;
+        gap: 20px;
+
+        .now_playing_controls--wrapper{
+            justify-content: flex-start;
+        }
+
+        .now_playing_volume--wrapper {
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .mezzo_player--mini {
+        grid-template-columns: 50px auto;
+        grid-template-areas:
+            "controls display"
+        ;
+        gap: 0px;
+        width: 100%;
+        padding: 10px 5% 10px 0;
+        position: absolute;
+        bottom: 0;
+        z-index: 100;
+        background-color: white;
+        border-top: 1px solid var(--border);
+
+
+
+        .skip,
+        .repeat {
+            display: none;
+        }
+    }
+
+    .mezzo_player--full {
+        .now_playing_player--image {
+            height: 300px;
+        }
+
+        .now_playing_progress--wrapper {
+            margin: 0 auto;
+            width: 300px;
+
+        }
+    }
+
+    .now_playing_modal--close {
+        position: absolute;
+        right: 50px;
+        top: 50px;
+        font-size: 25px;
+        color: var(--text-body);
+        cursor: pointer;
+    }
+}

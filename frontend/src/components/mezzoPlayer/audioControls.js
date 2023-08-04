@@ -52,9 +52,6 @@ function AudioControls({ loop, setLoop, tracks, trackIndex, setTrackIndex, setCu
 
     return (
         <div className='now_playing_controls--wrapper'>
-            <span className='now_playing_control'>
-
-            </span>
             <span className='now_playing_control skip' onClick={handlePrevious}>
                 <TbPlayerSkipBackFilled/>
             </span>
@@ -72,9 +69,6 @@ function AudioControls({ loop, setLoop, tracks, trackIndex, setTrackIndex, setCu
             </span>
             <span className='now_playing_control skip' onClick={handleNext}>
                 <TbPlayerSkipForwardFilled/>
-            </span>
-            <span onClick={() => setLoop(!loop)} className='now_playing_control'>
-                <TbRepeat className={`${loop ? 'loop--active' : ''}`}/>
             </span>
         </div>
     )

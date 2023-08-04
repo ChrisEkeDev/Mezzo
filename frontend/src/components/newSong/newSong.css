@@ -21,3 +21,9 @@
 .new_artist--action {
     margin-top: 60px;
 }
+
+@media screen and (max-width: 500px) {
+    .new_artist--form {
+        width: 100%;
+    }
+}

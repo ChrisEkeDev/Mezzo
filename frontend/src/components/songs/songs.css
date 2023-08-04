@@ -203,3 +203,21 @@
 .playing--3 {
     animation-delay: .6s;
 }
+
+@media screen and (max-width: 800px) {
+    .songs_header--wrapper {
+        .songs_header--label:nth-of-type(3),
+        .songs_header--label:nth-of-type(4) {
+            display:  none;
+        }
+    }
+    .song--grid {
+        display: grid;
+        grid-template-columns: auto 150px;
+    }
+
+    .song_item--time,
+    .song_item--genre {
+        display: none;
+    }
+}

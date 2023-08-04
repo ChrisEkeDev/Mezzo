@@ -7,7 +7,8 @@ export const useNowPlaying = () => useContext(NowPlayingContext);
 
 
 function NowPlayingProvider({children}) {
-    const [playerState, setPlayerState] = useState("paused");
+    const [ aside, setAside ] = useState(false)
+    const [ playerState, setPlayerState ] = useState("paused");
     const nowPlayingData = useSelector(state => state.songs.nowPlaying)
     const tracks = Object.values(nowPlayingData)
     const [ fullScreen, setFullScreen ] = useState(false);
@@ -82,7 +83,8 @@ function NowPlayingProvider({children}) {
                 audioRef,
                 progressRef,
                 tracks,
-                handlePlaySongs, handlePlay, handlePause, handleClear
+                handlePlaySongs, handlePlay, handlePause, handleClear,
+                aside, setAside
             }}>
             <audio ref={audioRef} src={currentTrack?.song} onLoadedMetadata={onLoadedMetadata} onEnded={handleNext} loop={loop}></audio>
             {children}

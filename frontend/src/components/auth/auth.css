@@ -95,3 +95,13 @@
 .auth_form--link:hover {
     text-decoration: underline;
 }
+
+
+@media screen and (max-width: 600px) {
+    .auth--image {
+        display: none;
+    }
+    .auth--image--credits {
+        display: none;
+    }
+}

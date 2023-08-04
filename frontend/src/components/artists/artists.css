@@ -176,3 +176,58 @@
     padding: 0 15px;
     color: var(--orange)
 }
+
+@media screen and (max-width: 1240px) {
+    .artist_header--contents {
+        align-items: flex-start;
+    }
+    .artist--data {
+        height: unset;
+        width: unset;
+    }
+    .artist_manage--wrapper {
+        position: absolute;
+        right: 20px;
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+    .artists--wrapper,
+    .artists--list {
+        gap: 15px;
+        padding: 15px 15px 50px 15px;
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+    .artist_item--wrapper {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .artist_item--image,
+    .artist--image {
+        height: 70px;
+        border-radius: 5px;
+    }
+
+    .artist_item--overlay {
+        opacity: .75;
+    }
+
+    .artist--data {
+        justify-content: unset;
+    }
+
+    .artist--data h1 {
+        margin: 0 0 5px 0;
+        font-size: 20px;
+    }
+
+    .artist--data p {
+        display:none;
+    }
+
+
+}
