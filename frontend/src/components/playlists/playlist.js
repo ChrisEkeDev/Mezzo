@@ -90,8 +90,10 @@ function Playlist() {
                         style='secondary'
                         icon={<TbDots/>}
                     />
-                    {   isVisible ?
-                        <div ref={ref} className='hover_menu--wrapper'>
+
+                </div>
+                {   isVisible ?
+                        <div ref={ref} className='hover_menu--wrapper  hover_menu--mobile'>
                                 <span onClick={() => setUpdatingPlaylist(true)} className='hover_menu--option'>
                                     <span className='hover_menu--label'>Update Playlist</span>
                                     <span className='hover_menu--icon'><TbEdit/></span>
@@ -106,8 +108,7 @@ function Playlist() {
                                 </span>
                         </div> :
                         null
-                    }
-                </div>
+                }
                 {
                     updatingPlaylist ?
                     <Modal>
