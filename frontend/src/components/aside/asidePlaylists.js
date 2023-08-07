@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import AsideGroupItem from './asideGroupItem';
+import { useNowPlaying } from '../../context/nowPlaying';
 import Modal from '../modal';
 import { thunkGetPlaylists } from '../../store/playlists';
 import NewPlaylist from '../newPlaylist';
@@ -14,9 +15,20 @@ function AsidePlaylists() {
     const [ newPlaylist, setNewPlaylist ] = useState(false)
     const history = useHistory();
     const dispatch = useDispatch();
+    const { aside, setAside } = useNowPlaying();
 
     const navigate = (route) => {
         history.push(route);
+    }
+
+    const handleAsideNavigation = (route) => {
+        navigate(route)
+        setAside(false)
+    }
+
+    const handleNewPlaylist = () => {
+        setNewPlaylist(true)
+        setAside(false)
     }
 
     useEffect(() => {
@@ -39,12 +51,12 @@ function AsidePlaylists() {
             <AsideGroupItem
                 label='New Playlist'
                 icon={<TbPlus className='playlist'/>}
-                action={() => setNewPlaylist(true)}
+                action={() => handleNewPlaylist(true)}
             />
             <AsideGroupItem
                 label='All Playlists'
                 icon={<TbPlaylist className='playlist'/>}
-                action={() => navigate('/dashboard/playlists')}
+                action={() => handleAsideNavigation('/dashboard/playlists')}
                 path='playlists'
             />
             {/* {

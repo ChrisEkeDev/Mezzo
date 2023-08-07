@@ -456,7 +456,7 @@
         gap: 20px;
 
         .now_playing_controls--wrapper{
-            justify-content: flex-start;
+            justify-content: center;
         }
 
         .now_playing_volume--wrapper {
@@ -476,6 +476,7 @@
         padding: 10px 5% 10px 0;
         position: absolute;
         bottom: 0;
+        left: 0;
         z-index: 100;
         background-color: white;
         border-top: 1px solid var(--border);

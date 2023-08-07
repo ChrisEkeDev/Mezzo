@@ -126,25 +126,27 @@ function SongItem({song, isAuth, artist, onPlaylistPage}) {
         <li id={`${song.id === currentSong?.id ? 'selectedSong' : ''}`}onClick={() => handleSelectSong(song.id) } className={`song_item--wrapper song--grid`}>
             <audio ref={audioRef} src={song.song} onLoadedMetadata={onLoadedMetadata}/>
             <div className='song_item--name'>
-                <div onClick={() => handlePlaySongs([song])} className='song_item--image' style={{backgroundImage: `url(${artist.image})`}}>
-                    { currentTrack?.id === song.id && playerState === "playing" ?
-                        <span className='song_item_playing--overlay'>
-                            <div className='playing--graphic'>
-                                <div className='playing--animation playing--1'></div>
-                                <div className='playing--animation playing--2'></div>
-                                <div className='playing--animation playing--3'></div>
-                            </div>
-                        </span> :
-                        <span className='song_item--image--overlay'>
-                            <TbPlayerPlayFilled/>
-                        </span>
-                    }
+                <div className='song_item--name_flex'>
+                    <div onClick={() => handlePlaySongs([song])} className='song_item--image' style={{backgroundImage: `url(${artist.image})`}}>
+                        { currentTrack?.id === song.id && playerState === "playing" ?
+                            <span className='song_item_playing--overlay'>
+                                <div className='playing--graphic'>
+                                    <div className='playing--animation playing--1'></div>
+                                    <div className='playing--animation playing--2'></div>
+                                    <div className='playing--animation playing--3'></div>
+                                </div>
+                            </span> :
+                            <span className='song_item--image--overlay'>
+                                <TbPlayerPlayFilled/>
+                            </span>
+                        }
+                    </div>
+                    <span className='song--name'>{song.name}</span>
+                    { isFavorited ? <span className='song_item--favorite'><TbHeartFilled/></span> : null }
                 </div>
-                <span>{song.name}</span>
-                { isFavorited ? <span className='song_item--favorite'><TbHeartFilled/></span> : null }
                 <span onClick={() => setIsVisible(true)} className='song_item--icon'><TbDots/></span>
                 {   isVisible ?
-                        <div ref={ref} className='hover_menu--wrapper'>
+                        <div ref={ref} className='hover_menu--wrapper hover_menu--mobile'>
                                 {currentTrack?.id === song.id ?
                                     playerState === 'paused' ?
                                         <span onClick={() => handlePlay()} className='hover_menu--option'>

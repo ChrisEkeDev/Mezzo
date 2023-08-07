@@ -124,3 +124,15 @@ html, body {
     font-size: 20px;
     color: var(--text-label)
   }
+
+
+
+  @media screen and (max-width: 800px) {
+    .hover_menu--mobile {
+      width: 90%;
+      right: 5%;
+      top: unset;
+      bottom: 80px;
+    }
+
+}

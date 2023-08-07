@@ -81,4 +81,8 @@
         font-size: 25px;
     }
 
+    .nav_user--menu {
+        right: 0px;
+    }
+
 }

@@ -229,5 +229,9 @@
         display:none;
     }
 
+    .artist_manage--wrapper {
+        position: unset;
+    }
+
 
 }

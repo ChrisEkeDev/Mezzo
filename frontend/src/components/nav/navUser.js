@@ -32,7 +32,7 @@ function NavUser() {
             <span onClick={() => setIsVisible(true)} className='nav_user--icon'><TbUserCircle/></span>
             {
                 isVisible ?
-                <div ref={ref} className='hover_menu--wrapper'>
+                <div ref={ref} className='hover_menu--wrapper nav_user--menu'>
                     <span onClick={signOut} className='hover_menu--option'>
                         <span className='hover_menu--label'>Sign Out</span>
                         <span className='hover_menu--icon'><TbLogout/></span>

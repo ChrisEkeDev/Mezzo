@@ -130,6 +130,12 @@
     background-color: rgba(255, 122, 0, .30);
 }
 
+.song_item--name_flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .song_item--image--overlay {
     opacity: 0;
     display: flex;
@@ -213,7 +219,25 @@
     }
     .song--grid {
         display: grid;
-        grid-template-columns: auto 150px;
+        grid-template-columns: auto 125px;
+    }
+
+    .song_item--artist,
+    .song_item--name {
+        font-size: 13px;
+        position: unset;
+    }
+
+    .song_item--name {
+        justify-content: space-between;
+        padding-right: 30px;
+    }
+
+
+
+    .song_item--icon {
+        position: unset;
+        align-self: flex-end;
     }
 
     .song_item--time,

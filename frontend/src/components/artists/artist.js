@@ -126,7 +126,7 @@ function Artist() {
                     </div>
 
                     {   isVisible ?
-                        <div ref={ref} className='hover_menu--wrapper'>
+                        <div ref={ref} className='hover_menu--wrapper hover_menu--mobile'>
                             {
                                 isAuth ?
                                 <>

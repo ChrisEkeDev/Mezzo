@@ -26,4 +26,8 @@
     .new_artist--form {
         width: 100%;
     }
+    .new_artist--wrapper {
+        padding: 30px 30px 100px 30px;
+        overflow-y: scroll;
+    }
 }

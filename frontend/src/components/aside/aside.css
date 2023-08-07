@@ -78,6 +78,7 @@
         z-index: 150;
         background-color: white;
         height: 100%;
+        transition: left 0.3s;
     }
     .aside--closed {
         left: -300px;
@@ -92,5 +93,9 @@
         align-items: center;
         color: var(--orange);
         font-size: 25px;
+    }
+
+    .aside_logo--wrapper img {
+        height: 24px;
     }
 }
