@@ -39,7 +39,7 @@ function SignIn() {
       })
       .catch(async(errors) => {
         const data = await errors.json();
-        if (data && data.errors) setErrors(data.errors)
+        if (data && data.errors) handleAlerts(data.errors)
         setLoading(undefined);
       })
     )

@@ -13,8 +13,6 @@ function Favorites() {
     const songs = Object.values(songsData);
     const artists = Object.values(artistsData);
 
-    console.log({songs, artists})
-
     return (
         <div className='favorites--wrapper'>
             <header className={`favorites_header--wrapper ${tab === 'songs' && songs.length > 0 ? 'no-border' : ''}`}>
