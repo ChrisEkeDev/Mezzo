@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import LoadingProvider from './context/loading';
 import AlertsProvider from './context/alerts';
-import './index.css';
+import './index.scss';
 import App from './App';
 import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
@@ -22,11 +22,7 @@ function Root() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <LoadingProvider>
-          <AlertsProvider>
-            <App />
-          </AlertsProvider>
-        </LoadingProvider>
+        <App />
       </BrowserRouter>
     </Provider>
   );

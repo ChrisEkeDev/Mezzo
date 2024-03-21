@@ -1,4 +1,4 @@
-@import url('../../index.css');
+@import url('../../index.scss');
 
 #nav--wrapper {
     border-bottom: 1px solid var(--border);

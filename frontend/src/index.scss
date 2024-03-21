@@ -13,6 +13,25 @@
     --background: #fbfbfb;
 }
 
+$main: #FF7A00;
+$mainDark: #DA5B00;
+$unit: calc(100dvw / 12);
+$test: #dcdcdc;
+$primary_font: 'Outfit';
+$placeholder: #f5f5f5;
+$hover: #eeeeee;
+$error: #e72424;
+
+@mixin grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+@mixin mainFont {
+  font-family: $primary_font;
+}
+
 html, body {
     margin: 0;
     padding: 0
@@ -27,6 +46,10 @@ html, body {
 #app--wrapper {
     height: 100dvh;
     width: 100dvw;
+}
+
+.sm {
+  font-size: .85rem;
 }
 
 
@@ -127,12 +150,30 @@ html, body {
 
 
 
-  @media screen and (max-width: 800px) {
-    .hover_menu--mobile {
-      width: 90%;
-      right: 5%;
-      top: unset;
-      bottom: 80px;
-    }
+
+/* Largest devices such as desktops (1280px and up) */
+@media only screen and (width <= 100em) {
+  html, body {
+    font-size: 14px;
+  }
+}
+
+/* Large devices such as laptops (1024px and up) */
+@media only screen and (width <= 64em) {
+  html, body {
+    font-size: 11px;
+  }
+
+}
+
+/* Medium devices such as tablets (768px and up) */
+@media only screen and (width <= 48em) {
+  html, body {
+    font-size: 12px;
+  }
+}
+
+/* Small devices such as large phones (640px and up) */
+@media only screen and (width <= 40em) {
 
 }

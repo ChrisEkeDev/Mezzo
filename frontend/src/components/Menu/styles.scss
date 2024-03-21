@@ -1,0 +1,55 @@
+@import '../../index.scss';
+
+.menu--wrapper {
+    grid-area: menu;
+    position: relative;
+    justify-self: flex-end;
+    padding: .5rem 1rem;
+}
+
+.menu_list--wrapper {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
+    right: 3rem;
+    top: 3rem;
+    background-color: white;
+    outline: 1px solid $placeholder;
+}
+
+.menu_item--wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+    border-bottom: 1px solid $placeholder;
+    cursor: pointer;
+    font-size: .85rem;
+    width: 200px;
+    transition: all .2s;
+
+    &:hover {
+        background-color: $placeholder;
+    }
+
+    &:first-of-type {
+        border-radius: 1rem 1rem 0 0;
+
+    }
+    &:last-of-type {
+        border-radius: 0 0 1rem 1rem;
+        border: none;
+    }
+}
+
+.menu_item--icon {
+    flex-shrink: 0;
+}
+
+.menu_item--label {
+    white-space: nowrap;
+}

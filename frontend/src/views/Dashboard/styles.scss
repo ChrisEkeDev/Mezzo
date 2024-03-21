@@ -1,0 +1,35 @@
+@import '../../index.scss';
+
+.dashboard--wrapper {
+    height: 100dvh;
+    @include grid();
+    grid-template-areas:
+    "aside aside main main main main main main main main main main";
+    grid-gap: 0rem;
+}
+
+
+.dashboard--main {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+}
+
+.navigation--wrapper {
+    display: grid;
+    //border-bottom: 1px solid $placeholder;
+    grid-template-columns: repeat(9, $unit);
+    grid-template-areas:
+    "player player player player player player player . . menu";
+}
+
+.main--wrapper {
+    flex: 1;
+    background-color: $placeholder;
+    border-radius: 1rem 0 0 1rem;
+}
+
+.footer--wrapper {
+    background-color: white;
+    height: 3rem;
+}

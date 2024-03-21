@@ -1,4 +1,4 @@
-@import url('../../index.css');
+@import url('../../index.scss');
 
 #aside--wrapper {
     border-right: 1px solid var(--border);

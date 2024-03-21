@@ -1,0 +1,45 @@
+@import '../../index.scss';
+
+
+.home--wrapper {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+.home--container {
+    flex: 1;
+    @include grid();
+    grid-template-areas:
+    ". . . media media media form form form . . ."
+}
+
+/* Largest devices such as desktops (1280px and up) */
+@media only screen and (width <= 100em) {
+    .home--container {
+        grid-template-areas:
+        ". . media media media media form form form form . ."
+    }
+}
+
+/* Large devices such as laptops (1024px and up) */
+@media only screen and (width <= 64em) {
+    .home--container {
+        grid-template-areas:
+        ". media media media media media form form form form form ."
+    }
+
+}
+
+/* Medium devices such as tablets (768px and up) */
+@media only screen and (width <= 48em) {
+    .home--container {
+        grid-template-areas:
+        ". form form form form form form form form form form ."
+    }
+}
+
+/* Small devices such as large phones (640px and up) */
+@media only screen and (width <= 40em) {
+
+}

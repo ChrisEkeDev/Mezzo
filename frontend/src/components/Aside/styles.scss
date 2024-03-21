@@ -1,0 +1,45 @@
+@import '../../index.scss';
+
+.aside--wrapper {
+    grid-area: aside;
+    // border-right: 1px solid $placeholder;
+}
+
+.aside--group {
+    padding: 1rem;
+}
+
+.aside--title {
+    font-weight: 600;
+}
+
+.aside--list {
+    padding: .5rem 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    margin: 0;
+}
+
+.aside_item--wrapper {
+    padding: .5rem;
+    gap: .5rem;
+    transition: all .2s;
+    border-radius: 10%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+        background-color: $placeholder;
+    }
+}
+
+.aside_item--icon {
+    font-size: 1rem;
+    color: $main;
+}
+
+.aside_item--label {
+    font-size: .85rem;
+}

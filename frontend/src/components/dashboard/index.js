@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import Nav from '../nav';
 import NewArtist from '../newArtist';
 import NewSong from '../newSong';
-import Aside from '../aside';
+import Aside from '../Aside';
 import Favorites from '../favorites';
 import Artists from '../artists';
 import Playlists from '../playlists';
@@ -36,7 +36,7 @@ function Dashboard() {
 
     return (
         <main id='dashboard--wrapper'>
-            <Aside/>
+            {/* <Aside/> */}
             <section className='dashboard--main'>
             <Nav/>
             <Switch>

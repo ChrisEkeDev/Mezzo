@@ -1,0 +1,47 @@
+@import '../../index.scss';
+
+.header--wrapper {
+    padding: 2rem 0;
+    @include grid();
+    grid-template-areas:
+    ". . . . . . . . logo . . .";
+}
+
+.header--logo {
+    grid-area: logo;
+    justify-self: flex-end;
+    height: 2rem;
+}
+
+/* Largest devices such as desktops (1280px and up) */
+@media only screen and (width <= 100em) {
+    .header--wrapper {
+        // background-color: red;
+        grid-template-areas:
+    ". . . . . . . . . logo . .";
+    }
+}
+
+/* Large devices such as laptops (1024px and up) */
+@media only screen and (width <= 64em) {
+    .header--wrapper {
+        // background-color: blue;
+        grid-template-areas:
+    ". . . . . . . . . . logo .";
+    }
+}
+
+/* Medium devices such as tablets (768px and up) */
+@media only screen and (width <= 48em) {
+    // .header--wrapper {
+    //     padding: 1rem 0;
+    //     background-color: green;
+    // }
+}
+
+/* Small devices such as large phones (640px and up) */
+@media only screen and (width <= 40em) {
+    // .header--wrapper {
+    //     background-color: purple;
+    // }
+}

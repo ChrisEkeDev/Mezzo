@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import '../auth.css';
+import { motion } from 'framer-motion'
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoading } from '../../../context/loading';
-import { useAlerts } from '../../../context/alerts';
-import { thunkSignIn } from '../../../store/session';
-import Input from '../../input';
-import Button from '../../button';
-import { TbLogin, TbUserCode, TbChevronLeft } from 'react-icons/tb';
+import { thunkSignIn } from '../../store/session';
+import TextInput from '../../components/shared/Inputs/TextInput';
+import Button from '../../components/shared/Buttons/Button';
+import { inOut, authForm } from '../../constants/animations';
+import '../shared/styles.scss';
 
 
 
-function SignIn() {
+function SignIn({handleRoute}) {
   const user = useSelector(state => state.session.user);
 
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ errors, setErrors] = useState({});
-  const { setLoading } = useLoading();
-  const { handleAlerts } = useAlerts();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -28,38 +25,38 @@ function SignIn() {
 
   const signIn = (e) => {
     e.preventDefault();
-    setLoading({message: 'Signing you in...'});
+    // setLoading({message: 'Signing you in...'});
     const data = {email, password};
     return (
       dispatch(thunkSignIn(data))
       .then((alert) => {
-        handleAlerts(alert)
+        // handleAlerts(alert)
         navigate('/dashboard/artists')
-        setLoading(undefined);
+        // setLoading(undefined);
       })
       .catch(async(errors) => {
         const data = await errors.json();
-        if (data && data.errors) handleAlerts(data.errors)
-        setLoading(undefined);
+        // if (data && data.errors) handleAlerts(data.errors)
+        // setLoading(undefined);
       })
     )
   }
 
   const demoSignIn = (e) => {
     e.preventDefault();
-    setLoading({message: 'Signing you in...'});
+    // setLoading({message: 'Signing you in...'});
     const data = {email: 'fassounds@email.com' , password: 'password'}
     return (
       dispatch(thunkSignIn(data))
       .then((alert) => {
-        handleAlerts(alert)
+        // handleAlerts(alert)
         navigate('/dashboard/artists')
-        setLoading(undefined);
+        // setLoading(undefined);
       })
       .catch(async(errors) => {
         const data = await errors.json();
         if (data && data.errors) setErrors(data.errors)
-        setLoading(undefined);
+        // setLoading(undefined);
       })
     )
   }
@@ -82,52 +79,40 @@ function SignIn() {
   if (user) navigate('/dashboard')
 
   return (
-    <section className='auth_form--wrapper'>
-      <Button
-        label='Back'
-        style='secondary back'
-        action={() => navigate('/')}
-        left={<TbChevronLeft/>}
-      />
-      <form className='auth_form--form' onSubmit={signIn}>
-          <header className='auth_form--header'>
-            <h1>Sign In</h1>
-            <p>Sign in to your Mezzo account.</p>
-          </header>
-          <Input
+      <motion.form {...inOut} variants={authForm} className='form--wrapper'>
+        <h1 className='form--title'>Sign In</h1>
+        <p className='form--tip'>Dont have an account yet? <strong className='form--link' onClick={() => handleRoute('/sign-up')}>Sign Up</strong></p>
+        <div className='form--inputs'>
+        <TextInput
             name='email'
             label='Email'
             value={email}
             setValue={setEmail}
             error={errors.email}
-          />
-          <Input
+        />
+        <TextInput
             name='password'
             label='Password'
             type='password'
             value={password}
             setValue={setPassword}
             error={errors.password}
-          />
-          <div className='auth_form--actions'>
-            <Button
-              label='Sign In'
-              style='primary'
-              action={signIn}
-              right={<TbLogin className='flip' />}
-              disabled={Object.keys(errors).length}
-            />
-            <Button
-              label='Try Mezzo (Demo)'
-              style='secondary'
-              action={demoSignIn}
-              right={<TbUserCode />}
-            />
-            <Link className='auth_form--link' to='/auth/sign-up'>Don't have an account?</Link>
-          </div>
-      </form>
-    </section>
-
+        />
+        </div>
+        <div className='form--actions'>
+        <Button
+            label='Sign In'
+            styles='primary'
+            action={signIn}
+            disabled={Object.keys(errors).length}
+        />
+        <Button
+            label='Try Mezzo (Demo)'
+            styles='secondary'
+            action={demoSignIn}
+        />
+        </div>
+      </motion.form>
   )
 }
 

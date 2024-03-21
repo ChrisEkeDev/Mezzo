@@ -1,0 +1,59 @@
+@import '../../../index.scss';
+
+.button {
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    border-radius: .5rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.icon_button {
+    height: 3rem;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    font-size: 1.25rem;
+    border: none;
+    background-color: transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.icon_button--off {
+    .icon {
+        opacity: .25;
+    }
+}
+
+.icon_button--small {
+    font-size: .95rem;
+}
+
+
+.primary {
+    background-color: $main;
+    color: white;
+}
+.primary:hover {
+    background-color: $mainDark;
+}
+
+.secondary {
+    background-color: white;
+    outline: 1px solid $placeholder;
+    color: $main;
+}
+
+.secondary:hover {
+    background-color: $hover;
+}
+
+.centered {
+    justify-content: center;
+}

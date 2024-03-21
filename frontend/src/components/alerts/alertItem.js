@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect } from "react";
-import './alerts.css';
+import './alerts.scss';
 import { TbAlertCircle } from 'react-icons/tb';
 
 

@@ -1,0 +1,49 @@
+@import '../../index.scss';
+
+.media_player--wrapper {
+    grid-area: player;
+    padding: 0 1rem;
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.media_player--controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.media_player--volume {
+    display: flex;
+    align-items: center ;
+}
+
+.media_player--sound_bar {
+    height: 2px;
+    width: 100%;
+    background-color: $main;
+    flex-shrink: 0;
+}
+
+.bar {
+    .media_player--info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex: 1;
+    }
+
+    .media_player--image {
+        height: 3rem;
+        border-radius: 10%;
+        aspect-ratio: 1;
+        background-color: $placeholder;
+    }
+}
+
+.full {
+
+}

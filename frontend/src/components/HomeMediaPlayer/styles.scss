@@ -1,0 +1,89 @@
+@import '../../index.scss';
+
+.media--wrapper {
+    grid-area: media;
+    align-self: center;
+}
+
+.media--img {
+    width: calc(100% - 6rem);
+    margin: 0 auto;
+    aspect-ratio: 1;
+    border-radius: 5%;
+    background-color: $test;
+}
+
+.media--info {
+    padding: 1rem 3rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.media--bar {
+    height: 2px;
+    width: 100%;
+    background-color: $main;
+}
+
+.media--song {
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.media--play {
+    height: 3rem;
+    aspect-ratio: 1;
+    font-size: 1.5rem;
+    display: grid;
+    place-items: center;
+}
+
+.media--next {
+    height: 3rem;
+    aspect-ratio: 1;
+    font-size: 1.5rem;
+    display: grid;
+    place-items: center;
+}
+
+/* Largest devices such as desktops (1280px and up) */
+@media only screen and (width <= 100em) {
+
+}
+
+/* Large devices such as laptops (1024px and up) */
+@media only screen and (width <= 64em) {
+
+}
+
+/* Medium devices such as tablets (768px and up) */
+@media only screen and (width <= 48em) {
+    .media--wrapper {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        padding: 1rem;
+        border: 1px solid $placeholder;
+    }
+    .media--img {
+        width: 3rem;
+        left: 0;
+        flex-shrink: 0;
+    }
+    .media--info {
+        padding: 0;
+        flex: 1;
+    }
+}
+
+/* Small devices such as large phones (640px and up) */
+@media only screen and (width <= 40em) {
+
+}

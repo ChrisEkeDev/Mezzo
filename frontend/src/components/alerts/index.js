@@ -1,6 +1,6 @@
 import React from 'react';
 import AlertItem from './alertItem';
-import './alerts.css';
+import './alerts.scss';
 
 function Alerts({removeAlerts, alerts}) {
   return (
