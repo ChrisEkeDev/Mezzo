@@ -1,13 +1,22 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { base, buttonBase } from '../../../constants/animations';
 import './styles.scss';
 
-function Button({label, styles, left, right, action, disabled}) {
+function Button({label, styles, left: LeftIcon, right: RightIcon, action, disabled}) {
   return (
-    <button onClick={action} className={`button ${styles} ${disabled ? 'disabled' : ''} ${!left && !right ? 'centered' : 'null'}`} type='button' disabled={disabled}>
-    { left ? <span className='button--icon'>{left}</span> :  null }
+    <motion.button
+      {...base}
+      variants={buttonBase}
+      onClick={action}
+      className={`button ${styles} ${disabled ? 'disabled' : ''} ${!LeftIcon && !RightIcon ? 'centered' : 'null'}`}
+      type='button'
+      disabled={disabled}
+    >
+    { LeftIcon ? <LeftIcon className='button--icon' /> :  null }
         { label ? <span>{label}</span> : null }
-    { right ? <span className='button--icon'>{right}</span>: null}
-    </button>
+    { RightIcon ? <RightIcon className='button--icon'/>: null}
+    </motion.button>
   )
 }
 

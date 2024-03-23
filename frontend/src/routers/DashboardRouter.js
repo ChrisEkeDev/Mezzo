@@ -1,13 +1,34 @@
-import React from 'react'
-import { Switch, Route } from 'react-router-dom';
+import React from 'react';
+import { AnimatePresence } from 'framer-motion'
+import { Switch, Route, useLocation } from 'react-router-dom';
+import * as ROUTES from '../constants/routes'
+import * as View from '../views'
 
 function DashboardRouter() {
-  return (
-
-    <Switch>
-        <Route exact path='/dashboard/artists'>
-            <Artists/>
-        </Route>
+    const location = useLocation();
+    return (
+        <AnimatePresence mode='wait'>
+            <Switch location={location} key={location.pathname}>
+                <Route
+                    exact
+                    path={ROUTES.WELCOME}
+                    component={View.Welcome}
+                />
+                <Route
+                    exact
+                    path={ROUTES.ARTISTS}
+                    component={View.Artists}
+                />
+                <Route
+                    exact
+                    path={ROUTES.SONGS}
+                    component={View.Songs}
+                />
+                <Route
+                    exact
+                    path={ROUTES.FAVORITES}
+                    component={View.Favorites}
+                />
                 {/* <Route exact path='/dashboard/songs'>
                     <Songs/>
                 </Route>
@@ -41,8 +62,9 @@ function DashboardRouter() {
                 <Route exact path='/dashboard/favorites'>
                     <Favorites/>
                 </Route> */}
-    </Switch>
-  )
+            </Switch>
+        </AnimatePresence>
+    )
 }
 
 export default DashboardRouter

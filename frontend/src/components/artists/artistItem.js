@@ -27,7 +27,7 @@ function ArtistItem({artist}) {
 
   return (
       <article onClick={() => navigate(`/dashboard/artists/${artist?.id}`)} className='artist_item--wrapper'>
-        <div className='artist_item--image' style={{backgroundImage: `url(${artist?.image})`}}>
+        {/* <div className='artist_item--image' style={{backgroundImage: `url(${artist?.image})`}}>
           {artist?.image ? null : <img src={placeholder}/> }
           <div className='artist_item--overlay'>
             <span className='artist_item--play'>
@@ -42,7 +42,7 @@ function ArtistItem({artist}) {
         <span className='artist_item--name_span'>
           <h3 className='artist_item--name'>{artist?.name}</h3>
           { isFavorited ? <span className='artist_item--favorite'><TbHeartFilled/></span> : null }
-        </span>
+        </span> */}
       </article>
   )
 }

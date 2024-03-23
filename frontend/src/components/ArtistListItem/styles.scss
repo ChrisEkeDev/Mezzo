@@ -1,0 +1,26 @@
+@import '../../index.scss';
+
+.artist_list_item--wrapper {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.artist_list_item--wrapper:hover {
+    background-color: $selected;
+}
+
+.artist_list_item--image {
+    transition: all .2s;
+    height: 4.5rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.artist_list_item--wrapper:hover .artist_list_item--image {
+    transform: scale(1.1, 1.1);
+}

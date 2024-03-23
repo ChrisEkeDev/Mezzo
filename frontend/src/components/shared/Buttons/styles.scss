@@ -23,6 +23,12 @@
     background-color: transparent;
     transition: all 0.2s;
     cursor: pointer;
+    box-shadow: $box_shadow;
+    border-radius: .5rem;
+}
+
+.icon_button--no_shadow {
+    box-shadow: unset;
 }
 
 .icon_button--off {
@@ -32,12 +38,17 @@
 }
 
 .icon_button--small {
-    font-size: .95rem;
+    font-size: .85rem;
+}
+
+.button--small {
+    font-size: .85rem;
 }
 
 
 .primary {
     background-color: $main;
+    box-shadow: $box_shadow;
     color: white;
 }
 .primary:hover {
@@ -47,11 +58,13 @@
 .secondary {
     background-color: white;
     outline: 1px solid $placeholder;
+    box-shadow: $box_shadow;
     color: $main;
 }
 
 .secondary:hover {
-    background-color: $hover;
+    // background-color: $hover;
+    box-shadow: 1px 1px 5px 3px rgba(0,0,0,.1);
 }
 
 .centered {

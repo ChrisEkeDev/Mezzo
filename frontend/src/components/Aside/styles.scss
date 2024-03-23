@@ -2,7 +2,7 @@
 
 .aside--wrapper {
     grid-area: aside;
-    // border-right: 1px solid $placeholder;
+    padding: .5rem 0;
 }
 
 .aside--group {
@@ -14,7 +14,7 @@
 }
 
 .aside--list {
-    padding: .5rem 0;
+    padding: 1rem 0;
     list-style-type: none;
     display: flex;
     flex-direction: column;
@@ -35,8 +35,15 @@
     }
 }
 
+.aside_item--selected {
+    background-color: $placeholder;
+    font-weight: 600;
+}
+
 .aside_item--icon {
     font-size: 1rem;
+    height: 1.15rem;
+    aspect-ratio: 1;
     color: $main;
 }
 

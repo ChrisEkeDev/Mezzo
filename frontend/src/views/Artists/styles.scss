@@ -1,0 +1,21 @@
+@import '../../index.scss';
+
+.artists--wrapper {
+    position: relative;
+}
+
+.artists--list {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    list-style-type: none;
+    gap: 1rem;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    border-radius: 1rem;
+}
+
+.artists_scroll_height {
+    height: calc(100dvh - 7rem)
+}

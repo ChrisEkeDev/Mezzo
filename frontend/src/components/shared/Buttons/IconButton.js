@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import './styles.scss';
 import { base, button } from '../../../constants/animations';
+import './styles.scss';
 
 
 function IconButton({icon: Icon, action, styles}) {

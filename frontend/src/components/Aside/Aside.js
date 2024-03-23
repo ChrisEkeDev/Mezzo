@@ -1,66 +1,39 @@
 import React from 'react'
-import Search from '../Search'
 import AsideItem from './AsideItem';
-import { PiPlaylistFill , PiListPlusBold,PiHeartStraightBold, PiMusicNotesPlusBold, PiMicrophoneStageBold,PiMusicNotesBold,   PiMicrophoneStageFill, PiHeartStraightFill , PiMusicNotesPlusFill, PiMusicNotesFill  } from "react-icons/pi";
+import { asideHrefs, asidePlaylistsHrefs, asideUserHrefs } from '../../constants/hrefs';
 import './styles.scss';
 
 function Aside() {
   return (
     <aside className='aside--wrapper'>
-            <Search />
             <div className='aside--group'>
                 <span className='aside--title sm'>Library</span>
                 <ul className='aside--list'>
-                    <AsideItem
-                        label="Create New Artist"
-                        icon={PiMusicNotesPlusBold}
-                        // action={}
-                    />
-                    <AsideItem
-                        label="Artists"
-                        icon={PiMicrophoneStageBold}
-                        // action={}
-                    />
-                    <AsideItem
-                        label="Songs"
-                        icon={PiMusicNotesBold}
-                        // action={}
-                    />
-                    <AsideItem
-                        label="Favorites"
-                        icon={PiHeartStraightBold}
-                        // action={}
-                    />
+                    {
+                        asideHrefs.map(href => (
+                            <AsideItem key={href.path} href={href}/>
+                        ))
+                    }
                 </ul>
             </div>
             <div className='aside--group'>
                 <span className='aside--title sm'>Playlists</span>
                 <ul className='aside--list'>
-                    <AsideItem
-                        label="New Playlist"
-                        icon={PiListPlusBold}
-                        // action={}
-                    />
-                    <AsideItem
-                        label="All Playlists"
-                        icon={PiPlaylistFill}
-                        // action={}
-                    />
+                    {
+                        asidePlaylistsHrefs.map(href => (
+                            <AsideItem key={href.path} href={href}/>
+                        ))
+                    }
                 </ul>
             </div>
             <div className='aside--group'>
                 <span className='aside--title sm'>Your Music</span>
                 <ul className='aside--list'>
-                <AsideItem
-                        label="My Artists"
-                        icon={PiMicrophoneStageFill}
-                        // action={}
-                    />
-                    <AsideItem
-                        label="My Songs"
-                        icon={PiMusicNotesFill}
-                        // action={}
-                    />
+                    {
+                        asideUserHrefs.map(href => (
+                            <AsideItem key={href.path} href={href}/>
+                        ))
+                    }
                 </ul>
             </div>
         </aside>

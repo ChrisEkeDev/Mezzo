@@ -5,29 +5,30 @@
     height: 100dvh;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .home--container {
     flex: 1;
+    z-index: 5;
     @include grid();
     grid-template-areas:
-    ". . . media media media form form form . . ."
+    ". . . . form form form form . . . ."
 }
+
+
 
 /* Largest devices such as desktops (1280px and up) */
 @media only screen and (width <= 100em) {
     .home--container {
         grid-template-areas:
-        ". . media media media media form form form form . ."
+        ". . . form form form form form form . . ."
     }
 }
 
 /* Large devices such as laptops (1024px and up) */
 @media only screen and (width <= 64em) {
-    .home--container {
-        grid-template-areas:
-        ". media media media media media form form form form form ."
-    }
+
 
 }
 

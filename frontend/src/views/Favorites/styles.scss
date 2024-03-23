@@ -1,0 +1,35 @@
+@import '../../index.scss';
+
+.favorites--list {
+    margin: 0;
+    padding: 0;
+    gap: .5rem;
+    padding-left: .5rem;
+    padding-top: .5rem;
+    list-style-type: none;
+}
+
+
+.list_item {
+    position: relative
+  }
+
+  .list_item--options {
+    position: absolute;
+    right: 0;
+    bottom: 0rem;
+  }
+
+  .list_item--play {
+    position: absolute;
+    left: 1.75rem;
+    z-index: 5;
+  }
+
+.list_item:nth-of-type(odd) {
+    background-color: $tint;
+}
+
+.list_item:hover {
+    background-color: $selected;
+}

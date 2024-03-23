@@ -106,29 +106,29 @@ function MediaPlayer() {
             </AnimatePresence>
       </div>
       <div className='media_player--volume'>
-              <AnimatePresence mode="wait">
-                {
-                  volume === 'off' ?
-                  <IconButton
-                    key="volume-off"
-                    icon={PiSpeakerNoneFill}
-                    action={() => setVolume('low')}
-                  /> :
-                  volume === 'high' ?
-                  <IconButton
-                    key="volume-low"
-                    icon={PiSpeakerHighFill}
-                    action={() => setVolume('high')}
-                  /> :
-                  <IconButton
-                    key="volume-high"
-                    icon={PiSpeakerLowFill}
-                    action={() => setVolume('off')}
-                  />
-                }
-              </AnimatePresence>
-              <div className='media_player--sound_bar'/>
-            </div>
+        <AnimatePresence mode="wait">
+          {
+            volume === 'off' ?
+            <IconButton
+              key="volume-off"
+              icon={PiSpeakerNoneFill}
+              action={() => setVolume('low')}
+            /> :
+            volume === 'high' ?
+            <IconButton
+              key="volume-low"
+              icon={PiSpeakerHighFill}
+              action={() => setVolume('high')}
+            /> :
+            <IconButton
+              key="volume-high"
+              icon={PiSpeakerLowFill}
+              action={() => setVolume('off')}
+            />
+          }
+        </AnimatePresence>
+        <div className='media_player--sound_bar'/>
+      </div>
     </div>
   )
 }

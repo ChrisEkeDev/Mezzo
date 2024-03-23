@@ -7,37 +7,37 @@ import Button from '../button';
 import { TbCircleCheckFilled, TbPlaylistAdd } from 'react-icons/tb';
 
 function AddToPlaylist({song, close}) {
-    const playlistData = useSelector(state => state.playlists.all)
-    const playlists = Object.values(playlistData);
-    const { setLoading } = useLoading();
-    const { handleAlerts } = useAlerts();
-    const dispatch = useDispatch();
-    const [ selectedPlaylist, setSelectedPlaylist ] = useState(undefined);
+    // const playlistData = useSelector(state => state.playlists.all)
+    // const playlists = Object.values(playlistData);
+    // const { setLoading } = useLoading();
+    // const { handleAlerts } = useAlerts();
+    // const dispatch = useDispatch();
+    // const [ selectedPlaylist, setSelectedPlaylist ] = useState(undefined);
 
-    const handleSelectPlaylist = (playlist) => {
-        setSelectedPlaylist(playlist)
-    }
+    // const handleSelectPlaylist = (playlist) => {
+    //     setSelectedPlaylist(playlist)
+    // }
 
-    const handleAddToPlaylist = async () => {
-        setLoading({message: 'Adding song to playlist...'})
-        const id = {songId: song.id}
-        try {
-            const data = await dispatch(thunkAddToPlaylist(id, selectedPlaylist.id))
-            const message = data.message;
-            handleAlerts(message)
-        } catch(error) {
-            const message = await error.json()
-            handleAlerts(message)
-        } finally {
-            setLoading(undefined)
-            close();
-        }
-    }
+    // const handleAddToPlaylist = async () => {
+    //     setLoading({message: 'Adding song to playlist...'})
+    //     const id = {songId: song.id}
+    //     try {
+    //         const data = await dispatch(thunkAddToPlaylist(id, selectedPlaylist.id))
+    //         const message = data.message;
+    //         handleAlerts(message)
+    //     } catch(error) {
+    //         const message = await error.json()
+    //         handleAlerts(message)
+    //     } finally {
+    //         setLoading(undefined)
+    //         close();
+    //     }
+    // }
 
 
     return (
         <>
-            <h2 className='confirm--title'>Select a Playlist</h2>
+            {/* <h2 className='confirm--title'>Select a Playlist</h2>
             <ul className='confirm--list'>
                 {
                     playlists?.map(playlist => {
@@ -66,7 +66,7 @@ function AddToPlaylist({song, close}) {
                     right={<TbPlaylistAdd/>}
                     disabled={!selectedPlaylist}
                 />
-            </div>
+            </div> */}
         </>
     )
 }

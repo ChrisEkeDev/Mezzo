@@ -62,6 +62,30 @@ export const button = {
     }
 }
 
+export const buttonBase = {
+    hidden: {
+        opacity: 0,
+        scale: 0,
+        transition: {
+            duration: .1
+        }
+    },
+    visible: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+            duration: .1
+        }
+    },
+    hover: {
+        opacity: .5,
+        scale: 1.025
+    },
+    tap: {
+        scale: .95
+    }
+}
+
 export const textError = {
     hidden: {
         opacity: 0,

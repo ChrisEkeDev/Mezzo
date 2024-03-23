@@ -17,80 +17,80 @@ import Button from '../button';
 import { TbPlayerPlayFilled, TbDots, TbEdit, TbTrash, TbX, TbHeartPlus, TbPlus, TbHeartFilled, TbHeartMinus } from 'react-icons/tb';
 
 function Artist() {
-    const user = useSelector(state => state.session.user);
-    const [ isLoading, setIsLoading] = useState(true)
-    const { ref, isVisible, setIsVisible } = useOutsideClick();
-    const [ deletingArtist, setDeletingArtist ] = useState(false);
-    const { setLoading } = useLoading();
-    const { handleAlerts } = useAlerts();
-    const { handlePlaySongs } = useNowPlaying();
-    const { id } = useParams();
-    const favoritesData = useSelector(state => state.favorites.artists);
-    const favorites = Object.values(favoritesData)
-    const artist = useSelector(state => state.artists.current)
-    const history = useHistory();
-    const dispatch = useDispatch();
+    // const user = useSelector(state => state.session.user);
+    // const [ isLoading, setIsLoading] = useState(true)
+    // const { ref, isVisible, setIsVisible } = useOutsideClick();
+    // const [ deletingArtist, setDeletingArtist ] = useState(false);
+    // const { setLoading } = useLoading();
+    // const { handleAlerts } = useAlerts();
+    // const { handlePlaySongs } = useNowPlaying();
+    // const { id } = useParams();
+    // const favoritesData = useSelector(state => state.favorites.artists);
+    // const favorites = Object.values(favoritesData)
+    // const artist = useSelector(state => state.artists.current)
+    // const history = useHistory();
+    // const dispatch = useDispatch();
 
-    const navigate = (route) => {
-        history.push(route);
-    }
+    // const navigate = (route) => {
+    //     history.push(route);
+    // }
 
-    const isFavorited = favorites.some(favorite => favorite.artistId === artist.id);
+    // const isFavorited = favorites.some(favorite => favorite.artistId === artist.id);
 
-    const deleteArtist = async () => {
-        setLoading({message: 'Deleting artist...'})
-        try {
-            const message = await dispatch(thunkDeleteArtist(artist))
-            handleAlerts(message);
-            navigate('/dashboard/artists')
-        } catch(error) {
-            const message = error.json()
-            handleAlerts(message);
-        } finally {
-            setLoading(undefined)
-        }
-    }
+    // const deleteArtist = async () => {
+    //     setLoading({message: 'Deleting artist...'})
+    //     try {
+    //         const message = await dispatch(thunkDeleteArtist(artist))
+    //         handleAlerts(message);
+    //         navigate('/dashboard/artists')
+    //     } catch(error) {
+    //         const message = error.json()
+    //         handleAlerts(message);
+    //     } finally {
+    //         setLoading(undefined)
+    //     }
+    // }
 
-    const handleAddFavorite = async (id) => {
-        setLoading({message: 'Adding artist to favorites...'})
-        try {
-            const data = await dispatch(thunkAddArtistToFavorites({artistId: id}))
-            const message = data.message;
-            handleAlerts(message);
-            setIsVisible(false)
-        } catch(error) {
-            handleAlerts(error);
-        } finally {
-            setLoading(undefined)
-        }
-    }
+    // const handleAddFavorite = async (id) => {
+    //     setLoading({message: 'Adding artist to favorites...'})
+    //     try {
+    //         const data = await dispatch(thunkAddArtistToFavorites({artistId: id}))
+    //         const message = data.message;
+    //         handleAlerts(message);
+    //         setIsVisible(false)
+    //     } catch(error) {
+    //         handleAlerts(error);
+    //     } finally {
+    //         setLoading(undefined)
+    //     }
+    // }
 
-    const handleRemoveFavorite = async (id) => {
-        setLoading({message: 'Removing artist from favorites...'})
-        try {
-            const data = await dispatch(thunkRemoveArtistFromFavorites({artistId: id}))
-            const message = data.message;
-            handleAlerts(message);
-            setIsVisible(false)
-        } catch (error) {
-            handleAlerts(error);
-        } finally {
-            setLoading(undefined)
-        }
-    }
+    // const handleRemoveFavorite = async (id) => {
+    //     setLoading({message: 'Removing artist from favorites...'})
+    //     try {
+    //         const data = await dispatch(thunkRemoveArtistFromFavorites({artistId: id}))
+    //         const message = data.message;
+    //         handleAlerts(message);
+    //         setIsVisible(false)
+    //     } catch (error) {
+    //         handleAlerts(error);
+    //     } finally {
+    //         setLoading(undefined)
+    //     }
+    // }
 
-    useEffect(() => {
-        dispatch(thunkGetArtist(id))
-        .then(() => setIsLoading(false))
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(thunkGetArtist(id))
+    //     .then(() => setIsLoading(false))
+    // }, [dispatch])
 
-    if (isLoading || !artist) return <LoadingData></LoadingData>
+    // if (isLoading || !artist) return <LoadingData></LoadingData>
 
-    const isAuth = user.id === artist.User.id;
+    // const isAuth = user.id === artist.User.id;
 
     return (
         <div className='artist--wrapper'>
-            <header>
+            {/* <header>
                 <div className='artist_header--wrapper'>
                 <div className='artist_header--contents'>
                 <div className='artist--image' style={{backgroundImage: `url(${artist?.image})`}}>
@@ -243,7 +243,7 @@ function Artist() {
                             <p>{artist.name} doesn't have any songs yet.</p>
                         </div>
                     </div>
-                }
+                } */}
 
         </div>
     )

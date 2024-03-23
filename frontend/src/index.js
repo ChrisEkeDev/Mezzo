@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
-import LoadingProvider from './context/loading';
-import AlertsProvider from './context/alerts';
+import AppProvider from './context/AppContext';
 import './index.scss';
 import App from './App';
 import configureStore from './store';
@@ -22,7 +21,9 @@ function Root() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <AppProvider>
+          <App />
+        </AppProvider>
       </BrowserRouter>
     </Provider>
   );

@@ -1,0 +1,52 @@
+@import '../../index.scss';
+
+.artist_item--wrapper {
+    position: relative;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 1rem;
+    padding: 1rem;
+    gap: 1rem;
+    transition: all .2s;
+    cursor: pointer;
+    background-color: white;
+
+
+}
+
+.artist_item--wrapper:hover {
+    background-color: $selected;
+}
+
+.artist_item--wrapper:hover .artist_item--image {
+    transform: scale(1.05, 1.05);
+}
+
+
+
+.artist_item--image {
+    transition: all .2s;
+    width: 60%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: $background;
+}
+
+.artist_item--artist {
+    display: block;
+}
+
+.artist_item--play {
+    position: absolute;
+    left: .5rem;
+    top: .5rem;
+}
+
+.artist_item--options {
+    position: absolute;
+    right: .5rem;
+    bottom: .5rem;
+}

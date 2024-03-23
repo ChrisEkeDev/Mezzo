@@ -1,0 +1,50 @@
+@import '../../index.scss';
+
+.song_item--wrapper {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-areas:
+    "name name name artist artist genre genre time";
+    line-height: 1rem;
+    padding: .5rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.song_item--flex  {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.song_item--play {
+    position: absolute;
+    left: 0;
+}
+
+.song_item--options {
+    position: absolute;
+    right: 1rem;
+    bottom: -.5rem;
+}
+
+.song_item--label {
+    align-self: center;
+}
+
+.song_item--image {
+    height: 3rem;
+    border-radius: .5rem;
+    aspect-ratio: 1;
+    background: $background;
+}
+
+.song_item--wrapper:nth-of-type(odd) {
+    background-color: $tint;
+}
+
+.song_item--wrapper:hover {
+    background-color: $selected;
+}

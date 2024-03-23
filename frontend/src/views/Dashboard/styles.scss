@@ -3,21 +3,33 @@
 .dashboard--wrapper {
     height: 100dvh;
     @include grid();
+    grid-template-rows: auto 5rem;
     grid-template-areas:
-    "aside aside main main main main main main main main main main";
+    "aside aside main main main main main main main main main main"
+    "media media media media media media media media media media media media";
     grid-gap: 0rem;
+}
+
+.wrapper {
+    border-radius: 1rem;
+    padding-right: 0;
+    margin-right: .5rem;
 }
 
 
 .dashboard--main {
     grid-area: main;
+    position: relative;
     display: flex;
     flex-direction: column;
 }
 
+.dashboard--media {
+    grid-area: media;
+}
+
 .navigation--wrapper {
     display: grid;
-    //border-bottom: 1px solid $placeholder;
     grid-template-columns: repeat(9, $unit);
     grid-template-areas:
     "player player player player player player player . . menu";
@@ -25,8 +37,8 @@
 
 .main--wrapper {
     flex: 1;
-    background-color: $placeholder;
-    border-radius: 1rem 0 0 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .footer--wrapper {

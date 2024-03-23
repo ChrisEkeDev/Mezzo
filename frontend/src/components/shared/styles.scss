@@ -5,6 +5,7 @@
     grid-area: form;
     top: -1rem;
     align-self: center;
+    margin: 0 calc($unit / 2)
 }
 
 .form--title {
@@ -31,7 +32,7 @@
 }
 
 .form--actions {
-    margin: 3rem 0;
+    margin: 3rem 0 0 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;

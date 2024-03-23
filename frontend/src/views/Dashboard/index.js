@@ -1,7 +1,8 @@
 import React from 'react';
 import Aside from '../../components/Aside/Aside';
-import MediaPlayer from '../../components/MediaPlayer';
-import Menu from '../../components/Menu';
+import DashboardMediaPlayer from '../../components/HomeMediaPlayer';
+import DashboardRouter from '../../routers/DashboardRouter';
+import DashboardHeader from '../../components/DashboardHeader';
 import './styles.scss'
 
 function Dashboard() {
@@ -9,16 +10,13 @@ function Dashboard() {
     <div className='dashboard--wrapper'>
         <Aside/>
         <div className='dashboard--main'>
-            <nav className='navigation--wrapper'>
-                <MediaPlayer />
-                <Menu />
-            </nav>
+            <DashboardHeader />
             <main className='main--wrapper'>
-
+              <DashboardRouter />
             </main>
-            <footer className='footer--wrapper'>
-
-            </footer>
+        </div>
+        <div className='dashboard--media'>
+          {/* <DashboardMediaPlayer /> */}
         </div>
     </div>
   )

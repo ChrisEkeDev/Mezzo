@@ -12,7 +12,6 @@ function AppRouter() {
             component={View.Home}
         />
         <Route
-            exact
             path={ROUTES.DASHBOARD}
             component={View.Dashboard}
         />

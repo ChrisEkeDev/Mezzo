@@ -1,10 +1,9 @@
 @import '../../index.scss';
 
 .menu--wrapper {
-    grid-area: menu;
-    position: relative;
-    justify-self: flex-end;
-    padding: .5rem 1rem;
+    right: 1.5rem;
+    padding: .5rem;
+    z-index: 50;
 }
 
 .menu_list--wrapper {
@@ -16,7 +15,7 @@
     flex-direction: column;
     border-radius: 1rem;
     right: 3rem;
-    top: 3rem;
+    top: 5rem;
     background-color: white;
     outline: 1px solid $placeholder;
 }
