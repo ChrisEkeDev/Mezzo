@@ -11,6 +11,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
+    justify-content: center;
 }
 
 .icon_button {
@@ -65,8 +66,4 @@
 .secondary:hover {
     // background-color: $hover;
     box-shadow: 1px 1px 5px 3px rgba(0,0,0,.1);
-}
-
-.centered {
-    justify-content: center;
 }

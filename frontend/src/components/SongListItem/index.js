@@ -18,7 +18,7 @@ function SongListItem({song}) {
           isHovering &&
           <IconButton
             key={0}
-            styles='list_item--play icon_button--no_shadow'
+            styles='list_item--play icon_button--no_shadow accent'
             icon={PiPlayFill}
             action={() => alert(`Play Song ${song}`)}
           />

@@ -9,7 +9,7 @@ function TextInput({name, label, placeholder, type, error, value, setValue, disa
     return (
     <LayoutGroup>
         <motion.label layout htmlFor={name} className="input--wrapper">
-            <motion.span className='sm'>{label}</motion.span>
+            { label && <motion.span className='sm'>{label}</motion.span> }
         {
             type === 'textarea' ?
             <motion.textarea

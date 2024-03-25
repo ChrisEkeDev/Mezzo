@@ -1,21 +1,52 @@
-import React from 'react'
-import { PiMagnifyingGlassBold } from 'react-icons/pi';
+import React, { useState } from 'react'
+import { PiMagnifyingGlassBold, PiXBold } from 'react-icons/pi';
+import { base, search } from '../../constants/animations';
+import { AnimatePresence, motion } from 'framer-motion';
 import './styles.scss'
-import Button from '../shared/Buttons/Button';
 
 function Search({placeholder, action}) {
+  const [ query, setQuery ] = useState('');
+
+  const handleQuery = (x) => {
+    setQuery(x.target.value)
+  }
+
+  const clearQuery = () => {
+    setQuery("")
+  }
+
   return (
     <div className='search--wrapper'>
         <input
+            value={query}
+            onChange={handleQuery}
             className='search--input'
             placeholder={placeholder}
         />
-        {/* <Button
-          styles='secondary button--small'
-          right={PiMagnifyingGlassBold}
-          action={action}
-          label="Search"
-        /> */}
+        <div className='search--action'>
+          <AnimatePresence mode='wait'>
+            {
+              query.length > 0 ?
+              <motion.span
+                key="close"
+                {...base}
+                variants={search}
+                className="search--clear"
+                onClick={clearQuery}
+              >
+                <PiXBold />
+              </motion.span> :
+              <motion.span
+                key="search"
+                {...base}
+                variants={search}
+                className="search--icon"
+              >
+                <PiMagnifyingGlassBold />
+              </motion.span>
+            }
+          </AnimatePresence>
+        </div>
     </div>
   )
 }

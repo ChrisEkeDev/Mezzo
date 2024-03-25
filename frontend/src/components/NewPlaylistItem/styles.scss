@@ -1,0 +1,21 @@
+@import '../../index.scss';
+
+.playlist_item--wrapper {
+    display: flex;
+    gap: .5rem;
+    line-height: 1rem;
+    padding: .5rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.playlist_item--play {
+    left: .5rem;
+    top: .5rem;
+}
+
+.playlist_item--options {
+    right: 0;
+    bottom: 0;
+}

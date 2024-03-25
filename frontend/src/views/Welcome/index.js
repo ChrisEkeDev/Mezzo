@@ -6,7 +6,7 @@ function Welcome() {
   return (
     <>
       <Scroll>
-        <section className='welcome--wrapper'>
+        <section className='wrapper'>
             <h1>Dashboard Home</h1>
         </section>
       </Scroll>

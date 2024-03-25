@@ -21,6 +21,11 @@ function DashboardRouter() {
                 />
                 <Route
                     exact
+                    path={ROUTES.ARTIST_PAGE}
+                    component={View.ArtistPage}
+                />
+                <Route
+                    exact
                     path={ROUTES.SONGS}
                     component={View.Songs}
                 />
@@ -29,22 +34,27 @@ function DashboardRouter() {
                     path={ROUTES.FAVORITES}
                     component={View.Favorites}
                 />
-                {/* <Route exact path='/dashboard/songs'>
-                    <Songs/>
-                </Route>
-                <Route exact path='/dashboard/playlists'>
-                    <Playlists/>
-                </Route>
-                <Route exact path='/dashboard/playlists/:id'>
-                    <Playlist/>
-                </Route>
-                <Route exact path='/dashboard/my-artists'>
-                    <MyArtists/>
-                </Route>
-                <Route exact path='/dashboard/my-songs'>
-                    <MySongs/>
-                </Route>
-                <Route exact path='/dashboard/new-artist'>
+                <Route
+                    exact
+                    path={ROUTES.ALL_PLAYLISTS}
+                    component={View.Playlists}
+                />
+                <Route
+                    exact
+                    path={ROUTES.PLAYLIST_PAGE}
+                    component={View.PlaylistPage}
+                />
+                <Route
+                    exact
+                    path={ROUTES.PLAYLIST_PAGE}
+                    component={View.PlaylistPage}
+                />
+                <Route
+                    exact
+                    path={ROUTES.NEW_PLAYLIST}
+                    component={View.NewPlaylist}
+                />
+                {/*  <Route exact path='/dashboard/new-artist'>
                     <NewArtist/>
                 </Route>
                 <Route exact path='/dashboard/artists/:artistId/songs/:songId/update'>
@@ -58,9 +68,6 @@ function DashboardRouter() {
                 </Route>
                 <Route exact path='/dashboard/artists/:id'>
                     <Artist/>
-                </Route>
-                <Route exact path='/dashboard/favorites'>
-                    <Favorites/>
                 </Route> */}
             </Switch>
         </AnimatePresence>

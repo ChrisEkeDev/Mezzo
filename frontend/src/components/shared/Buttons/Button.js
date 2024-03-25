@@ -3,13 +3,13 @@ import { motion } from 'framer-motion';
 import { base, buttonBase } from '../../../constants/animations';
 import './styles.scss';
 
-function Button({label, styles, left: LeftIcon, right: RightIcon, action, disabled}) {
+function Button({label, styles, left: LeftIcon, right: RightIcon, action, disabled, animation}) {
   return (
     <motion.button
       {...base}
-      variants={buttonBase}
+      variants={animation ? animation : buttonBase}
       onClick={action}
-      className={`button ${styles} ${disabled ? 'disabled' : ''} ${!LeftIcon && !RightIcon ? 'centered' : 'null'}`}
+      className={`button ${styles} ${disabled ? 'disabled' : ''}`}
       type='button'
       disabled={disabled}
     >

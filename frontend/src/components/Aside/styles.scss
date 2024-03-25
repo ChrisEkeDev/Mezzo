@@ -3,6 +3,7 @@
 .aside--wrapper {
     grid-area: aside;
     padding: .5rem 0;
+    z-index: 10;
 }
 
 .aside--group {
@@ -26,17 +27,17 @@
     padding: .5rem;
     gap: .5rem;
     transition: all .2s;
-    border-radius: 10%;
+    border-radius: .5rem;
     display: flex;
     align-items: center;
     cursor: pointer;
     &:hover {
-        background-color: $placeholder;
+        background-color: $selected;
     }
 }
 
 .aside_item--selected {
-    background-color: $placeholder;
+    background-color: $selected;
     font-weight: 600;
 }
 

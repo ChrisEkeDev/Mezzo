@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useMediaContext } from '../../context/MediaContext';
 import './styles.scss';
 
-const MediaVisualizer = () => {
+const MediaVisualizer = ({full}) => {
   const [ analyserNode, setAnalyserNode ] = useState(null);
   const [ dataArray, setDataArray ] = useState(null);
   const { sourceRef, mediaContext } = useMediaContext();
-  const MAIN_COLOR = `#f34e77`;
+  const LIGHT_COLOR = `#ffdde6`;
+  const MAIN_COLOR = '#f34e77'
   const BACKGROUND_COLOR = '#ffffff';
 
   useEffect(() => {
@@ -29,26 +30,44 @@ const MediaVisualizer = () => {
     if (!mediaContext || !analyserNode || !dataArray) return;
     const canvas = document.getElementById('audioCanvas');
     if (!canvas) return;
-    const canvasCtx = canvas.getContext('2d');
-    if (!canvasCtx) return;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const canvasContext = canvas.getContext('2d');
+    if (!canvasContext) return;
 
     const draw = () => {
       requestAnimationFrame(draw);
       analyserNode.getByteFrequencyData(dataArray);
-      canvasCtx.fillStyle = BACKGROUND_COLOR;
-      canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
-      const barWidth = (canvas.width / (dataArray.length * 2)) * 5;
+      canvasContext.fillStyle = BACKGROUND_COLOR;
+      canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+
+      const outerBarWidth = (canvas.width / (dataArray.length * 6)) * 3;
       let x = 0;
       for (let i = 0; i < dataArray.length; i++) {
+        const barHeight = dataArray[i];
+        const centerY = canvas.height / 2;
+        const upperY = centerY - barHeight / 2;
+        const lowerY = centerY + barHeight / 2;
+        canvasContext.fillStyle = LIGHT_COLOR;
+        canvasContext.fillRect(x, upperY, outerBarWidth, barHeight);
+        canvasContext.fillRect(x, lowerY, outerBarWidth, -barHeight);
+        x += outerBarWidth - 1;
+      }
+
+
+      const innerBarWidth = (canvas.width / (dataArray.length * 10)) * 3;
+      let y = 0;
+      for (let i = 0; i < dataArray.length; i++) {
         const barHeight = dataArray[i] / 2;
-        canvasCtx.fillStyle = MAIN_COLOR;
-        canvasCtx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight);
-        x += barWidth - 1;
+        const centerY = canvas.height / 2;
+        const upperY = centerY - barHeight / 2;
+        const lowerY = centerY + barHeight / 2;
+        canvasContext.fillStyle = MAIN_COLOR;
+        canvasContext.fillRect(y, upperY, innerBarWidth, barHeight);
+        canvasContext.fillRect(y, lowerY, innerBarWidth, -barHeight);
+        y += innerBarWidth - 1;
       }
     };
-
-
-
 
     draw();
     return () => cancelAnimationFrame(draw);
@@ -57,7 +76,7 @@ const MediaVisualizer = () => {
   return (
       <canvas
         id="audioCanvas"
-        style={{width: '300px', height: '100%'}}>
+      >
       </canvas>
   );
 };

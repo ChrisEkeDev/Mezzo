@@ -10,18 +10,12 @@
     grid-gap: 0rem;
 }
 
-.wrapper {
-    border-radius: 1rem;
-    padding-right: 0;
-    margin-right: .5rem;
-}
-
-
 .dashboard--main {
     grid-area: main;
     position: relative;
     display: flex;
     flex-direction: column;
+    z-index: 5;
 }
 
 .dashboard--media {

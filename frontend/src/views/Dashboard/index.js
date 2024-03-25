@@ -4,6 +4,7 @@ import DashboardMediaPlayer from '../../components/HomeMediaPlayer';
 import DashboardRouter from '../../routers/DashboardRouter';
 import DashboardHeader from '../../components/DashboardHeader';
 import './styles.scss'
+import MediaVisualizer from '../../components/MediaVisualizer';
 
 function Dashboard() {
   return (
@@ -16,8 +17,9 @@ function Dashboard() {
             </main>
         </div>
         <div className='dashboard--media'>
-          {/* <DashboardMediaPlayer /> */}
+          <DashboardMediaPlayer />
         </div>
+        {/* <MediaVisualizer /> */}
     </div>
   )
 }

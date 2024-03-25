@@ -14,6 +14,7 @@ function Menu() {
 
     return (
         <div className='menu--wrapper'>
+
             <AnimatePresence mode="wait">
                 {
                     menu ?
@@ -32,22 +33,30 @@ function Menu() {
 
                 }
             </AnimatePresence>
-            <AnimatePresence>
-                {
-                    menu &&
-                    <motion.ul {...base} variants={menuFade} className='menu_list--wrapper'>
-                        <MenuItem
-                            icon={PiSignOutBold}
-                            label="Sign Out"
-                            action={() => navigate(ROUTES.HOME)}
-                        />
-                        <MenuItem
-                            icon={PiXBold}
-                            label="Close"
-                        />
-                    </motion.ul>
-                }
-            </AnimatePresence>
+            <div className='menu_list--wrapper'>
+                <AnimatePresence>
+                    {
+                        menu &&
+                        <motion.ul
+                            key="menu"
+                            {...base}
+                            variants={menuFade}
+                            className='menu_list--container'
+                        >
+                            <MenuItem
+                                icon={PiSignOutBold}
+                                label="Sign Out"
+                                action={() => navigate(ROUTES.HOME)}
+                            />
+                            <MenuItem
+                                icon={PiXBold}
+                                label="Close"
+                                action={() => setMenu(false)}
+                            />
+                        </motion.ul>
+                    }
+                </AnimatePresence>
+            </div>
         </div>
   )
 }

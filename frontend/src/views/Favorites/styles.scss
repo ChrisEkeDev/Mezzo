@@ -1,18 +1,11 @@
 @import '../../index.scss';
 
 .favorites--list {
-    margin: 0;
-    padding: 0;
-    gap: .5rem;
-    padding-left: .5rem;
-    padding-top: .5rem;
-    list-style-type: none;
+  padding: 0;
+  padding-left: .5rem;
+  padding-top: .5rem;
 }
 
-
-.list_item {
-    position: relative
-  }
 
   .list_item--options {
     position: absolute;

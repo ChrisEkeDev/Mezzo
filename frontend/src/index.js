@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import AppProvider from './context/AppContext';
 import './index.scss';
 import App from './App';
@@ -21,9 +23,11 @@ function Root() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <AppProvider>
-          <App />
-        </AppProvider>
+        <DndProvider backend={HTML5Backend}>
+          <AppProvider>
+            <App />
+          </AppProvider>
+        </DndProvider>
       </BrowserRouter>
     </Provider>
   );

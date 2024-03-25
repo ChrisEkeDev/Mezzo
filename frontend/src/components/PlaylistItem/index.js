@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { AnimatePresence } from 'framer-motion'
-import placeholder from '../../assets/placeholder_artist.svg';
+import { AnimatePresence } from 'framer-motion';
 import IconButton from '../../components/shared/Buttons/IconButton';
+import placeholder from '../../assets/placeholder_artist.svg';
 import { PiPlayFill, PiNotchesBold } from 'react-icons/pi'
 import './styles.scss';
 
-function ArtistListItem({artist}) {
+
+function PlaylistItem({playlist}) {
     const [ isHovering, setIsHovering ] = useState(false);
+
     return (
         <li
-            className='artist_list_item--wrapper list_item'
+            className='playlist_item--wrapper list_item'
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
@@ -18,31 +20,29 @@ function ArtistListItem({artist}) {
                 isHovering &&
                 <IconButton
                     key={0}
-                    styles='list_item--play icon_button--no_shadow accent'
+                    styles='playlist_item--play icon_button--no_shadow accent'
                     icon={PiPlayFill}
-                    action={() => alert(`Play Song ${artist}`)}
+                    action={() => alert(`Play Playlist ${playlist}`)}
                 />
                 }
             </AnimatePresence>
 
-            <img className='artist_list_item--image' src={placeholder}/>
-            <span className='md bold'>Artist List Item {artist}</span>
+            <img className='playlist_item--image' src={placeholder}/>
+            <span className='playlist_item--artist'>Playlist {playlist}</span>
 
             <AnimatePresence>
                 {
                 isHovering &&
                 <IconButton
                     key={0}
-                    styles='list_item--options icon_button--no_shadow'
+                    styles='playlist_item--options icon_button--no_shadow'
                     icon={PiNotchesBold}
-                    action={() => alert(`Open Options ${artist}`)}
+                    action={() => alert(`Open Options ${playlist}`)}
                 />
                 }
             </AnimatePresence>
-
-
         </li>
     )
 }
 
-export default ArtistListItem
+export default PlaylistItem

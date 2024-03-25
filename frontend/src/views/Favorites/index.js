@@ -8,13 +8,13 @@ function Favorites() {
     const favorites = Array.from({ length: 20 }, (_, index) => index + 1);
 
     return (
-        <>
+        <div className='wrapper'>
             <header className='header'>
                 <span className='label'>Favorites</span>
             </header>
             <section>
                 <Scroll>
-                    <ul className='favorites--list'>
+                    <ul className='list favorites--list'>
                         {favorites.map((favorite, i) => {
                             if (i % 3 === 0) {
                                 return (<ArtistListItem artist={favorite}/>)
@@ -25,7 +25,7 @@ function Favorites() {
                     </ul>
                 </Scroll>
             </section>
-        </>
+        </div>
     )
 }
 

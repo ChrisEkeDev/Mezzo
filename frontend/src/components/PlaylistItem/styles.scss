@@ -1,0 +1,39 @@
+@import '../../index.scss';
+
+.playlist_item--wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.playlist_item--image {
+    transition: all .2s;
+    width: 8rem;
+    aspect-ratio: 1;
+    border-radius: 1rem;
+    background: $background;
+}
+
+.playlist_item--wrapper:hover {
+    background-color: $selected;
+}
+
+.playlist_item--wrapper:hover .playlist_item--image {
+    transform: scale(1.05, 1.05);
+}
+
+.playlist_item--options {
+    position: absolute;
+    right: .5rem;
+    bottom: .5rem;
+}
+
+.playlist_item--play {
+    position: absolute;
+    left: 3.5rem;
+    top: 3.5rem;
+    z-index: 5;
+}

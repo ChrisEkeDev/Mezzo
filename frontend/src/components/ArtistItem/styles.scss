@@ -11,7 +11,6 @@
     padding: 1rem;
     gap: 1rem;
     transition: all .2s;
-    cursor: pointer;
     background-color: white;
 
 
@@ -29,7 +28,7 @@
 
 .artist_item--image {
     transition: all .2s;
-    width: 60%;
+    width: 10rem;
     aspect-ratio: 1;
     border-radius: 50%;
     background: $background;
@@ -37,12 +36,18 @@
 
 .artist_item--artist {
     display: block;
+    text-decoration: none;
+}
+
+.artist_item--artist:hover {
+    text-decoration: underline;
 }
 
 .artist_item--play {
     position: absolute;
-    left: .5rem;
+    z-index: 5;
     top: .5rem;
+    left: .5rem;
 }
 
 .artist_item--options {

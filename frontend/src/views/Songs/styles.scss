@@ -1,47 +1,32 @@
 @import '../../index.scss';
 
-.songs--wrapper {
-    position: relative;
-}
-
 .songs--header {
-    padding: 1rem;
-    line-height: 1rem;
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    padding-right: 2rem;
-    border-radius: .5rem 0 0 .5rem;
-    padding-top: 0rem;
     grid-template-areas:
     "name name name artist artist genre genre time";
 }
 
-.song_list--label {
-    font-size: .85rem;
-    opacity: .5;
-}
-
-.song_name {
-    grid-area: name;
-}
-
-.song_artist {
-    grid-area: artist;
-}
-
-.song_genre {
-    grid-area: genre;
-}
-
-.song_time {
-    grid-area: time;
+.songs--header--open {
+    padding-right: 2.5rem !important;
 }
 
 .songs--list {
-    margin: 0;
-    padding: .5rem;
-    gap: .5rem;
-    display: flex;
-    list-style-type: none;
-    flex-direction: column;
+    padding-right: 0 !important;
+}
+
+.song--name {
+    grid-area: name;
+}
+
+.song--artist {
+    grid-area: artist;
+}
+
+.song--genre {
+    grid-area: genre;
+}
+
+.song--time {
+    grid-area: time;
 }

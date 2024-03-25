@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion'
 import placeholder from '../../assets/placeholder_artist.svg';
 import IconButton from '../../components/shared/Buttons/IconButton';
-import { PiPlayFill, PiNotchesBold } from 'react-icons/pi'
+import { PiShuffleBold, PiNotchesBold } from 'react-icons/pi'
 import './styles.scss';
+const ROUTE_PREFIX = '/dashboard/artists/'
 
 function ArtistItem({artist}) {
   const [ isHovering, setIsHovering ] = useState(false);
@@ -20,15 +22,20 @@ function ArtistItem({artist}) {
           isHovering &&
           <IconButton
             key={0}
-            styles='artist_item--play icon_button--no_shadow'
-            icon={PiPlayFill}
+            styles='artist_item--play icon_button--no_shadow accent'
+            icon={PiShuffleBold}
             action={() => alert(`Play Artist ${artist}`)}
           />
         }
       </AnimatePresence>
 
       <img className='artist_item--image' src={placeholder}/>
-      <span className='artist_item--artist'>Artist {artist}</span>
+
+      <Link
+        className='artist_item--artist bold accent'
+        to={`${ROUTE_PREFIX}${artist}`}>
+          Artist {artist}
+      </Link>
 
       <AnimatePresence>
         {

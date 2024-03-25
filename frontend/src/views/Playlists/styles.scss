@@ -1,0 +1,60 @@
+@import '../../index.scss';
+
+
+.playlists--list {
+    gap: 1rem;
+}
+
+.new_playlist--wrapper {
+    display: grid !important;
+    grid-template-columns: calc(100% / 3) auto;
+    gap: 1rem;
+}
+
+
+.new_playlist--form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.new_playlist--scroll {
+    height: calc(100dvh - 18rem);
+    margin-right: 0;
+    margin-top: .25rem;
+}
+
+.new_playlist--overlay {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    left: .5rem;
+    right: -.5rem;
+    top: .5rem;
+    bottom: .5rem;
+    pointer-events: none;
+    border-radius: 1rem;
+    background-color: rgba(white, .5);
+    z-index: 10;
+    gap: .5rem;
+}
+
+.new_playlist--icon {
+    font-size: 2rem;
+    color: $main;
+}
+
+.new_playlist--button {
+    margin-top: 1rem;
+}
+
+.new_playlist--list {
+    // background-color: green !important;
+    height: 100%;
+}
+
+.new_playlist--songs {
+    z-index: 15;
+}

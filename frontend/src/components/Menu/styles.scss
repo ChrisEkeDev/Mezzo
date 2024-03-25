@@ -1,54 +1,71 @@
 @import '../../index.scss';
 
 .menu--wrapper {
-    right: 1.5rem;
+    right: 0rem;
     padding: .5rem;
     z-index: 50;
+    position: relative;
+
 }
 
 .menu_list--wrapper {
     position: absolute;
+    right: 1rem;
+    top: .5rem;
+}
+
+.menu_list--container {
+    position: relative;
     margin: 0;
-    padding: 0;
+    padding: 1rem;
     list-style-type: none;
     display: flex;
+    gap: .5rem;
     flex-direction: column;
     border-radius: 1rem;
-    right: 3rem;
-    top: 5rem;
     background-color: white;
-    outline: 1px solid $placeholder;
+    box-shadow: $box_shadow;
 }
 
 .menu_item--wrapper {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: .5rem 1rem;
-    border-bottom: 1px solid $placeholder;
+    gap: .5rem;
+    padding: .5rem;
     cursor: pointer;
     font-size: .85rem;
-    width: 200px;
+    border-radius: .5rem;
+    width: 12rem;
     transition: all .2s;
 
     &:hover {
-        background-color: $placeholder;
-    }
-
-    &:first-of-type {
-        border-radius: 1rem 1rem 0 0;
-
-    }
-    &:last-of-type {
-        border-radius: 0 0 1rem 1rem;
-        border: none;
+        background-color: $selected;
     }
 }
 
+
 .menu_item--icon {
     flex-shrink: 0;
+    font-size: 1rem;
 }
 
 .menu_item--label {
     white-space: nowrap;
+}
+
+.menu--deco {
+    height: 2rem;
+    position: absolute;
+}
+
+.deco_1 {
+    transform: rotate(-180deg);
+    left: -2rem;
+    top: calc(-1px + 1rem);
+}
+
+.deco_2 {
+    transform: rotate(180deg);
+    bottom: calc(-2rem + 1px);
+    right: 0rem;
 }

@@ -8,16 +8,16 @@ function Songs() {
     const songs = Array.from({ length: 20 }, (_, index) => index + 1);
 
     return (
-        <div className="spngs--wrapper">
-            <header className='songs--header'>
-                <span className='label song_name'>Song</span>
-                <span className='label song_artist'>Artist</span>
-                <span className='label song_genre'>Genre</span>
-                <span className='label song_time'>Time</span>
+        <div className="wrapper">
+            <header className='header songs--header songs--header--open'>
+                <span className='label song--name'>Song</span>
+                <span className='label song--artist'>Artist</span>
+                <span className='label song--genre'>Genre</span>
+                <span className='label song--time'>Time</span>
             </header>
-            <section className='songs--wrapper dashboard_page--wrapper'>
-                <Scroll styles='songs_scroll_height'>
-                    <ul className='songs--list'>
+            <section className='wrapper'>
+                <Scroll>
+                    <ul className='list songs--list'>
                         {songs.map(song => (
                             <SongItem song={song} />
                         ))}

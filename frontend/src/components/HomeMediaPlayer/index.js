@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import placeholder from '../../assets/placeholder_artist.svg'
 import { AnimatePresence, motion } from 'framer-motion';
-import { PiSpeakerNoneFill, PiSpeakerHighFill, PiSpeakerLowFill, PiSpeakerSlashFill, PiArrowsInFill, PiArrowsOutFill, PiPlayFill, PiRepeatBold, PiRepeatOnceBold, PiShuffleBold , PiPauseFill, PiSkipForwardFill, PiSkipBackFill } from 'react-icons/pi'
+import {
+  PiSpeakerSimpleNoneFill, PiSpeakerSimpleHighFill, PiSpeakerSimpleLowFill,
+  PiSpeakerSimpleSlashFill, PiArrowsInFill, PiArrowsOutFill,
+  PiPlayFill, PiRepeatBold, PiRepeatOnceBold, PiShuffleBold ,
+  PiPauseBold, PiSkipForwardFill, PiSkipBackFill
+} from 'react-icons/pi'
 import { useMediaContext } from '../../context/MediaContext';
 import IconButton from '../shared/Buttons/IconButton';
-import MediaVisualizer from '../MediaVisualizer';
 import { inOut, mediaInOut } from '../../constants/animations';
 import Media from '../Media';
 import './styles.scss';
@@ -24,7 +28,6 @@ function MediaPlayer() {
       <div className='media--wrapper'>
         <div className='media--container'>
           <div className='media--visualizer'>
-            <MediaVisualizer/>
             <AnimatePresence mode="wait">
               <motion.div className='media--info' {...inOut} variants={mediaInOut} >
               <img src={placeholder} className='media--img'/>
@@ -37,27 +40,23 @@ function MediaPlayer() {
             <div className='media--controls'>
               <AnimatePresence mode="wait">
                 {
-                  repeat === 'all' ?
-                  <IconButton
-                    key="repeat-all"
-                    action={() => setRepeat('none')}
-                    icon={PiRepeatBold}
-                  /> :
-                  repeat === "one" ?
+                  mediaControls.repeat ?
                   <IconButton
                     key="repeat-one"
-                    action={() => setRepeat('all')}
+                    styles="icon_button--no_shadow accent"
+                    action={() => mediaControls.toggleRepeat()}
                     icon={PiRepeatOnceBold}
                   /> :
                   <IconButton
                     key="repeat-none"
-                    styles="icon_button--off"
-                    action={() => setRepeat('one')}
+                    styles="icon_button--off icon_button--no_shadow"
+                    action={() => mediaControls.toggleRepeat()}
                     icon={PiRepeatBold}
                   />
                 }
               </AnimatePresence>
               <IconButton
+                styles="icon_button--no_shadow"
                 action={() => console.log('Skip Back')}
                 icon={PiSkipBackFill}
               />
@@ -68,7 +67,7 @@ function MediaPlayer() {
                     key='pause'
                     action={() => mediaControls.togglePlay()}
                     styles='media--play'
-                    icon={PiPauseFill}
+                    icon={PiPauseBold}
                   /> :
                   <IconButton
                     key='play'
@@ -79,6 +78,7 @@ function MediaPlayer() {
               }
               </AnimatePresence>
               <IconButton
+                styles="icon_button--no_shadow"
                 action={() => console.log('Skip Forward')}
                 icon={PiSkipForwardFill}
               />
@@ -87,30 +87,36 @@ function MediaPlayer() {
                   shuffle ?
                   <IconButton
                     key="shuffle-on"
+                    styles="icon_button--no_shadow"
                     action={() => setShuffle(false)}
                     icon={PiShuffleBold}
                   />
                   :
                   <IconButton
                     key="shuffle-off"
-                    styles="icon_button--off"
+                    styles="icon_button--off icon_button--no_shadow"
                     action={() => setShuffle(true)}
                     icon={PiShuffleBold}
                   />
                 }
               </AnimatePresence>
               <div className='media--volume'>
-                <AnimatePresence mode="wait">
-                  {
-                    mediaControls.volume === 0 ?
-                    <IconButton icon={PiSpeakerSlashFill} key="muted" action={() => mediaControls.toggleVolume()}/> :
-                    mediaControls.volume > 30 ?
-                    <IconButton icon={PiSpeakerLowFill} key="low" action={() => mediaControls.toggleVolume()}/> :
-                    mediaControls.volume >= 30 && mediaControls.vloume < 60 ?
-                    <IconButton icon={PiSpeakerNoneFill} key="mid" action={() => mediaControls.toggleVolume()}/> :
-                    <IconButton icon={PiSpeakerHighFill} key="high" action={() => mediaControls.toggleVolume()}/>
-                  }
-                </AnimatePresence>
+                    <IconButton
+                      styles="icon_button--no_shadow"
+                      icon={
+                        mediaControls.volume === 0 ?
+                        PiSpeakerSimpleSlashFill :
+                        mediaControls.volume > 30 ?
+                        PiSpeakerSimpleLowFill :
+                        mediaControls.volume >= 30 && mediaControls.vloume < 60 ?
+                        PiSpeakerSimpleNoneFill :
+                        mediaControls.mute ?
+                        PiSpeakerSimpleSlashFill :
+                        PiSpeakerSimpleHighFill
+                      }
+                      key="muted"
+                      action={() => mediaControls.toggleMute()}
+                    />
                 <div className='media_player--sound_bar'/>
               </div>
               <div className='media--expand'>

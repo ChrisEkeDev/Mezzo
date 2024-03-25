@@ -51,15 +51,9 @@ export const asideUserHrefs = [
         path: ROUTES.CREATE_NEW
     },
     {
-       label: "My Artists",
+       label: "My Music",
        activeIcon: PiMicrophoneStageFill,
        inactiveIcon: PiMicrophoneStageBold,
-       path: ROUTES.MY_ARTISTS
-    },
-    {
-        label: "My Songs",
-        activeIcon: PiMusicNotesFill,
-        inactiveIcon: PiMusicNotesBold,
-        path: ROUTES.MY_SONGS
+       path: ROUTES.MY_MUSIC
     }
 ]

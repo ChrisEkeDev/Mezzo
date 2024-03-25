@@ -38,6 +38,22 @@ export const menuFade = {
     }
 }
 
+export const menuDeco = {
+    hidden: {
+        y: -10,
+        x: 10,
+        opacity: 0,
+        rotate: -180
+    },
+    visible: {
+        y: 0,
+        x: 0,
+        opacity: 1,
+        rotate: -180
+    }
+}
+
+
 export const button = {
     hidden: {
         opacity: 0,
@@ -78,8 +94,7 @@ export const buttonBase = {
         }
     },
     hover: {
-        opacity: .5,
-        scale: 1.025
+        opacity: 1
     },
     tap: {
         scale: .95
@@ -129,4 +144,21 @@ export const textError = {
         opacity: 0,
         x: 15
     }
+ }
+
+ export const search = {
+    hidden: {
+        opacity: 0,
+        x: 20,
+        transition: {
+            duration: .1
+        }
+    },
+    visible: {
+        opacity: 1,
+        x: 0,
+        transition: {
+            duration: .1
+        }
+    },
  }

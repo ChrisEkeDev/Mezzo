@@ -13,13 +13,9 @@ function MediaProvider({children}) {
     const [ media, setMedia ] = useState(song);
     const [ mediaContext, setMediaContext ] = useState(null);
     const [ isPlaying, setIsPlaying ] = useState(false);
-    const [ volume, setVolume] = useState(60);
-
-    // const initiateMedia = () => {
-    //     if (mediaContext.state === 'suspended') {
-    //         mediaContext.resume()
-    //     }
-    // }
+    const [ volume, setVolume ] = useState(.6);
+    const [ mute, setMute ] = useState(false);
+    const [ repeat, setRepeat ] = useState(false)
 
     useEffect(() => {
         const context = new (window.AudioContext)();
@@ -40,29 +36,30 @@ function MediaProvider({children}) {
         }
     }
 
-    const toggleVolume = () => {
-        if (volume < 30) {
-            setVolume(60)
-        } else if (volume >= 30 && volume < 60) {
-            setVolume(100)
-        } else if (volume === 0) {
-            setVolume(30)
-        } else {
-            setVolume(0)
-        }
-    }
-
     const handleVolume = (event) => {
         mediaRef.current.volume = event.target.value;
         setVolume(event.target.value)
     };
+
+    const toggleMute = () => {
+        const option = !mute;
+        mediaRef.current.muted = option;
+        setMute(option)
+    }
+
+    const toggleRepeat = () => {
+        setRepeat(!repeat)
+    }
 
     const mediaControls = {
         isPlaying,
         togglePlay: () => togglePlay(),
         volume,
         setVolume: (e) => handleVolume(e),
-        toggleVolume: () => toggleVolume()
+        mute,
+        toggleMute: () => toggleMute(),
+        repeat,
+        toggleRepeat: () => toggleRepeat()
     }
 
     return (
