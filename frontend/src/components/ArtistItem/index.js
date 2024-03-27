@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion'
 import placeholder from '../../assets/placeholder_artist.svg';
-import IconButton from '../../components/shared/Buttons/IconButton';
+import IconButton from '../Shared/Buttons/IconButton';
 import { PiShuffleBold, PiNotchesBold } from 'react-icons/pi'
 import './styles.scss';
+
 const ROUTE_PREFIX = '/dashboard/artists/'
 
 function ArtistItem({artist}) {
@@ -21,10 +22,9 @@ function ArtistItem({artist}) {
         {
           isHovering &&
           <IconButton
-            key={0}
             styles='artist_item--play icon_button--no_shadow accent'
             icon={PiShuffleBold}
-            action={() => alert(`Play Artist ${artist}`)}
+            action={() => alert(`Shuffle Artist ${artist} Songs`)}
           />
         }
       </AnimatePresence>
@@ -41,10 +41,9 @@ function ArtistItem({artist}) {
         {
           isHovering &&
           <IconButton
-            key={0}
             styles='artist_item--options icon_button--no_shadow'
             icon={PiNotchesBold}
-            action={() => alert(`Open Options ${artist}`)}
+            action={() => alert(`Open Options for Artist ${artist}`)}
           />
         }
       </AnimatePresence>

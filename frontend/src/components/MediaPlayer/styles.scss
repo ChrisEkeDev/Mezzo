@@ -1,49 +1,113 @@
 @import '../../index.scss';
 
-.media_player--wrapper {
-    grid-area: player;
-    padding: 0 1rem;
-    display: flex;
-    gap: 4rem;
-    align-items: center;
-    justify-content: space-between;
+.media--wrapper {
+    position: absolute;
+    bottom: 0rem;
+    left: 0rem;
+    right: 0rem;
+    align-self: center;
+
 }
 
-.media_player--controls {
+.media--container {
+    position: relative;
+}
+
+.media--visualizer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5rem;
+    border-radius: 1rem;
+    padding-right: 1rem;
+}
+
+.media--info {
+    padding: 1rem;
+    position: relative;
     display: flex;
     align-items: center;
     gap: 1rem;
+    z-index: 5;
+    width: 100%;
 }
 
-.media_player--volume {
+.media--img {
+    top: 1rem;
+    left: 1rem;
+    height: 3rem;
+    aspect-ratio: 1;
+    border-radius: .5rem;
+}
+
+.media--controls {
     display: flex;
-    align-items: center ;
+    align-items: center;
+    gap: 3rem;
+    z-index: 5;
+    padding: 1rem;
+    background-color: white;
 }
 
-.media_player--sound_bar {
+.media--play_pause {
+    position: absolute;
+    left: 1.5rem;
+    z-index: 5;
+}
+
+.media--bar {
     height: 2px;
     width: 100%;
     background-color: $main;
-    flex-shrink: 0;
 }
 
-.bar {
-    .media_player--info {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+.media--song {
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.media--play {
+    color: $main;
+}
+
+.media--next {
+    height: 3rem;
+    aspect-ratio: 1;
+    font-size: 1.5rem;
+    display: grid;
+    place-items: center;
+}
+
+/* Largest devices such as desktops (1280px and up) */
+@media only screen and (width <= 100em) {
+
+}
+
+/* Large devices such as laptops (1024px and up) */
+@media only screen and (width <= 64em) {
+
+}
+
+/* Medium devices such as tablets (768px and up) */
+@media only screen and (width <= 48em) {
+    .media--img {
+        width: 4rem;
+        left: 0;
+        flex-shrink: 0;
+    }
+    .media--visualizer {
         gap: 1rem;
-        flex: 1;
     }
 
-    .media_player--image {
-        height: 3rem;
-        border-radius: 10%;
-        aspect-ratio: 1;
-        background-color: $placeholder;
+    .media--controls {
+        gap: 1rem;
     }
 }
 
-.full {
+/* Small devices such as large phones (640px and up) */
+@media only screen and (width <= 40em) {
 
 }

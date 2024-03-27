@@ -1,0 +1,80 @@
+@import '../../index.scss';
+
+.loading--wrapper {
+    position: fixed;
+    height: 100dvh;
+    width: 100dvw;
+    background-color: rgba(255,255,255,.75);
+    z-index: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading--contents {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes bar {
+    0% {
+        height: 20%;
+    }
+    25% {
+        height: 60%
+    }
+    50% {
+        height: 40%
+    }
+    75% {
+        height: 80%
+    }
+    100% {
+        height: 20%
+    }
+}
+
+.loading--graphic {
+    height: 4rem;
+    aspect-ratio: 1;
+    display: flex;
+    gap: .25rem;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.loading--animation {
+    width: calc(100% / 6);
+    background-color: $main;
+    border-radius: .15rem;
+    animation-name: bar;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.bar--1 {
+    animation-delay: .3s;
+}
+
+.bar--2 {
+    animation-delay: 0s;
+}
+
+.bar--3 {
+    animation-delay: .6s;
+}
+
+.bar--4 {
+    animation-delay: .9s;
+}
+
+.loading--contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-label)
+}

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import placeholder from '../../assets/placeholder_artist.svg';
-import IconButton from '../../components/shared/Buttons/IconButton';
-import { ItemTypes } from '../../constants';
+import IconButton from '../../components/Shared/Buttons/IconButton';
+import { ItemTypes } from '../../Constants';
 import { PiPlayFill, PiNotchesBold } from 'react-icons/pi'
 import { useDrag } from 'react-dnd';
 import './styles.scss';
@@ -15,7 +15,6 @@ function NewPlaylistItem(props) {
         item: { song },
         collect: monitor => ({
           isDragging: !!monitor.isDragging(),
-          // clientOffset: monitor.getClientOffset(),
         })
     });
 
@@ -34,7 +33,6 @@ function NewPlaylistItem(props) {
             {
                 isHovering &&
                 <IconButton
-                    key={0}
                     styles='playlist_item--play icon_button--no_shadow accent'
                     icon={PiPlayFill}
                     action={() => alert(`Play Song ${song}`)}
@@ -50,10 +48,9 @@ function NewPlaylistItem(props) {
             {
                 isHovering &&
                 <IconButton
-                key={0}
-                styles='playlist_item--options icon_button--no_shadow'
-                icon={PiNotchesBold}
-                action={() => alert(`Open Options ${song}`)}
+                    styles='playlist_item--options icon_button--no_shadow'
+                    icon={PiNotchesBold}
+                    action={() => alert(`Open Options ${song}`)}
                 />
             }
             </AnimatePresence>

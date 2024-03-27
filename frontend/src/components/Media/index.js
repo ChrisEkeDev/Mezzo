@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react';
-import { useMediaContext } from '../../context/MediaContext';
+import { useMediaContext } from '../../Context/MediaContext';
 import './styles.scss';
 
 function Media() {
-    const { sourceRef, mediaRef, media, mediaContext, mediaControls } = useMediaContext();
+    const { sourceRef, mediaRef, mediaContext, mediaData, mediaControls } = useMediaContext();
 
     const handleAudioEnded = () => {
         if (mediaControls.repeat) {
           mediaRef.current.currentTime = 0;
           mediaRef.current.play();
+        } else {
+            mediaControls.nextTrack()
         }
-      };
+    };
+
+    const currentSong = mediaData.currentPlaylist[mediaData.currentIndex]
 
     useEffect(() => {
         if (!mediaContext) return;
@@ -20,10 +24,12 @@ function Media() {
         return () => sourceRef.current.disconnect();
     }, [mediaContext]);
 
+
+
     return (
         <div className='media_source--wrapper'>
             <audio autoPlay={true} ref={mediaRef} onEnded={handleAudioEnded}>
-                <source src={media} type="audio/mpeg" />
+                <source src={currentSong.file} type="audio/mpeg" />
             </audio>
         </div>
     )

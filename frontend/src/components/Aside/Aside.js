@@ -1,6 +1,6 @@
 import React from 'react'
 import AsideItem from './AsideItem';
-import { asideHrefs, asidePlaylistsHrefs, asideUserHrefs } from '../../constants/hrefs';
+import { asideHrefs, asidePlaylistsHrefs, asideUserHrefs } from '../../Constants/hrefs';
 import './styles.scss';
 
 function Aside() {

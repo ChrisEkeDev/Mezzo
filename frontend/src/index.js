@@ -4,11 +4,11 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import AppProvider from './context/AppContext';
+import AppProvider from './Context/AppContext';
 import './index.scss';
 import App from './App';
-import configureStore from './store';
-import { restoreCSRF, csrfFetch } from './store/csrf';
+import configureStore from './Store';
+import { restoreCSRF, csrfFetch } from './Store/csrf';
 
 const store = configureStore();
 

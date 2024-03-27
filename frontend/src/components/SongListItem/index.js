@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion'
 import placeholder from '../../assets/placeholder_artist.svg';
-import IconButton from '../../components/shared/Buttons/IconButton';
+import IconButton from '../Shared/Buttons/IconButton';
 import { PiPlayFill, PiNotchesBold } from 'react-icons/pi'
 import './styles.scss';
 
@@ -17,7 +17,6 @@ function SongListItem({song}) {
         {
           isHovering &&
           <IconButton
-            key={0}
             styles='list_item--play icon_button--no_shadow accent'
             icon={PiPlayFill}
             action={() => alert(`Play Song ${song}`)}
@@ -35,10 +34,9 @@ function SongListItem({song}) {
         {
           isHovering &&
           <IconButton
-            key={0}
             styles='list_item--options icon_button--no_shadow'
             icon={PiNotchesBold}
-            action={() => alert(`Open Options ${song}`)}
+            action={() => alert(`Open Options for Song ${song}`)}
           />
         }
       </AnimatePresence>

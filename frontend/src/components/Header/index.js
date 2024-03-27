@@ -1,9 +1,9 @@
 import React from 'react'
 import mezzo from '../../assets/mezzo-color.svg'
-import { useApp } from '../../context/AppContext'
-import * as ROUTES from '../../constants/routes'
+import { useApp } from '../../Context/AppContext'
+import * as ROUTES from '../../Constants/routes'
 import { motion } from 'framer-motion'
-import { base, swell } from '../../constants/animations';
+import { base, swell } from '../../Constants/animations';
 import './styles.scss';
 
 function Header() {

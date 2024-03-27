@@ -1,8 +1,8 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useApp } from '../../context/AppContext';
-import { base, button } from '../../constants/animations';
+import { useApp } from '../../Context/AppContext';
+import { base, button } from '../../Constants/animations';
 
 function AsideItem({href}) {
   const { activeIcon: ActiveIcon, inactiveIcon: InactiveIcon, path, label } = href;

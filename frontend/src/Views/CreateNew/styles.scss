@@ -1,0 +1,59 @@
+@import '../../index.scss';
+
+.create_new--section {
+    position: relative;
+    height: calc(100dvh - 11rem);
+    background-color: $placeholder;
+    outline: 1rem solid white;
+    border-radius: 1.5rem;
+    margin-right: .5rem;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 1rem;
+}
+
+.create_new--option {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    transition: all .2s;
+    &:hover {
+        background-color: $selected;
+    }
+}
+
+.create_new--icon--wrapper {
+    height: 7rem;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.create_new--icon {
+    position: absolute;
+    color: $main;
+    height: 6rem;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5.5rem;
+
+}
+
+.create_new--body {
+    width: 55%;
+    text-align: center;
+    color: $subText;
+}
+
+.create_new--button {
+    margin-top: 2rem;
+}

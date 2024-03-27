@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useMediaContext } from '../../context/MediaContext';
+import { useMediaContext } from '../../Context/MediaContext';
 import './styles.scss';
 
 const MediaVisualizer = ({full}) => {

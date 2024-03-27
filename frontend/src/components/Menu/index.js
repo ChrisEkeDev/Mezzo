@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion'
-import * as ROUTES from '../../constants/routes'
-import { useApp } from '../../context/AppContext';
+import * as ROUTES from '../../Constants/routes'
+import { useApp } from '../../Context/AppContext';
 import { PiNotchesBold, PiXBold, PiSignOutBold } from "react-icons/pi";
-import IconButton from '../../components/shared/Buttons/IconButton';
+import IconButton from '../../components/Shared/Buttons/IconButton';
 import MenuItem from './MenuItem';
-import { base, menuFade } from '../../constants/animations';
+import { base, menuFade } from '../../Constants/animations';
 import './styles.scss';
 
 function Menu() {

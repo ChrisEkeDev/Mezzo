@@ -1,136 +1,102 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import placeholder from '../../assets/placeholder_artist.svg'
 import { AnimatePresence, motion } from 'framer-motion';
-import { inOut, mediaInOut  } from '../../constants/animations';
-import { PiSpeakerNoneFill,PiSpeakerHighFill, PiSpeakerLowFill, PiArrowsInFill, PiArrowsOutFill, PiPlayFill, PiRepeatBold, PiRepeatOnceBold, PiShuffleBold , PiPauseFill, PiSkipForwardFill, PiSkipBackFill } from 'react-icons/pi'
-import IconButton from '../../components/shared/Buttons/IconButton';
+import {
+  PiSpeakerSimpleNoneFill, PiSpeakerSimpleHighFill, PiSpeakerSimpleLowFill,
+  PiSpeakerSimpleSlashFill, PiArrowsInFill, PiArrowsOutFill,
+  PiPlayFill, PiRepeatBold, PiRepeatOnceBold, PiShuffleBold ,
+  PiPauseBold, PiSkipForwardFill, PiSkipBackFill, PiPauseFill
+} from 'react-icons/pi'
+import { useMediaContext } from '../../Context/MediaContext';
+import IconButton from '../Shared/Buttons/IconButton';
+import Media from '../Media';
 import './styles.scss';
+import VolumeInput from '../Shared/Inputs/VolumeInput';
 
-function MediaPlayer() {
-  const [ volume, setVolume ] = useState('low')
-  const [ layout, setLayout ] = useState("bar")
-  const [ isPlaying, setIsPlaying] = useState(false);
-  const [ repeat, setRepeat ] = useState('none');
-  const [ shuffle, setShuffle ] = useState(false);
+function MediaControls() {
+  const { mediaControls } = useMediaContext();
+  const {
+    playing,
+    togglePlay,
+    volume,
+    repeat,
+    toggleRepeat,
+    prevTrack,
+    nextTrack,
+    shuffle,
+    toggleShuffle,
+    mute,
+    toggleMute,
+    handleVolume
+   } = mediaControls;
 
   return (
-    <div className={`media_player--wrapper ${layout}`}>
-      <div className='media_player--controls'>
-          <AnimatePresence mode="wait">
-            {
-              repeat === 'all' ?
+    <>
+      <Media />
+      <div className='media--wrapper'>
+        <div className='media--container'>
+            <div className='media--controls'>
+              <AnimatePresence mode="wait">
+                  <IconButton
+                    key={`repeat-${repeat}`}
+                    styles={`icon_button--no_shadow ${repeat && 'accent'}`}
+                    action={toggleRepeat}
+                    icon={repeat ? PiRepeatOnceBold : PiRepeatBold}
+                  />
+              </AnimatePresence>
               <IconButton
-                key="repeat-all"
-                styles="icon_button--small"
-                action={() => setRepeat('none')}
-                icon={PiRepeatBold}
-              /> :
-              repeat === "one" ?
-              <IconButton
-                key="repeat-one"
-                styles="icon_button--small"
-                action={() => setRepeat('all')}
-                icon={PiRepeatOnceBold}
-              /> :
-              <IconButton
-                key="repeat-none"
-                styles="icon_button--off icon_button--small"
-                action={() => setRepeat('one')}
-                icon={PiRepeatBold}
+                styles="icon_button--no_shadow"
+                action={prevTrack}
+                icon={PiSkipBackFill}
               />
-            }
-
-          </AnimatePresence>
-          <IconButton
-            action={() => console.log('Skip Back')}
-            icon={PiSkipBackFill}
-          />
-          <AnimatePresence mode="wait">
-          {
-              isPlaying ?
+              <AnimatePresence mode="wait">
+                  <IconButton
+                    key={`play-${playing}`}
+                    action={togglePlay}
+                    styles='media--play'
+                    icon={playing ? PiPauseFill : PiPlayFill}
+                  />
+              </AnimatePresence>
               <IconButton
-                key='pause'
-                action={() => setIsPlaying(false)}
-                icon={PiPauseFill}
-              /> :
-              <IconButton
-                key='play'
-                action={() => setIsPlaying(true)}
-                icon={PiPlayFill}
+                styles="icon_button--no_shadow"
+                action={nextTrack}
+                icon={PiSkipForwardFill}
               />
-          }
-          </AnimatePresence>
-          <IconButton
-            action={() => console.log('Skip Forward')}
-            icon={PiSkipForwardFill}
-          />
-          <AnimatePresence mode="wait">
-            {
-              shuffle ?
-              <IconButton
-                key="shuffle-on"
-                styles="icon_button--small"
-                action={() => setShuffle(false)}
-                icon={PiShuffleBold}
-              />
-               :
-               <IconButton
-                key="shuffle-off"
-                styles="icon_button--off icon_button--small"
-                action={() => setShuffle(true)}
-                icon={PiShuffleBold}
-              />
-            }
-          </AnimatePresence>
-      </div>
-      <div className='media_player--info'>
-            <div className='media_player--image'/>
-            <AnimatePresence mode="wait">
-              <motion.p className='media_player--song' {...inOut} variants={mediaInOut}>
-                <strong>Song Name</strong> - Song Artist
-              </motion.p>
-            </AnimatePresence>
-            <AnimatePresence mode="wait">
-              {
-                layout === 'bar' ?
-                <IconButton
-                  key="bar-layout"
-                  icon={PiArrowsOutFill}
-                  action={() => setLayout('full')}
-                /> :
-                <IconButton
-                  key="full-layout"
-                  icon={PiArrowsInFill}
-                  action={() => setLayout('bar')}
+              <AnimatePresence mode="wait">
+                  <IconButton
+                    key={`shuffle-${shuffle}`}
+                    styles={`icon_button--no_shadow ${shuffle && 'icon_button--off'}`}
+                    action={toggleShuffle}
+                    icon={PiShuffleBold}
+                  />
+              </AnimatePresence>
+              <div className='media--volume'>
+                  <IconButton
+                    styles="icon_button--no_shadow"
+                    icon={
+                      mediaControls.volume === 0 ?
+                      PiSpeakerSimpleSlashFill :
+                      mediaControls.volume > 30 ?
+                      PiSpeakerSimpleLowFill :
+                      mediaControls.volume >= 30 && mediaControls.vloume < 60 ?
+                      PiSpeakerSimpleNoneFill :
+                      mediaControls.mute ?
+                      PiSpeakerSimpleSlashFill :
+                      PiSpeakerSimpleHighFill
+                    }
+                    key="muted"
+                    action={toggleMute}
+                  />
+                <VolumeInput
+                  value={volume}
+                  setValue={handleVolume}
                 />
-              }
-            </AnimatePresence>
+              </div>
+          </div>
+        </div>
       </div>
-      <div className='media_player--volume'>
-        <AnimatePresence mode="wait">
-          {
-            volume === 'off' ?
-            <IconButton
-              key="volume-off"
-              icon={PiSpeakerNoneFill}
-              action={() => setVolume('low')}
-            /> :
-            volume === 'high' ?
-            <IconButton
-              key="volume-low"
-              icon={PiSpeakerHighFill}
-              action={() => setVolume('high')}
-            /> :
-            <IconButton
-              key="volume-high"
-              icon={PiSpeakerLowFill}
-              action={() => setVolume('off')}
-            />
-          }
-        </AnimatePresence>
-        <div className='media_player--sound_bar'/>
-      </div>
-    </div>
+    </>
   )
 }
 
-export default MediaPlayer
+export default MediaControls

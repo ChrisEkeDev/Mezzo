@@ -4,7 +4,7 @@ import AudioVolume from './audioVolume';
 import AudioControls from './audioControls';
 import AudioProgress from './audioProgress';
 import AudioDisplay from './audioDisplay';
-import { useNowPlaying } from '../../context/nowPlaying';
+import { useNowPlaying } from '../../Context/nowPlaying';
 import './mezzoPlayer.scss';
 import { TbX } from 'react-icons/tb';
 

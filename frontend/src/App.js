@@ -1,6 +1,6 @@
 import React from 'react';
-import AppRouter from './routers/AppRouter';
-import MediaProvider from './context/MediaContext'
+import AppRouter from './Routers/AppRouter';
+import MediaProvider from './Context/MediaContext'
 
 function App() {
 

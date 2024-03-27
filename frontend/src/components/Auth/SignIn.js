@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion'
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { thunkSignIn } from '../../store/session';
-import TextInput from '../../components/shared/Inputs/TextInput';
-import Button from '../../components/shared/Buttons/Button';
-import { inOut, authForm } from '../../constants/animations';
-import '../shared/styles.scss';
+import { thunkSignIn } from '../../Store/session';
+import TextInput from '../../components/Shared/Inputs/TextInput';
+import Button from '../../components/Shared/Buttons/Button';
+import { inOut, authForm } from '../../Constants/animations';
+import '../Shared/styles.scss';
 
 
 
@@ -61,26 +61,26 @@ function SignIn({handleRoute}) {
     )
   }
 
-  useEffect(() => {
-    const errors = {};
-    if (email.trim().length < 4) {
-      errors.email = 'Email must be at least 4 characters';
-    }
-    if (!email.includes(".") || !email.includes("@")) {
-      errors.email = 'Please enter a valid email address';
-    }
-    if (password.trim().length < 6) {
-      errors.password = 'Password must be at least 6 characters';
-    }
-    setErrors(errors)
-  }, [email, password])
+  // useEffect(() => {
+  //   const errors = {};
+  //   if (email && email.trim().length < 4) {
+  //     errors.email = 'Email must be at least 4 characters';
+  //   }
+  //   if (!email.includes(".") || !email.includes("@")) {
+  //     errors.email = 'Please enter a valid email address';
+  //   }
+  //   if (password && password.trim().length < 6) {
+  //     errors.password = 'Password must be at least 6 characters';
+  //   }
+  //   setErrors(errors)
+  // }, [email, password])
 
 
   if (user) navigate('/dashboard')
 
   return (
-      <motion.form {...inOut} variants={authForm} className='form--wrapper'>
-        <h1 className='form--title'>Sign In</h1>
+      <motion.form {...inOut} variants={authForm} className='form--wrapper auth_form--wrapper'>
+        <h1 className='form--title auth_form--title'>Sign In</h1>
         <p className='form--tip'>Dont have an account yet? <strong className='form--link' onClick={() => handleRoute('/sign-up')}>Sign Up</strong></p>
         <div className='form--inputs'>
         <TextInput
@@ -99,7 +99,7 @@ function SignIn({handleRoute}) {
             error={errors.password}
         />
         </div>
-        <div className='form--actions'>
+        <div className='form--actions auth_form--actions'>
         <Button
             label='Sign In'
             styles='primary'

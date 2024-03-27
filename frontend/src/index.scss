@@ -13,8 +13,8 @@
     --background: #fbfbfb;
 }
 
-$main: #f34e77;
-$mainDark: #f83b6a;
+$main: #5c1dba;
+$mainDark: #461196;
 $unit: calc(100dvw / 12);
 $test: #dcdcdc;
 $primary_font: 'Outfit';
@@ -25,7 +25,7 @@ $subText: #5A5A5A;
 $error: #e72424;
 $background: #B8B8B8;
 $box_shadow:  1px 1px 5px 1px rgba(0,0,0,.05);
-$selected: #fcf0f3;
+$selected: #f4edff;
 
 
 
@@ -129,6 +129,7 @@ h1, h2, h3, h4, h5, h6, p {
 .flex-row {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 /* width */

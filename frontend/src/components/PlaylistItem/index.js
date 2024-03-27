@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import IconButton from '../../components/shared/Buttons/IconButton';
+import IconButton from '../../components/Shared/Buttons/IconButton';
 import placeholder from '../../assets/placeholder_artist.svg';
 import { PiPlayFill, PiNotchesBold } from 'react-icons/pi'
 import './styles.scss';
+
+const ROUTE_PREFIX = '/dashboard/playlists/'
 
 
 function PlaylistItem({playlist}) {
@@ -19,7 +22,6 @@ function PlaylistItem({playlist}) {
                 {
                 isHovering &&
                 <IconButton
-                    key={0}
                     styles='playlist_item--play icon_button--no_shadow accent'
                     icon={PiPlayFill}
                     action={() => alert(`Play Playlist ${playlist}`)}
@@ -28,13 +30,17 @@ function PlaylistItem({playlist}) {
             </AnimatePresence>
 
             <img className='playlist_item--image' src={placeholder}/>
-            <span className='playlist_item--artist'>Playlist {playlist}</span>
+
+            <Link
+                className='artist_item--artist bold accent'
+                to={`${ROUTE_PREFIX}${playlist}`}>
+                Playlist {playlist}
+            </Link>
 
             <AnimatePresence>
                 {
                 isHovering &&
                 <IconButton
-                    key={0}
                     styles='playlist_item--options icon_button--no_shadow'
                     icon={PiNotchesBold}
                     action={() => alert(`Open Options ${playlist}`)}

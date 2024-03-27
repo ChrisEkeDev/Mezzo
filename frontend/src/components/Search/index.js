@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { PiMagnifyingGlassBold, PiXBold } from 'react-icons/pi';
-import { base, search } from '../../constants/animations';
+import { base, search } from '../../Constants/animations';
 import { AnimatePresence, motion } from 'framer-motion';
 import './styles.scss'
 
