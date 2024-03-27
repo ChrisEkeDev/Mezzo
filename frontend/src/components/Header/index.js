@@ -14,7 +14,7 @@ function Header() {
         <motion.img
           {...base}
           variants={swell}
-          onClick={() => navigate(ROUTES.WELCOME)}
+          onClick={() => navigate(ROUTES.NOW_PLAYING)}
           className='header--logo' src={mezzo}
         />
     </header>

@@ -4,27 +4,23 @@ import Scroll from '../../components/Shared/Layout/Scroll';
 import TextInput from '../../components/Shared/Inputs/TextInput'
 import Button from '../../components/Shared/Buttons/Button';
 import { ItemTypes } from '../../Constants';
-import { useDrop, useDrag } from 'react-dnd';
-import './styles.scss'
+import { useDrop } from 'react-dnd';
+import { songsDemoData } from '../../Constants/songsDemo';
 import { AnimatePresence, motion } from 'framer-motion';
 import { PiListPlusLight, PiFloppyDiskFill } from 'react-icons/pi';
 import { base, swell } from '../../Constants/animations';
+import usePlaylistForm from '../../Hooks/usePlaylistForm';
+import './styles.scss'
 
 function NewPlaylist() {
-    const [ playlistName, setPlaylistName ] = useState('')
-    const [ playlistSongs, setPlaylistSongs ] = useState([{song: 21}, {song: 22}, { song: 23}]);
-    const allSongs = Array.from({ length: 20 }, (_, index) => index + 1);
-
-    const handleAddToPlaylist = (song) => {
-        if (playlistSongs.find(foundSong => foundSong.song === song.song)) return
-        setPlaylistSongs(playlist => [...playlist, song]);
-    }
+    const { formData, handleInput, errors, onAddSongToPlaylist, onCreatePlaylist } = usePlaylistForm();
+    const { name, playlist } = formData;
 
     const [{ canDrop, isOver }, drop] = useDrop({
         accept: ItemTypes.PLAYLIST_SONG,
         drop: (item, monitor) => {
             if (!monitor.didDrop()) {
-                handleAddToPlaylist(item);
+                onAddSongToPlaylist(item);
             }
         },
         collect: monitor => ({
@@ -32,12 +28,6 @@ function NewPlaylist() {
           canDrop: !!monitor.canDrop()
         }),
     });
-
-    const handleInput = (value) => {
-        setPlaylistName(value)
-    }
-
-
 
     return (
         <div className="wrapper">
@@ -49,11 +39,11 @@ function NewPlaylist() {
                 <section className='wrapper new_playlist--wrapper'>
                     <div className='wrapper new_playlist--form'>
                         <TextInput
-                            name='playlist'
+                            name='name'
                             styles="new_playlist--input"
-                            value={playlistName}
+                            value={name}
                             setValue={handleInput}
-                            error={playlistName.length === 0 ? 'Please enter a name' : null}
+                            error={errors.name}
                         />
                         <Scroll styles='new_playlist--scroll'>
                             <motion.ul
@@ -68,15 +58,22 @@ function NewPlaylist() {
                                             variants={swell}
                                             className='new_playlist--overlay'
                                         >
+                                            {/* <AnimatePresence>
+                                                {
+                                                    isOver ?
+                                                    <span><PiFloppyDiskFill/></span> :
+                                                    <span><PiFloppyDiskFill/></span>
+                                                }
+                                            </AnimatePresence> */}
                                             <PiListPlusLight className='new_playlist--icon'/>
                                             <span className='bold tint'>Release here to add to playlist.</span>
                                         </motion.div>
                                     }
                                 </AnimatePresence>
-                                {playlistSongs.map(song => (
+                                {playlist.map(song => (
                                     <NewPlaylistItem
-                                        key={song.song}
-                                        song={song.song}
+                                        key={song.id}
+                                        song={song}
                                     />
                                 ))}
                             </motion.ul>
@@ -84,7 +81,8 @@ function NewPlaylist() {
                         <Button
                             styles="primary new_playlist--button"
                             label="Save Playlist"
-                            left={PiFloppyDiskFill}
+                            icon={PiFloppyDiskFill}
+                            action={onCreatePlaylist}
                         />
                     </div>
                     <div className='wrapper new_playlist--songs'>
@@ -92,11 +90,10 @@ function NewPlaylist() {
                             <motion.ul
                                 className='list songs--list'
                             >
-                                {allSongs.map(song => (
+                                {songsDemoData.map(song => (
                                     <NewPlaylistItem
-                                        key={song}
+                                        key={song.id}
                                         song={song}
-                                        handleAddToPlaylist={handleAddToPlaylist}
                                         draggable
                                     />
                                 ))}

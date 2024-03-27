@@ -1,0 +1,27 @@
+@import '../styles.scss';
+
+.now_playing--graphic {
+    position: absolute;
+    height: 3rem;
+    aspect-ratio: 1;
+    display: flex;
+    gap: .25rem;
+    align-items: flex-end;
+    padding: .5rem;
+    justify-content: center;
+    background-color: black;
+    border-radius: .5rem;
+    opacity: .3;
+    z-index: 3;
+}
+
+.now_playing--animation {
+    width: calc(100% / 6);
+    background-color: white;
+    border-radius: .005rem;
+    animation-name: bar;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+}

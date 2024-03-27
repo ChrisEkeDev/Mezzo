@@ -11,8 +11,8 @@ function DashboardRouter() {
             <Switch location={location} key={location.pathname}>
                 <Route
                     exact
-                    path={ROUTES.WELCOME}
-                    component={View.Welcome}
+                    path={ROUTES.NOW_PLAYING}
+                    component={View.NowPlaying}
                 />
                 <Route
                     exact

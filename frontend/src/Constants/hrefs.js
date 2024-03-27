@@ -1,12 +1,12 @@
-import { PiHouseFill,PiMusicNotesPlusBold,PiListPlusFill, PiHouseBold, PiMusicNotesBoldFill, PiPlaylistBold,  PiPlaylistFill , PiListPlusBold,PiHeartStraightBold, PiMusicNotesPlusFill, PiMicrophoneStageBold,PiMusicNotesBold,   PiMicrophoneStageFill, PiHeartStraightFill, PiMusicNotesFill  } from "react-icons/pi";
+import { PiPlayFill, PiMusicNotesPlusBold,PiListPlusFill, PiHouseBold, PiMusicNotesBoldFill, PiPlaylistBold,  PiPlaylistFill , PiListPlusBold,PiHeartStraightBold, PiMusicNotesPlusFill, PiMicrophoneStageBold,PiMusicNotesBold,   PiMicrophoneStageFill, PiHeartStraightFill, PiMusicNotesFill, PiPlayBold  } from "react-icons/pi";
 import * as ROUTES from './routes';
 
 export const asideHrefs = [
     {
-       label: "Home",
-       activeIcon: PiHouseFill,
-       inactiveIcon: PiHouseBold,
-       path: ROUTES.WELCOME
+       label: "Now Playing",
+       activeIcon: PiPlayFill,
+       inactiveIcon: PiPlayBold,
+       path: ROUTES.NOW_PLAYING
     },
     {
         label: "Artists",

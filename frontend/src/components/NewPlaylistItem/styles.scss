@@ -1,7 +1,8 @@
 @import '../../index.scss';
 
-.playlist_item--wrapper {
+.new_playlist_item--wrapper {
     display: flex;
+    align-items: center;
     gap: .5rem;
     line-height: 1rem;
     padding: .5rem;
@@ -10,12 +11,26 @@
     transition: all .2s;
 }
 
-.playlist_item--play {
+.new_playlist_item--play {
+    position: absolute;
+    z-index: 5;
     left: .5rem;
     top: .5rem;
 }
 
-.playlist_item--options {
+.new_playlist_item--options {
+    position: absolute;
     right: 0;
     bottom: 0;
+}
+
+.song_item--progress {
+    position: absolute;
+    background-color: $main;
+    transition: all .2s linear;
+    border-radius: .5rem;
+    opacity: .05;
+    height: 100%;
+    left: 0;
+    z-index: 1;
 }

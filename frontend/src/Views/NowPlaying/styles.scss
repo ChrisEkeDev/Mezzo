@@ -1,0 +1,6 @@
+@import '../../index.scss';
+
+.now_playing--wrapper {
+    display: grid;
+    grid-template-columns: auto calc(100% / 3) ;
+}

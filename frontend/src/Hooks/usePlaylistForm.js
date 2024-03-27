@@ -17,8 +17,11 @@ function usePlaylistForm() {
         console.log(formData)
     }
 
-    const onAddToPlaylist = (data) => {
-
+    const onAddSongToPlaylist = (song) => {
+        const { playlist } = formData;
+        console.log(song)
+        if (playlist.find(foundSong => foundSong.id === song.id)) return
+        setFormData(prevState => ({ ...prevState, playlist:[...playlist, song] }));
     }
 
     useEffect(() => {
@@ -33,7 +36,7 @@ function usePlaylistForm() {
     }, [formData])
 
 
-    return { name, playlist, errors, onAddToPlaylist, onCreatePlaylist }
+    return { formData, handleInput, errors, onAddSongToPlaylist, onCreatePlaylist }
 }
 
 export default usePlaylistForm

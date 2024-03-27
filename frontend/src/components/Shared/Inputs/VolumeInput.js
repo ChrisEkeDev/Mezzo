@@ -7,7 +7,7 @@ function VolumeInput({value, setValue }) {
           min={0}
           max={100}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => setValue(e)}
     />
   )
 }

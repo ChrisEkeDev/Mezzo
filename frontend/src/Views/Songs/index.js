@@ -1,11 +1,10 @@
 import React from 'react';
-import Search from '../../components/Search';
 import SongItem from '../../components/SongItem';
+import { songsDemoData } from '../../Constants/songsDemo';
 import Scroll from '../../components/Shared/Layout/Scroll';
 import './styles.scss'
 
 function Songs() {
-    const songs = Array.from({ length: 20 }, (_, index) => index + 1);
 
     return (
         <div className="wrapper">
@@ -18,8 +17,11 @@ function Songs() {
             <section className='wrapper'>
                 <Scroll>
                     <ul className='list songs--list'>
-                        {songs.map(song => (
-                            <SongItem song={song} />
+                        {songsDemoData.map(song => (
+                            <SongItem
+                                key={song.id}
+                                song={song}
+                            />
                         ))}
                     </ul>
                 </Scroll>

@@ -10,25 +10,22 @@ import {
 import { useMediaContext } from '../../Context/MediaContext';
 import IconButton from '../Shared/Buttons/IconButton';
 import Media from '../Media';
-import './styles.scss';
 import VolumeInput from '../Shared/Inputs/VolumeInput';
+import './styles.scss';
 
 function MediaControls() {
-  const { mediaControls } = useMediaContext();
+  const { mediaControls, mediaData } = useMediaContext();
   const {
-    playing,
     togglePlay,
-    volume,
-    repeat,
-    toggleRepeat,
+    toggleLoop,
     prevTrack,
     nextTrack,
-    shuffle,
     toggleShuffle,
-    mute,
     toggleMute,
     handleVolume
    } = mediaControls;
+
+   const { onLoop, isPlaying, isMuted, volume, isShuffled } = mediaData;
 
   return (
     <>
@@ -38,10 +35,10 @@ function MediaControls() {
             <div className='media--controls'>
               <AnimatePresence mode="wait">
                   <IconButton
-                    key={`repeat-${repeat}`}
-                    styles={`icon_button--no_shadow ${repeat && 'accent'}`}
-                    action={toggleRepeat}
-                    icon={repeat ? PiRepeatOnceBold : PiRepeatBold}
+                    key={`repeat-${onLoop}`}
+                    styles={`icon_button--no_shadow ${onLoop ? 'accent' : 'icon_button--off' }`}
+                    action={toggleLoop}
+                    icon={onLoop ? PiRepeatOnceBold : PiRepeatBold}
                   />
               </AnimatePresence>
               <IconButton
@@ -51,10 +48,10 @@ function MediaControls() {
               />
               <AnimatePresence mode="wait">
                   <IconButton
-                    key={`play-${playing}`}
+                    key={`play-${isPlaying}`}
                     action={togglePlay}
                     styles='media--play'
-                    icon={playing ? PiPauseFill : PiPlayFill}
+                    icon={isPlaying ? PiPauseFill : PiPlayFill}
                   />
               </AnimatePresence>
               <IconButton
@@ -64,8 +61,8 @@ function MediaControls() {
               />
               <AnimatePresence mode="wait">
                   <IconButton
-                    key={`shuffle-${shuffle}`}
-                    styles={`icon_button--no_shadow ${shuffle && 'icon_button--off'}`}
+                    key={`shuffle-${isShuffled}`}
+                    styles={`icon_button--no_shadow ${isShuffled ? 'accent' : 'icon_button--off'}`}
                     action={toggleShuffle}
                     icon={PiShuffleBold}
                   />
@@ -74,14 +71,12 @@ function MediaControls() {
                   <IconButton
                     styles="icon_button--no_shadow"
                     icon={
-                      mediaControls.volume === 0 ?
+                      volume === 0 || isMuted ?
                       PiSpeakerSimpleSlashFill :
-                      mediaControls.volume > 30 ?
-                      PiSpeakerSimpleLowFill :
-                      mediaControls.volume >= 30 && mediaControls.vloume < 60 ?
+                      volume < 30 ?
                       PiSpeakerSimpleNoneFill :
-                      mediaControls.mute ?
-                      PiSpeakerSimpleSlashFill :
+                      volume >= 30 && volume < 60 ?
+                      PiSpeakerSimpleLowFill :
                       PiSpeakerSimpleHighFill
                     }
                     key="muted"

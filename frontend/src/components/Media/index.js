@@ -3,18 +3,9 @@ import { useMediaContext } from '../../Context/MediaContext';
 import './styles.scss';
 
 function Media() {
-    const { sourceRef, mediaRef, mediaContext, mediaData, mediaControls } = useMediaContext();
+    const { mediaContext, mediaData } = useMediaContext();
+    const { song, sourceRef, mediaRef, onEnded, onLoadedMetadata } = mediaData;
 
-    const handleAudioEnded = () => {
-        if (mediaControls.repeat) {
-          mediaRef.current.currentTime = 0;
-          mediaRef.current.play();
-        } else {
-            mediaControls.nextTrack()
-        }
-    };
-
-    const currentSong = mediaData.currentPlaylist[mediaData.currentIndex]
 
     useEffect(() => {
         if (!mediaContext) return;
@@ -25,11 +16,14 @@ function Media() {
     }, [mediaContext]);
 
 
-
     return (
         <div className='media_source--wrapper'>
-            <audio autoPlay={true} ref={mediaRef} onEnded={handleAudioEnded}>
-                <source src={currentSong.file} type="audio/mpeg" />
+            <audio
+                ref={mediaRef}
+                onEnded={onEnded}
+                onLoadedMetadata={onLoadedMetadata}
+            >
+                <source src={song && song.file} type="audio/mpeg" />
             </audio>
         </div>
     )

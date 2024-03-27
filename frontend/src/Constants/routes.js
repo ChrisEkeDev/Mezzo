@@ -1,7 +1,7 @@
 export const HOME = '/'
 
 export const DASHBOARD = '/dashboard*';
-export const WELCOME = '/dashboard';
+export const NOW_PLAYING = '/dashboard';
 
 export const ARTISTS = '/dashboard/artists';
 export const ARTIST_PAGE = '/dashboard/artists/:artistId';
