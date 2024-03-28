@@ -3,11 +3,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import placeholder from '../../assets/placeholder_artist.svg';
 import IconButton from '../../components/Shared/Buttons/IconButton';
 import { ItemTypes } from '../../Constants';
+import { COLORS } from '../../Constants';
 import { useMediaContext } from '../../Context/MediaContext'
-import { PiPlayFill, PiNotchesBold, PiAirTrafficControl } from 'react-icons/pi'
+import { PiPlayFill, PiNotchesBold } from 'react-icons/pi';
+import { pulse } from '../../Constants/animations';
 import { useDrag } from 'react-dnd';
 import './styles.scss';
-import NowPlayingAnimation from '../Shared/NowPlayingAnimation';
 
 function NewPlaylistItem(props) {
     const { song, draggable } = props;
@@ -30,18 +31,15 @@ function NewPlaylistItem(props) {
             ref={draggable && drag}
             style={{
                 cursor: draggable && 'grab',
-                backgroundColor: isDragging && 'rgba(243, 78, 119, .10)',
+                backgroundColor: ( isDragging || currentSong ) && COLORS.SELECTED,
             }}
             className='wrapper new_playlist_item--wrapper list_item'
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
-            {
-                currentSongPlaying ?
-                <NowPlayingAnimation /> :
                 <AnimatePresence>
                 {
-                    isHovering &&
+                    isHovering && !currentSongPlaying &&
                     <IconButton
                         styles='new_playlist_item--play icon_button--no_shadow accent'
                         icon={PiPlayFill}
@@ -49,13 +47,13 @@ function NewPlaylistItem(props) {
                     />
                 }
                 </AnimatePresence>
-            }
 
-            <img className="song_item--image fg" src={placeholder}/>
-            <div className='flex-col fg'>
+
+            <motion.img animate={currentSongPlaying && pulse} className="song_item--image fg" src={placeholder}/>
+            <motion.div animate={currentSongPlaying && pulse} className='flex-col fg'>
                 <span className="sm bold">{song.name}</span>
                 <span className="sm tint">{song.artist}</span>
-            </div>
+            </motion.div>
             <AnimatePresence>
             {
                 isHovering &&

@@ -5,9 +5,17 @@ const MediaContext = createContext(null);
 
 export const useMediaContext = () => useContext(MediaContext)
 
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+let mediaContext;
+
+// Ensure AudioContext is supported
+if (!AudioContext) {
+  console.error("AudioContext is not supported in this browser");
+}
 
 
 function MediaProvider({children}) {
+    const [isInitialized, setIsInitialized] = useState(false);
     const allSongs = songsDemoData;
     const mediaRef = useRef(null);
     const sourceRef = useRef(null);
@@ -22,7 +30,6 @@ function MediaProvider({children}) {
     const [ isShuffled, setIsShuffled ] = useState(false);
     const queueRef = useRef([]);
 
-    const [ mediaContext, setMediaContext ] = useState(null);
     const [ volume, setVolume ] = useState(60);
     const [ isMuted, setIsMuted ] = useState(false);
     const [ progress, setProgress ] = useState(0);
@@ -96,17 +103,21 @@ function MediaProvider({children}) {
     }
 
     const playNow = (selectedSong) => {
-        if (currentSong.id === selectedSong.id) return
-        setSongQueue((prevQueue) => {
-            const currentIndex = prevQueue.findIndex(song => song.id === selectedSong.id);
-            let newQueue = [...prevQueue];
-            if (currentIndex !== -1) {
-              newQueue.splice(currentIndex, 1);
-            }
-            newQueue.splice(currentTrackIndex + 1, 0, selectedSong);
-            return newQueue;
-          });
-          setCurrentTrackIndex(currentTrackIndex + 1);
+        if (currentSong?.id === selectedSong.id) return
+        if (songQueue.length === 0) {
+            setSongQueue([selectedSong]);
+        } else {
+            setSongQueue((prevQueue) => {
+                const currentIndex = prevQueue.findIndex(song => song.id === selectedSong.id);
+                let newQueue = [...prevQueue];
+                if (currentIndex !== -1) {
+                  newQueue.splice(currentIndex, 1);
+                }
+                newQueue.splice(currentTrackIndex + 1, 0, selectedSong);
+                return newQueue;
+            });
+            setCurrentTrackIndex(currentTrackIndex + 1);
+        }
     }
 
     const playNext = (selectedSong) => {
@@ -136,17 +147,34 @@ function MediaProvider({children}) {
         if (songs) setSongQueue(songs);
         else setSongQueue(allSongs);
         setCurrentTrackIndex(0)
-        // play();
+        play();
     }
 
-    const play = () => {
-        setIsPlaying(true)
-        mediaRef.current.play();
+    const play = async () => {
+        if (!mediaContext) {
+            mediaContext = new AudioContext();
+        }
+
+        if (mediaContext.state === "suspended") {
+            mediaContext.resume().then(() => mediaRef.current.play())
+        }
+
+        if (mediaRef.current) {
+            try {
+                await mediaRef.current.play();
+                setIsPlaying(true)
+            } catch(err) {
+                console.error(err)
+            }
+        }
     }
 
     const pause = () => {
+        if (isPlaying) {
+            mediaRef.current.pause();
+            setIsPlaying(false)
+        }
         setIsPlaying(false)
-        mediaRef.current.pause();
     }
 
     const onLoadedMetadata = () => {
@@ -223,30 +251,19 @@ function MediaProvider({children}) {
     }, [volume, mediaRef, isMuted])
 
     useEffect(() => {
-        const context = new (window.AudioContext)();
-        setMediaContext(context);
-        return () => context.close();
-    }, []);
-
-    useEffect(() => {
-
-            setCurrentSong(songQueue[currentTrackIndex])
+        if (songQueue.length > 0 && currentTrackIndex >= 0) {
+            const newCurrentSong = songQueue[currentTrackIndex];
+            setCurrentSong(newCurrentSong)
             if (mediaRef.current) {
+                mediaRef.current.src = newCurrentSong.file;
                 mediaRef.current.load();
-                // setIsPlaying(true)
-                // mediaRef.current.play();
+                play()
             }
-
-    }, [songQueue, currentTrackIndex])
-
-    useEffect(() => {
-        if (isPlaying) {
-            mediaRef.current.play();
         } else {
-            mediaRef.current.pause();
+            setCurrentSong(null)
         }
         playAnimationRef.current = requestAnimationFrame(progressCallBack);
-    }, [isPlaying, mediaRef])
+    }, [songQueue, currentTrackIndex])
 
 
     return (

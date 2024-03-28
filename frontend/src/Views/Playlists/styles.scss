@@ -1,5 +1,9 @@
 @import '../../index.scss';
-
+.playlist_page--wrapper {
+    .list {
+        padding-top: 1rem;
+    }
+}
 
 .playlists--list {
     gap: 1rem;

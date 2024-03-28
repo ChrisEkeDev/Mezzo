@@ -4,7 +4,7 @@ import ArtistItem from '../../components/ArtistItem';
 import './styles.scss';
 
 function Artists() {
-  const artists = Array.from({ length: 50 }, (_, index) => index + 1);
+  const artists = Array.from({ length: 10 }, (_, index) => index + 1);
 
   return (
     <div className="wrapper">
@@ -14,8 +14,8 @@ function Artists() {
       <section className='wrapper'>
         <Scroll>
           <ul className='list artists--list'>
-            {artists.map(artist => (
-              <ArtistItem artist={artist} />
+            {artists.map((artist, i) => (
+              <ArtistItem  key={i} artist={artist} />
             ))}
           </ul>
         </Scroll>

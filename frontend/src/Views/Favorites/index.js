@@ -5,7 +5,7 @@ import SongListItem from '../../components/SongListItem';
 import './styles.scss';
 
 function Favorites() {
-    const favorites = Array.from({ length: 20 }, (_, index) => index + 1);
+
 
     return (
         <div className='wrapper'>
@@ -15,13 +15,13 @@ function Favorites() {
             <section>
                 <Scroll>
                     <ul className='list favorites--list'>
-                        {favorites.map((favorite, i) => {
+                        {/* {favorites.map((favorite, i) => {
                             if (i % 3 === 0) {
                                 return (<ArtistListItem artist={favorite}/>)
                             } else {
                                 return (<SongListItem song={favorite}/>)
                             }
-                        })}
+                        })} */}
                     </ul>
                 </Scroll>
             </section>

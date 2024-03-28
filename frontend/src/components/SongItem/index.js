@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion'
 import placeholder from '../../assets/placeholder_artist.svg';
 import IconButton from '../Shared/Buttons/IconButton';
-import NowPlayingAnimation from '../Shared/NowPlayingAnimation';
-import { PiPlayFill, PiNotchesBold } from 'react-icons/pi'
-import './styles.scss';
+import { PiPlayFill, PiNotchesBold } from 'react-icons/pi';
+import { COLORS } from '../../Constants';
 import { useMediaContext } from '../../Context/MediaContext';
+import { pulse } from '../../Constants/animations';
+import './styles.scss';
+
 
 function SongItem({song}) {
   const [ isHovering, setIsHovering ] = useState(false);
@@ -19,16 +21,15 @@ function SongItem({song}) {
   return (
     <motion.li
       className='song_item--wrapper list_item'
+      style={{backgroundColor: currentSong && COLORS.SELECTED}}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
       <div className='song_item--flex song--name'>
-        {
-          currentSongPlaying ?
-          <NowPlayingAnimation /> :
+
           <AnimatePresence>
           {
-            isHovering &&
+            ( isHovering || !currentSongPlaying ) &&
             <IconButton
               styles='song_item--play icon_button--no_shadow accent'
               icon={PiPlayFill}
@@ -36,10 +37,9 @@ function SongItem({song}) {
             />
           }
           </AnimatePresence>
-        }
 
-        <img className="song_item--image" src={placeholder}/>
-        <span className="song_item--label sm bold">{song.name}</span>
+        <motion.img animate={currentSongPlaying && pulse} className="song_item--image" src={placeholder}/>
+        <motion.span animate={currentSongPlaying && pulse} className="song_item--label sm bold">{song.name}</motion.span>
         <AnimatePresence>
           {
             isHovering &&

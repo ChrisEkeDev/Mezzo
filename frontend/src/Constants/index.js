@@ -2,6 +2,10 @@ export const ItemTypes = {
     PLAYLIST_SONG: "PLAYLIST_SONG"
 }
 
+export const COLORS = {
+    SELECTED: '#f4edff',
+    MAIN: '#5c1dba'
+}
 
 export const GenreOptions = {
     RANDB: {

@@ -180,3 +180,14 @@ export const textError = {
         }
     },
  }
+
+
+ export const pulse = {
+    scale: [1, 1.01, 1], // Start small, pulse to larger, back to original size
+    opacity: [1, 0.7, 1], // Vary opacity to enhance the pulse effect
+    transition: {
+      duration: 0.75, // Duration of one pulse cycle
+      ease: "easeInOut", // Easing function for the animation
+      repeat: Infinity, // Repeat the animation indefinitely
+    },
+  };
